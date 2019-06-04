@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+//@import "../../../node_modules/ag-grid-community/src/styles/ag-grid.scss";
+//@import "/node_modules/ag-grid-community/src/styles/ag-theme-blue.scss";
+
+//$ag-icons-path: '~ag-grid/src/styles/icons/';
+//
+//@import "~ag-grid-community/src/styles/ag-grid.scss";
+//@import "~ag-grid-community/src/styles/ag-theme-blue.scss";
+//node_modules/ag-grid-community/src/styles/ag-grid.scss
+
+// node_modules/ag-grid-community/src/styles/ag-theme-blue.scss
+//@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+h1 {
+  margin: 25px 25px 25px 0px;
+}
+
+h3 {
+  margin: 25px 25px 25px 0px;
+}
+
+button {
+  margin: 10px;
+}
+

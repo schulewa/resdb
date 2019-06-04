@@ -27,7 +27,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ag-grid-community/dist/styles/ag-grid.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-balham.css"
             ],
             "scripts": []
           },
@@ -83,7 +86,10 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ag-grid-community/dist/styles/ag-grid.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css",
+              "node_modules/ag-grid-community/dist/styles/ag-theme-balham.css"
             ],
             "scripts": [],
             "assets": [

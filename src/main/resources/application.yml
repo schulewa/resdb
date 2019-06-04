@@ -1,0 +1,63 @@
+flyway:
+#  locations: db/migration/mysql
+#  enabled: false
+#  locations: database/schema/mysql
+
+logging:
+  level:
+    org:
+      hibernate: trace
+#        sql: debug
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: trace
+      springframework:
+        jdbc: debug
+        web:
+          filter:
+            CommonsRequestLoggingFilter: debug
+    com.apschulewitz.resdb: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    com:
+      mysql:
+        cj:
+          jdbc:
+            ClientPreparedStatement: TRACE
+
+spring:
+  datasource:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/resdb_dev?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: resdb_dev
+    password: resdb_dev
+  data:
+    rest:
+      base-path: /resdb/api
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  session:
+    store-type: none
+
+server:
+  port: 8080
+
+client:
+  cors:
+    base:
+      url: http://localhost:50545
+
+
+environment: dev
+
+authentication:
+  expiryInMinutes: 7200
+
+security:
+  ignored:
+    - "*.bundle.*"
+  sessions: NEVER

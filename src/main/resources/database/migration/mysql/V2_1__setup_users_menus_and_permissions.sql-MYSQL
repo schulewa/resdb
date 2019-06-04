@@ -1,0 +1,2129 @@
+/********************************************************************************************************************************************
+** CREATE STANDARD PERMISSIONS
+********************************************************************************************************************************************/
+
+select @resdb_permission_id := 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ADDRESS_TYPE-C', 'Address type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ADDRESS_TYPE-U', 'Address type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ADDRESS_TYPE-R', 'Address type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT-C', 'Artefact maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT-U', 'Artefact maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT-R', 'Artefact maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE-C', 'Artefact attribute maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE-U', 'Artefact attribute maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE-R', 'Artefact attribute maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE_TYPE-C', 'Artefact attribute type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE_TYPE-U', 'Artefact attribute type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_ATTRIBUTE_TYPE-R', 'Artefact attribute type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_GROUP-C', 'Artefact group maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_GROUP-U', 'Artefact group maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_GROUP-R', 'Artefact group maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMAGE-C', 'Artefact image maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMAGE-U', 'Artefact image maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMAGE-R', 'Artefact image maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMG_PATTERN_SMBL-C', 'Artefact image pattern symbol maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMG_PATTERN_SMBL-U', 'Artefact image pattern symbol maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_IMG_PATTERN_SMBL-R', 'Artefact image pattern symbol maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_PLACE-C', 'Artefact place maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_PLACE-U', 'Artefact place maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_PLACE-R', 'Artefact place maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_RSTRTN_WORK-C', 'Artefact restoration work maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_RSTRTN_WORK-U', 'Artefact restoration work maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_RSTRTN_WORK-R', 'Artefact restoration work maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_TYPE-C', 'Artefact type maintenance (Create/)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_TYPE-U', 'Artefact type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ARTEFACT_TYPE-R', 'Artefact type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY-C', 'Bibliography maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY-U', 'Bibliography maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY-R', 'Bibliography maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY_PUBLICATION-C', 'Bibliography publication maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY_PUBLICATION-U', 'Bibliography publication maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'BIBLIOGRAPHY_PUBLICATION-R', 'Bibliography publication maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR-C', 'Calendar maintenance (Createe)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR-U', 'Calendar maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR-R', 'Calendar maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_RACE-C', 'Calendar race maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_RACE-U', 'Calendar race maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_RACE-R', 'Calendar race maintenance (Race)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_TYPE-C', 'Calendar type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_TYPE-U', 'Calendar type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'CALENDAR_TYPE-R', 'Calendar type maintenance (Race)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY-C', 'Country maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY-U', 'Country maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY-R', 'Country maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY_REGION-C', 'Country region maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY_REGION-U', 'Country region maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'COUNTRY_REGION-R', 'Country region maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS-C', 'Data class maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS-U', 'Data class maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS-R', 'Data class maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS_METHOD-C', 'Data class method maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS_METHOD-U', 'Data class method maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS_METHOD-R', 'Data class method maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS_METHOD_ARGUMENT-C', 'Data class method argument maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DATA_CLASS_METHOD_ARGUMENT-U', 'Data class method argument maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (select @resdb_permission_id := @resdb_permission_id + 1;, 'DATA_CLASS_METHOD_ARGUMENT-R', 'Data class method argument maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY-C', 'Deity maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY-U', 'Deity maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY-R', 'Deity query', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_ALIAS-C', 'Deity alias maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_ALIAS-U', 'Deity alias maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (6@resdb_permission_id, 'DEITY_ALIAS-R', 'Deity alias maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_RELIGION-C', 'Deity religion maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_RELIGION-U', 'Deity religion maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_RELIGION-R', 'Deity religion maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_TYPE-C', 'Deity type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_TYPE-U', 'Deity type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DEITY_TYPE-R', 'Deity type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_CLASS-C', 'Dropdown class maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_CLASS-U', 'Dropdown class maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_CLASS-R', 'Dropdown class maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_DOMAIN-C', 'Dropdown domain maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_DOMAIN-U', 'Dropdown domain maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'DROPDOWN_DOIMAIN-R', 'Dropdown domain maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY-C', 'Entity maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY-U', 'Entity maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY-R', 'Entity maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_ADDRESS-C', 'Entity address maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_ADDRESS-U', 'Entity address maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_ADDRESS-R', 'Entity address maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_TYPE-C', 'Entity type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_TYPE-U', 'Entity type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'ENTITY_TYPE-R', 'Entity type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT-C', 'Event maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT-U', 'Event maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT-R', 'Event  maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE-C', 'Event attribute maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE-U', 'Event attribute maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE-R', 'Event attribute maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE_TYPE-C', 'Event attribute type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE_TYPE-U', 'Event attribute type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_ATTRIBUTE_TYPE-R', 'Event attribute type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_PERSON-C', 'Event person maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_PERSON-U', 'Event person maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_PERSON-R', 'Event person maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE-C', 'Event type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE-U', 'Event type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE-R', 'Event type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE_GROUP-C', 'Event type group maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE_GROUP-U', 'Event type group maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'EVENT_TYPE_GROUP-R', 'Event type group maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY-C', 'Hierarchy maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY-U', 'Hierarchy maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY-R', 'Hierarchy maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_NODE-C', 'Hierarchy node maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_NODE-U', 'Hierarchy node maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_NODE-R', 'Hierarchy node maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_TYPE-C', 'Hierarchy type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_TYPE-U', 'Hierarchy type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'HIERARCHY_TYPE-R', 'Hierarchy type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE-C', 'Image maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE-U', 'Image maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE-R', 'Image maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION-C', 'Image collection maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION-U', 'Image collection maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION-R', 'Image collection maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION_SEQ-C', 'Image collection sequence maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION_SEQ-U', 'Image collection sequence maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_COLLECTION_SEQ-R', 'Image collection sequence maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_TYPE-C', 'Image type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_TYPE-U', 'Image type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'IMAGE_TYPE-R', 'Image type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE-C', 'Language maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE-U', 'Language maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE-R', 'Language maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_GROUP-C', 'Language group maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_GROUP-U', 'Language group maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_GROUP-R', 'Language group maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_LOCATION-C', 'Language location maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_LOCATION-U', 'Language location maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_LOCATION-R', 'Language location maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_PATTERN_SYMBOL-C', 'Language pattern symbol maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_PATTERN_SYMBOL-U', 'Language pattern symbol maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LANGUAGE_PATTERN_SYMBOL-R', 'Language pattern symbol maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LIBRARY_LOCATION-C', 'Library location maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LIBRARY_LOCATION-U', 'Library location maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'LIBRARY_LOCATION-R', 'Library location maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL-C', 'Material maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL-U', 'Material maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL-R', 'Material maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL_TYPE-C', 'Material type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL_TYPE-U', 'Material type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MATERIAL_TYPE-R', 'Material type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE-C', 'Measure maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE-U', 'Measure maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE-R', 'Measure maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_CONVERTOR-C', 'Measure convertor maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_CONVERTOR-U', 'Measure convertor maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_CONVERTOR-R', 'Measure convertor maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_TYPE-C', 'Measure type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_TYPE-U', 'Measure type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MEASURE_TYPE-R', 'Measure type maintenance (Read) q', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU-C', 'Menu maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU-U', 'Menu maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU-R', 'Menu maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_CONFIGURATION-C', 'Menu configuration maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_CONFIGURATION-U', 'Menu configuration maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_CONFIGURATION-R', 'Menu configuration maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_ITEM-C', 'Menu item maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_ITEM-U', 'Menu item maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_ITEM-R', 'Menu item maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_OPTION-C', 'Menu option maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_OPTION-U', 'Menu option maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_OPTION-R', 'Menu option maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'OTHER_ADDRESS-C', 'Other address maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'OTHER_ADDRESS-U', 'Other address maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'OTHER_ADDRESS-R', 'Other address maintenance (Read', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PATTERN_SYMBOL-C', 'Pattern symbol maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PATTERN_SYMBOL-U', 'Pattern symbol maintenance (Create)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PATTERN_SYMBOL-R', 'Pattern symbol maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERIOD-C', 'Period maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERIOD-U', 'Period maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERIOD-R', 'Period maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERMISSION-C', 'Permission maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERMISSION-U', 'Permission maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERMISSION-R', 'Permission maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON-C', 'Person maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON-U', 'Person maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON-R', 'Person maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ALIAS-C', 'Person alias maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ALIAS-U', 'Person alias maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ALIAS-R', 'Person alias maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_DEFINITION-C', 'Person definition maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_DEFINITION-U', 'Person definition maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_DEFINITION-R', 'Person definition maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ROLE-C', 'Person role maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ROLE-U', 'Person role maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_ROLE-R', 'Person role maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_TYPE-C', 'Person type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_TYPE-U', 'Person type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PERSON_TYPE-R', 'Person type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE-C', 'Place maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE-U', 'Place maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE-R', 'Place maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE_ALIAS-C', 'Place alias maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE_ALIAS-U', 'Place alias maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PLACE_ALIAS-R', 'Place alias maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'POSTAL_ADDRESS-C', 'Postal address maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'POSTAL_ADDRESS-U', 'Postal address maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'POSTAL_ADDRESS-R', 'Postal address maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION-C', 'Publication maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION-U', 'Publication maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION-R', 'Publication maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_ROLE-C', 'Publication role maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_ROLE-U', 'Publication role maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_ROLE-R', 'Publication role maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_TYPE-C', 'Publication type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_TYPE-U', 'Publication type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'PUBLICATION_TYPE-R', 'Publication type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE-C', 'Race maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE-U', 'Race maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE-R', 'Race maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_ALIAS-C', 'Race alias maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_ALIAS-U', 'Race alias maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_ALIAS-R', 'Race alias maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_PLACE-C', 'Race place maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_PLACE-U', 'Race place maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_PLACE-R', 'Race place maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_TYPE-C', 'Race type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_TYPE-U', 'Race type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RACE_TYPE-R', 'Race type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE-C', 'Reference maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE-U', 'Reference maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE-R', 'Reference maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE_TYPE-C', 'Reference type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE_TYPE-U', 'Reference type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REFERENCE_TYPE-R', 'Reference type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REGION-C', 'Region maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REGION-U', 'Region maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'REGION-R', 'Region maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RELIGION-C', 'Religion maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RELIGION-U', 'Religion maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RELIGION-R', 'Religion maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RESET_PASSWORD', 'Reset Password', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER-C', 'River maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER-U', 'River maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER-R', 'River maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER_ALIAS-C', 'River alias maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER_ALIAS-U', 'River alias maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'RIVER_ALIAS-R', 'River alias maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'SYSTEM_PARAMETERS-C', 'System parameter maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'SYSTEM_PARAMETERS-U', 'System parameter maintenance (Create)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'SYSTEM_PARAMETERS-R', 'System parameter maintenance (Create)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE-C', 'Tale maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE-U', 'Tale maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE-R', 'Tale maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE_TYPE-C', 'Tale maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE_TYPE-U', 'Tale maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TALE_TYPE-R', 'Tale maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY-C', 'Technology maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY-U', 'Technology maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY-R', 'Technology maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE-C', 'Technology type maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE-U', 'Technology type maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE-R', 'Technology type maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE_GROUP-C', 'Technology type group maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE_GROUP-U', 'Technology type group maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TECHNOLOGY_TYPE_GROUP-R', 'Technology type group maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'THEORY-C', 'Theory maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'THEORY-U', 'Theory maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'THEORY-R', 'Theory maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TITLE-C', 'Title maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TITLE-U', 'Title maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'TITLE-R', 'Title maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_ACCOUNT_MAINTENANCE-C', 'User account maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_ACCOUNT_MAINTENANCE-U', 'User account maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_ACCOUNT_MAINTENANCE-R', 'User account maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_GROUP_MAINTENANCE-C', 'User group maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_GROUP_MAINTENANCE-U', 'User group maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_GROUP_MAINTENANCE-R', 'User group maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_PASSWORD_MAINTENANCE-C', 'User password maintenance (Create)', 'A', 'C');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_PASSWORD_MAINTENANCE-U', 'User password maintenance (Update)', 'A', 'U');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'USER_PASSWORD_MAINTENANCE-R', 'User password maintenance (Read)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_CONFIGURATION', 'Static Data menu (Access)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_RESEARCH', 'Research menu (Access)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_STATIC_DATA', 'Static Data menu (Access)', 'A', 'R');
+
+select @resdb_permission_id := @resdb_permission_id + 1;
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (@resdb_permission_id, 'MENU_TIME', 'Time menu (Access)', 'A', 'R');
+
+
+/********************************************************************************************************************************************
+** CREATE STANDARD USERS AND GROUPS
+********************************************************************************************************************************************/
+
+INSERT INTO resdb_user_account (id, logon_name, first_name, family_name, language_id, status, last_logon, invalid_logon_count, pwd_last_updated) VALUES (1, 'admin', 'Admin', 'Admin', 1, 'A', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP);
+INSERT INTO resdb_user_account (id, logon_name, first_name, family_name, language_id, status, last_logon, invalid_logon_count, pwd_last_updated) VALUES (2, 'adrian', 'Adrian', 'Schulewitz', 1, 'A', CURRENT_TIMESTAMP, 0, CURRENT_TIMESTAMP);
+
+INSERT INTO resdb_user_password (account_id, logon_name, valid_from, valid_to, password) VALUES (1, 'admin', CURRENT_TIMESTAMP, null, 'admin');
+INSERT INTO resdb_user_password (account_id, logon_name, valid_from, valid_to, password) VALUES (2, 'adrian', CURRENT_TIMESTAMP, null, 'nepal1');
+
+
+INSERT INTO resdb_user_group (id, group_name, display_name, status) VALUES (1, 'ADMIN', 'Administration Group', 'A');
+INSERT INTO resdb_user_group (id, group_name, display_name, status) VALUES (2, 'DATA_ENTRY', 'Data Entry Group', 'A');
+INSERT INTO resdb_user_group (id, group_name, display_name, status) VALUES (3, 'DATA_READONLY', 'Data Read-Only Group', 'A');
+
+INSERT INTO resdb_language (id, iso_6391_code, iso_6392_code_alpha_3b, iso_6392_code_alpha_3t, iso_6392_code_alpha_2, name, language_group_id) VALUES (1, 'en-GB', 'eng', 'eng', 'uk', 'English (UK)', 1)
+
+INSERT INTO resdb_language_group (id, name) VALUES (1, 'Indo-European');
+
+INSERT INTO resdb_user_group_membership (id, account_id, group_id, valid_from, valid_to) VALUES (1, 1, 1, TIMESTAMP('2000-01-01 09:00:00'), null);
+
+-- groups: 1=ADMIN, 2=DATA_ENTRY, 3=DATA_READONLY
+INSERT INTO resdb_user_group_permission (group_id, permission_id) SELECT g.id, p.id FROM resdb_permission p , resdb_user_group g  WHERE g.group_name = 'ADMIN';
+INSERT INTO resdb_user_group_permission (group_id, permission_id) SELECT g.id, p.id FROM resdb_permission p , resdb_user_group g  WHERE g.group_name = 'DATA_ENTRY';
+INSERT INTO resdb_user_group_permission (group_id, permission_id) SELECT g.id, p.id FROM resdb_permission p , resdb_user_group g  WHERE g.group_name = 'DATA_READONLY';
+
+select @resdb_menu_option_id := 1;
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Address types maintenance','menu.entity.AddressType', 'Address types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Artefact attribute types maintenance','menu.entity.ArtefactAttributeType', 'Artefact attribute types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Artefact types maintenance','menu.entity.ArtefactType', 'Artefact types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Calendar types maintenance','menu.entity.CalendarType', 'Calendar types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Deity types maintenance','menu.entity.DeityType', 'Deity types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Entity types maintenance','menu.entity.EntityType', 'Entity types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Event types maintenance','menu.entity.EventType', 'Event types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Event attribute types maintenance','menu.entity.EventAttributeType', 'Event attribute types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Hierarchy types maintenance','menu.entity.HierarchyType', 'Hierarchy types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Material types maintenance','menu.entity.MeasureType', 'Measure types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Measure types maintenance','menu.entity.MeasureType', 'Measure types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Person types maintenance','menu.entity.PersonType', 'Person types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Publication types maintenance','menu.entity.PublicationType', 'Publication types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Race types maintenance','menu.entity.RaceType', 'Race types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Reference types maintenance','menu.entity.ReferenceType', 'Reference types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Tale types maintenance','menu.entity.TaleType', 'Tale types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Technology types maintenance','menu.entity.TechnologyType', 'Technology types', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Home','', 'Home', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Static Data','', 'Static Data', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Configuration','', 'Configuration', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Research','', 'Research', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Data Class Association','', 'Data Class Association', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Menu Configuration','', 'Menu Configuration', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'Reset Password','', 'Reset Password', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'User Login Maintenance','', 'User Login Maintenance', '');
+
+select @resdb_menu_option_id := @resdb_menu_option_id + 1
+INSERT INTO resdb_menu_option (id, name, data_object, default_menu_text, operation) VALUES (@resdb_menu_option_id, 'System Parameters','', 'System Parameters', '');
+
+/********************************************************************************************************************************************
+ ** CREATE DEFAULT MENU SYSTEM
+********************************************************************************************************************************************/
+
+insert into resdb_menu (name, owner_name, owner_type) values ('default', 'adrian', 'U');
+insert into resdb_menu (name, owner_name, owner_type) values ('empty', 'adrian', 'U');
+
+select @resdb_menu_item := 1;
+
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 1, 1, 17, 0, 'Home', 'Go to Home screen', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 1, 1, 18, 0, 'Static Data', 'Go to Static Data screen', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 1, 1, 19, 0, 'Configuration', 'Go to Configuration screen', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 1, 1, 20, 0, 'Research', 'Go to Research screen', 'n', 'n', 'n', 0);
+
+-- static data sub-menu
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 1, 1, 2, 'Address Type', 'Address types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 2, 2, 2, 'Artefact Artifact Types', 'Artefact attribute types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 3, 3, 2, 'Artefact Types', 'Artefact types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 4, 4, 2, 'Calendar Types', 'Calendar types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 5, 5, 2, 'Deity Types', 'Deity types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 6, 6, 2, 'Entity Types', 'Entity types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 7, 7, 2, 'Event Types', 'Event types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 8, 8, 2, 'Event Attribute Types', 'Event attribute types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 9, 9, 2, 'Hierarchy Types', 'Hierarchy types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 10, 10, 2, 'Measure Types', 'Material types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 11, 10, 2, 'Measure Types', 'Measure types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 12, 11, 2, 'Person Types', 'Person types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 13, 12, 2, 'Publication Types', 'Publication types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 14, 13, 2, 'Race Types', 'Race types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 15, 14, 2, 'Race Types', 'Reference types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 16, 15, 2, 'Tale Types', 'Tale types maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 17, 16, 2, 'Technology Types', 'Technology types maintenance', 'n', 'n', 'n', 0);
+
+-- configuration sub-menu
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 1, 21, 2, 'Data Class Association', 'Data class association maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 2, 22, 2, 'Menu Configuration', 'Menu configuration maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 3, 24, 2, 'User Login Maintenance', 'User login maintenance', 'n', 'n', 'n', 0);
+
+select @resdb_menu_item = @resdb_menu_item + 1;
+insert into resdb_menu_item (id, menu_id, menu_level, sequence_no, internal_menuoption_id, parent_menuitem_id, item_text, prompt, is_leaf_node, has_separator_before, has_separator_after, permission)
+values (@resdb_menu_item, 1, 2, 4, 25, 2, 'System Parameters', 'System parameters', 'n', 'n', 'n', 0));
+
+
+/********************************************************************************************************************************************
+ ** CREATE PERMISSIONS FOR ADMIN USER
+********************************************************************************************************************************************/
+
+select @resdb_user_group_permission := 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_CONFIGURATION';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_RESEARCH';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_STATIC_DATA';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ADDRESS_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ADDRESS_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ADDRESS_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_ATTRIBUTE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_GROUP-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_GROUP-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_GROUP-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMAGE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMAGE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMAGE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMG_PATTERN_SMBL-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMG_PATTERN_SMBL-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_IMG_PATTERN_SMBL-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_PLACE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_PLACE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_PLACE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_RSTRTN_WORK-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_RSTRTN_WORK-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_RSTRTN_WORK-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ARTEFACT_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY_PUBLICATION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY_PUBLICATION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'BIBLIOGRAPHY_PUBLICATION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_RACE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_RACE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_RACE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'CALENDAR_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY_REGION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY_REGION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'COUNTRY_REGION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD_ARGUMENT-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD_ARGUMENT-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DATA_CLASS_METHOD_ARGUMENT-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_ALIAS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_ALIAS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_ALIAS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_RELIGION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_RELIGION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_RELIGION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DEITY_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_CLASS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_CLASS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_CLASS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_DOMAIN-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_DOMAIN-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'DROPDOWN_DOMAIN-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_ADDRESS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_ADDRESS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_ADDRESS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'ENTITY_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_ATTRIBUTE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_PERSON-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_PERSON-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_PERSON-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE_GROUP-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE_GROUP-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'EVENT_TYPE_GROUP-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_NODE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_NODE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_NODE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'HIERARCHY_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION_SEQ-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION_SEQ-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_COLLECTION_SEQ-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'IMAGE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_GROUP-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_GROUP-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_GROUP-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_LOCATION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_LOCATION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_LOCATION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_PATTERN_SYMBOL-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_PATTERN_SYMBOL-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LANGUAGE_PATTERN_SYMBOL-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LIBRARY_LOCATION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LIBRARY_LOCATION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'LIBRARY_LOCATION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MATERIAL-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MATERIAL-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MATERIAL-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_CONVERTOR-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_CONVERTOR-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_CONVERTOR-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MEASURE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_CONFIGURATION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_CONFIGURATION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_CONFIGURATION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_ITEM-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_ITEM-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_ITEM-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_OPTION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_OPTION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'MENU_OPTION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'OTHER_ADDRESS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'OTHER_ADDRESS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'OTHER_ADDRESS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PATTERN_SYMBOL-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PATTERN_SYMBOL-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PATTERN_SYMBOL-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERIOD-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERIOD-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERIOD-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERMISSION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERMISSION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERMISSION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ALIAS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ALIAS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ALIAS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_DEFINITION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_DEFINITION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_DEFINITION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ROLE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ROLE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_ROLE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PERSON_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE_ALIAS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE_ALIAS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PLACE_ALIAS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'POSTAL_ADDRESS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'POSTAL_ADDRESS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'POSTAL_ADDRESS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION_ROLE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION_ROLE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'PUBLICATION_ROLE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_ALIAS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_ALIAS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_ALIAS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_PLACE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_PLACE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_PLACE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RACE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REFERENCE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REGION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REGION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'REGION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RELIGION-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RELIGION-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RELIGION-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RESET_PASSWORD-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER_ALIAS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER_ALIAS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'RIVER_ALIAS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'SYSTEM_PARAMETERS-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'SYSTEM_PARAMETERS-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'SYSTEM_PARAMETERS-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permissio, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TALE_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE_GROUP-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE_GROUP-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TECHNOLOGY_TYPE_GROUP-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'THEORY-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'THEORY-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'THEORY-R';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TITLE-C';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TITLE-U';
+
+select @resdb_user_group_permission := @resdb_user_group_permission + 1;
+insert into resdb_user_group_permission (id, group_id, permission_id)
+select @resdb_user_group_permission, ug.id, p.id from resdb_user_group ug, resdb_permission p where ug.group_name = 'ADMIN' and p.name = 'TITLE-R';
+

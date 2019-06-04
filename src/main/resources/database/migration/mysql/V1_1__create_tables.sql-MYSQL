@@ -1,0 +1,1684 @@
+DROP TABLE IF EXISTS `resdb_address_type`;
+
+SELECT 'Creating table resdb_address_type' AS '';
+CREATE TABLE resdb_address_type
+(
+  id                  INTEGER         NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30)     NOT NULL,
+  CONSTRAINT resdb_address_type_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_address_type_name_idx ON resdb_address_type (name);
+
+DROP TABLE IF EXISTS `resdb_artefact`;
+
+SELECT 'Creating table resdb_artefact' AS '';
+CREATE TABLE resdb_artefact
+(
+  id		              INTEGER			  NOT NULL AUTO_INCREMENT,
+  name	              VARCHAR(30)		NOT NULL,
+  description         VARCHAR(250)  NULL,
+  date_found_year     INTEGER       NULL,
+  date_found_month    INTEGER       NULL,
+  date_found_day      INTEGER       NULL,
+  artefact_type_id    INTEGER     	NOT NULL,
+  found_by_person_id  INTEGER       NULL,
+  artefact_group_id   INTEGER       NULL,
+  owner_identifier    VARCHAR(10)   NULL,
+  technology_id       INTEGER       NULL,
+  composition_id      INTEGER       NULL,
+  version_no 			    INTEGER       NOT NULL,
+  version_status		  CHAR(1)		    NOT NULL,
+  version_user        VARCHAR(20)   NOT NULL,
+  version_from_date		DATETIME	    NOT NULL,
+  version_to_date     DATETIME      NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artefact_name_idx ON resdb_artefact (name, version_to_date);
+
+DROP TABLE IF EXISTS `resdb_artefact_attribute`;
+
+SELECT 'Creating table resdb_artefact_attribute' AS '';
+CREATE TABLE resdb_artefact_attribute
+(
+  id		                         INTEGER	    NOT NULL AUTO_INCREMENT,
+  artefact_id                    INTEGER 	    NOT NULL,
+  artefact_attribute_type_id     INTEGER      NOT NULL,
+  version_no 			               INTEGER      NOT NULL,
+  version_status		             CHAR(1)		  NOT NULL,
+  version_user                   VARCHAR(20)  NOT NULL,
+  version_from_date		           DATETIME	    NOT NULL,
+  version_to_date                DATETIME     NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_attribute_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_art_attrib_name_idx ON resdb_artefact_attribute (artefact_id, artefact_attribute_type_id, version_to_date);
+
+
+DROP TABLE IF EXISTS `resdb_artefact_attribute_type`;
+
+SELECT 'Creating table resdb_artefact_attribute_type' AS '';
+CREATE TABLE resdb_artefact_attribute_type
+(
+  id                          INTEGER 	  NOT NULL AUTO_INCREMENT,
+  name                        VARCHAR(20) NOT NULL,
+  data_type                   VARCHAR(20) NOT NULL,
+  is_mandatory                CHAR(1)     NOT NULL,
+  data_class_association_id   INTEGER     NULL,
+  version_no 					        INTEGER     NOT NULL,
+  version_status				      CHAR(1)		  NOT NULL,
+  version_user                VARCHAR(20) NOT NULL,
+  version_from_date				    DATETIME	  NOT NULL,
+  version_to_date             DATETIME    NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_attr_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artfct_atrib_typ_nam_idx ON resdb_artefact_attribute_type (name, version_to_date);
+
+DROP TABLE IF EXISTS `resdb_artefact_group`;
+
+SELECT 'Creating table resdb_artefact_group' AS '';
+CREATE TABLE resdb_artefact_group
+(
+  id  	        	    INTEGER			  NOT NULL AUTO_INCREMENT,
+  name    	    	    VARCHAR(20)		NOT NULL,
+  version_no 			    INTEGER			  NOT NULL,
+  version_status	    CHAR(1)			  NOT NULL,
+  version_user		    VARCHAR(20)		NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date     DATETIME      NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_group_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artefact_group_name_idx ON resdb_artefact_group (name, version_to_date);
+
+DROP TABLE IF EXISTS `resdb_artefact_image`;
+
+SELECT 'Creating table resdb_artefact_image' AS '';
+CREATE TABLE resdb_artefact_image
+(
+  id                          INTEGER       NOT NULL AUTO_INCREMENT,
+  artefact_id                 INTEGER		    NOT NULL,
+  image_collection_header_id  INTEGER		    NOT NULL,
+  version_no 			            INTEGER			  NOT NULL,
+  version_status	            CHAR(1)			  NOT NULL,
+  version_user		            VARCHAR(20)		NOT NULL,
+  version_from_date		        DATETIME		  NOT NULL,
+  version_to_date             DATETIME      NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_image_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_art_img_coll_idx ON resdb_artefact_image (artefact_id, image_collection_header_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_artefact_img_pttrn_smbl;
+
+SELECT 'Creating table resdb_artefact_img_pttrn_smbl' AS '';
+CREATE TABLE resdb_artefact_img_pttrn_smbl
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  artefact_image_id  		INTEGER		    NOT NULL,
+  pattern_symbol_id  		INTEGER	      NOT NULL,
+  version_no 			      INTEGER			  NOT NULL,
+  version_status	      CHAR(1)			  NOT NULL,
+  version_user		      VARCHAR(20)		NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date       DATETIME      NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artfct_img_ptrn_smbl_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artfct_img_ptrn_smbl_idx ON resdb_artefact_img_pttrn_smbl (artefact_image_id, pattern_symbol_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_artefact_place;
+
+SELECT 'Creating table resdb_artefact_place' AS '';
+CREATE TABLE resdb_artefact_place
+(
+  id                  INTEGER     NOT NULL    AUTO_INCREMENT,
+  artefact_id         INTEGER		  NOT NULL,
+  place_id            INTEGER		  NOT NULL,
+  held_at_entity_id   INTEGER		  NOT NULL,
+  version_no 		      INTEGER			NOT NULL,
+  version_status	    CHAR(1)			NOT NULL,
+  version_user	      VARCHAR(20)	NOT NULL,
+  version_from_date	  DATETIME		NOT NULL,
+  version_to_date     DATETIME    NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_place_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artefact_place_idx ON resdb_artefact_place (artefact_id, place_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_artefact_rstrtn_work;
+
+SELECT 'Creating table resdb_artefact_rstrtn_work' AS '';
+CREATE TABLE resdb_artefact_rstrtn_work
+(
+  id                      INTEGER         NOT NULL AUTO_INCREMENT,
+  description             VARCHAR(250)    NULL,
+  artefact_id             INTEGER         NOT NULL,
+  date_started_year       INTEGER         NULL,
+  date_started_month      INTEGER         NULL,
+  date_started_day        INTEGER         NULL,
+  date_finished_year      INTEGER         NULL,
+  date_finished_month     INTEGER         NULL,
+  date_finished_day       INTEGER         NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status			    CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)		  NOT NULL,
+  version_from_date			  DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL  DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artfct_rstrtn_wrk_pk PRIMARY KEY (id, version_to_date)
+);
+
+DROP TABLE IF EXISTS resdb_artefact_type;
+
+SELECT 'Creating table resdb_artefact_type' AS '';
+CREATE TABLE resdb_artefact_type
+(
+  id				          INTEGER			NOT NULL AUTO_INCREMENT,
+  name    	          VARCHAR(20)	NOT NULL,
+  version_no 		      INTEGER			NOT NULL,
+  version_status	    CHAR(1)			NOT NULL,
+  version_user	      VARCHAR(20)	NOT NULL,
+  version_from_date	  DATETIME		NOT NULL,
+  version_to_date			DATETIME		NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_artefact_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_artfct_typ_nam_idx on resdb_artefact_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_audit_header;
+
+SELECT 'Creating table resdb_audit_header' AS '';
+CREATE TABLE resdb_audit_header
+(
+  id              INTEGER			  NOT NULL AUTO_INCREMENT,
+  logon_name      VARCHAR(20)		NOT NULL,
+  audit_date      DATETIME    	NOT NULL,
+  CONSTRAINT resdb_audit_header_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_audit_header_idx ON resdb_audit_header (audit_date, logon_name);
+
+DROP TABLE IF EXISTS resdb_audit_detail;
+
+SELECT 'Creating table resdb_audit_detail' AS '';
+CREATE TABLE resdb_audit_detail
+(
+  id              INTEGER 	      NOT NULL AUTO_INCREMENT,
+  table_name      varchar(30)     NOT NULL,
+  column_name     varchar(30)     NOT NULL,
+  action          varchar(1)      NOT NULL,
+  audit_date      datetime        NOT NULL,
+  old_value       varchar(250)    NULL,
+  new_value       varchar(250)    NULL,
+  CONSTRAINT resdb_audit_detail_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_audit_detail_idx ON resdb_audit_detail (table_name, column_name, action, audit_date);
+
+DROP TABLE IF EXISTS resdb_bibliography;
+
+SELECT 'Creating table resdb_bibliography' AS '';
+CREATE TABLE resdb_bibliography
+(
+  id          	      INTEGER 		  NOT NULL AUTO_INCREMENT,
+  name        	      VARCHAR(30) 	NOT NULL,
+  version_no 		      INTEGER			  NOT NULL,
+  version_status	    CHAR(1)			  NOT NULL,
+  version_user	      VARCHAR(20)		NOT NULL,
+  version_from_date   DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_bibliography_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_bibliography_name_idx ON resdb_bibliography (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_bibliography_publication;
+
+SELECT 'Creating table resdb_bibliography_publication' AS '';
+CREATE TABLE resdb_bibliography_publication
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  bibliography_id			INTEGER 	    NOT NULL,
+  publication_id			INTEGER       NOT NULL,
+  version_no 		      INTEGER			  NOT NULL,
+  version_status	    CHAR(1)			  NOT NULL,
+  version_user	      VARCHAR(20)		NOT NULL,
+  version_from_date   DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_bibliography_publctn_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_bibliography_publctn_idx ON resdb_bibliography_publication (bibliography_id, publication_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_calendar;
+
+SELECT 'Creating table resdb_calendar' AS '';
+CREATE TABLE resdb_calendar
+(
+  id                  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30)		NOT NULL,
+  calendar_type_id    INTEGER			  NOT NULL,
+  version_no 			    INTEGER			  NOT NULL,
+  version_status		  VARCHAR(1)		NOT NULL,
+  version_user		    VARCHAR(20)		NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_calendar_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_calendar_name_idx ON resdb_calendar (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_calendar_race;
+
+SELECT 'Creating table resdb_calendar_race' AS '';
+CREATE TABLE resdb_calendar_race
+(
+  id                  INTEGER	      NOT NULL AUTO_INCREMENT,
+  calendar_id         INTEGER 	    NOT NULL,
+  race_id             INTEGER       NOT NULL,
+  version_no 			    INTEGER			  NOT NULL,
+  version_status		  VARCHAR(1)		NOT NULL,
+  version_user		    VARCHAR(20)		NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_calendar_race_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_calendar_race_idx ON resdb_calendar_race (calendar_id, race_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_calendar_type;
+
+SELECT 'Creating table resdb_calendar_type' AS '';
+CREATE TABLE resdb_calendar_type
+(
+  id                  INTEGER	 		  NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30) 	NOT NULL,
+  version_no 			    INTEGER			  NOT NULL,
+  version_status	    CHAR(1)			  NOT NULL,
+  version_user		    VARCHAR(20)		NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_calendar_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_calendar_type_name_idx ON resdb_calendar_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_country;
+
+SELECT 'Creating table resdb_country' AS '';
+CREATE TABLE resdb_country
+(
+  id                  INTEGER 		  NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30) 	NOT NULL,
+  version_no 			    INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user		    VARCHAR(20)		NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_country_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_country_name_idx ON resdb_country (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_country_region;
+
+SELECT 'Creating table resdb_country_region' AS '';
+CREATE TABLE resdb_country_region
+(
+  id                  INTEGER 		NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30) NOT NULL,
+  country_id          INTEGER     NOT NULL,
+  region_id           INTEGER     NOT NULL,
+  version_no 			    INTEGER			NOT NULL,
+  version_status	    CHAR(1)	    NOT NULL,
+  version_user		    VARCHAR(20)	NOT NULL,
+  version_from_date		DATETIME		NOT NULL,
+  version_to_date			DATETIME		NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_country_region_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_country_region_name_idx ON resdb_country_region (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_data_class;
+
+SELECT 'Creating table resdb_data_class' AS '';
+CREATE TABLE resdb_data_class
+(
+  id                          INTEGER       NOT NULL AUTO_INCREMENT,
+  data_class_key				      VARCHAR(30)		NOT NULL,
+  fully_qualified_class_name  VARCHAR(250)  NOT NULL,
+  version_no 			            INTEGER			  NOT NULL,
+  version_status	            CHAR(1)	      NOT NULL,
+  version_user		            VARCHAR(20)	  NOT NULL,
+  version_from_date		        DATETIME		  NOT NULL,
+  version_to_date			        DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_data_class_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_data_class_name_idx ON resdb_data_class (data_class_key, version_to_date);
+
+DROP TABLE IF EXISTS resdb_data_class_method;
+
+SELECT 'Creating table resdb_data_class_method' AS '';
+CREATE TABLE resdb_data_class_method
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  data_class_key        VARCHAR(30)		NOT NULL,
+  method_name           VARCHAR(250)	NOT NULL,
+  version_no 			      INTEGER			  NOT NULL,
+  version_status	      CHAR(1)	      NOT NULL,
+  version_user		      VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_data_class_method_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_data_class_method_idx ON resdb_data_class_method (data_class_key, method_name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_data_class_method_argmnt;
+
+SELECT 'Creating table resdb_data_class_method_argmnt' AS '';
+CREATE TABLE resdb_data_class_method_argmnt
+(
+  id                      INTEGER       NOT NULL AUTO_INCREMENT,
+  data_class_key          VARCHAR(30)   NOT NULL,
+  method_id               INTEGER       NOT NULL,
+  argument_sequence_no    INTEGER       NOT NULL,
+  argument_data_type      VARCHAR(250)  NOT NULL,
+  version_no 				      INTEGER			  NOT NULL,
+  version_status			    VARCHAR(1)		NOT NULL,
+  version_user			      VARCHAR(20)		NOT NULL,
+  version_from_date		    DATETIME		  NOT NULL,
+  version_to_date			    DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_data_clss_mthd_argmnt_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_data_clss_mthd_arg_idx ON resdb_data_class_method_argmnt (data_class_key, method_id, argument_sequence_no, version_to_date);
+
+DROP TABLE IF EXISTS resdb_deity;
+
+SELECT 'Creating table resdb_deity' AS '';
+CREATE TABLE resdb_deity
+(
+  id              	  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name            	  VARCHAR(30)	  NOT NULL,
+  deity_type_id       INTEGER       NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+
+  CONSTRAINT resdb_deity_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_deity_name_idx ON resdb_deity (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_deity_alias;
+
+SELECT 'Creating table resdb_deity_alias' AS '';
+CREATE TABLE resdb_deity_alias
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  from_deity_id       INTEGER 	    NOT NULL,
+  to_alias_id         INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_deity_alias_pk PRIMARY KEY (id, version_to_date)
+);
+
+DROP TABLE IF EXISTS resdb_deity_religion;
+
+SELECT 'Creating table resdb_deity_religion' AS '';
+CREATE TABLE resdb_deity_religion
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  deity_id            INTEGER		    NOT NULL,
+  religion_id         INTEGER		    NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_deity_religion_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_deity_religion_idx ON resdb_deity_religion(deity_id, religion_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_deity_type;
+
+SELECT 'Creating table resdb_deity_type' AS '';
+CREATE TABLE resdb_deity_type
+(
+  id						      INTEGER			  NOT NULL AUTO_INCREMENT,
+  name					      VARCHAR(30)		NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_deity_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_deity_type_name_idx ON resdb_deity_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_dropdown_class;
+
+SELECT 'Creating table resdb_dropdown_class' AS '';
+CREATE TABLE resdb_dropdown_class (
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(100)  NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_dropdown_class_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_dropdown_class_idx ON resdb_dropdown_class (name, version_to_date) ;
+
+DROP TABLE IF EXISTS resdb_dropdown_domain;
+
+SELECT 'Creating table resdb_dropdown_domain' AS '';
+CREATE TABLE resdb_dropdown_domain (
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  short_code          VARCHAR(10)   NOT NULL,
+  description         VARCHAR(100)  NOT NULL,
+  dropdown_class_id   INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_dropdown_domain_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_dropdown_domain_idx ON resdb_dropdown_domain (short_code,version_to_date);
+
+DROP TABLE IF EXISTS resdb_entity;
+
+SELECT 'Creating table resdb_entity' AS '';
+CREATE TABLE resdb_entity
+(
+  id                  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30)		NOT NULL,
+  entity_type_id      INTEGER			  NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_entity_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_entity_name_idx ON resdb_entity (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_entity_type;
+
+SELECT 'Creating table resdb_entity_type' AS '';
+CREATE TABLE resdb_entity_type
+(
+  id              	  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name            	  VARCHAR(30)		NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_entity_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_entity_type_name_idx ON resdb_entity_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_entity_address;
+
+SELECT 'Creating table resdb_entity_address' AS '';
+CREATE TABLE resdb_entity_address
+(
+  id                  INTEGER			  NOT NULL AUTO_INCREMENT,
+  entity_id           INTEGER       NOT NULL,
+  address_type_id     INTEGER       NOT NULL,
+  address_id          INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_entity_address_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_entity_address_name_idx ON resdb_entity_address (entity_id, address_type_id, address_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event;
+
+SELECT 'Creating table resdb_event' AS '';
+CREATE TABLE resdb_event
+(
+  id                  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                VARCHAR(30)		NOT NULL,
+  event_type_id       INTEGER     	NOT NULL,
+  description         VARCHAR(250)	NULL,
+  event_date_year     INTEGER       NULL,
+  event_date_month    INTEGER       NULL,
+  event_date_day      INTEGER       NULL,
+  place_id            INTEGER       NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_name_idx ON resdb_event (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event_person;
+
+SELECT 'Creating table resdb_event_person' AS '';
+CREATE TABLE resdb_event_person
+(
+  id					        INTEGER			  NOT NULL AUTO_INCREMENT,
+  event_id        	  INTEGER 		  NOT NULL,
+  person_id       	  INTEGER     	NOT NULL,
+  involvement     	  VARCHAR(250)  NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_person_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_person_name_idx ON resdb_event_person (event_id, person_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event_attribute;
+
+SELECT 'Creating table resdb_event_attribute' AS '';
+CREATE TABLE resdb_event_attribute
+(
+  id                          INTEGER       NOT NULL AUTO_INCREMENT,
+  event_id                    INTEGER 	    NOT NULL,
+  event_attribute_type_id     INTEGER       NOT NULL,
+  version_no 				          INTEGER			  NOT NULL,
+  version_status		          CHAR(1)			  NOT NULL,
+  version_user			          VARCHAR(20)	  NOT NULL,
+  version_from_date		        DATETIME		  NOT NULL,
+  version_to_date			        DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_attribute_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_attribute_idx ON resdb_event_attribute (event_id, event_attribute_type_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event_attribute_type;
+
+SELECT 'Creating table resdb_event_attribute_type' AS '';
+CREATE TABLE resdb_event_attribute_type
+(
+  id                          INTEGER       NOT NULL AUTO_INCREMENT,
+  event_id                    INTEGER     	NOT NULL,
+  name                        VARCHAR(20)   NOT NULL,
+  is_mandatory                CHAR(1)       NOT NULL,
+  data_class_association_id   INTEGER       NOT NULL,
+  version_no 				          INTEGER			  NOT NULL,
+  version_status		          CHAR(1)			  NOT NULL,
+  version_user			          VARCHAR(20)	  NOT NULL,
+  version_from_date		        DATETIME		  NOT NULL,
+  version_to_date			        DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_attrib_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_attrib_type_idx ON resdb_event_attribute_type (event_id, name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event_type;
+
+SELECT 'Creating table resdb_event_type' AS '';
+CREATE TABLE resdb_event_type
+(
+  id                  	INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                	VARCHAR(30)		NOT NULL,
+  event_type_group_id 	INTEGER			  NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_type_name_idx ON resdb_event_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_event_type_group;
+
+SELECT 'Creating table resdb_event_type_group' AS '';
+CREATE TABLE resdb_event_type_group
+(
+  id					          INTEGER			  NOT NULL AUTO_INCREMENT,
+  name        		      VARCHAR(30)		NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_event_type_group_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_event_type_group_name_idx ON resdb_event_type_group (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_hierarchy;
+
+SELECT 'Creating table resdb_hierarchy' AS '';
+CREATE TABLE resdb_hierarchy
+(
+  id                    INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                  VARCHAR(30)		NOT NULL,
+  hierarchy_type_id     INTEGER			  NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_hierarchy_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_hierarchy_name_idx ON resdb_hierarchy (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_hierarchy_node;
+
+SELECT 'Creating table resdb_hierarchy_node' AS '';
+CREATE TABLE resdb_hierarchy_node
+(
+  id                        INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                      VARCHAR(30)		NOT NULL,
+  parent_hierarchy_id       INTEGER			  NOT NULL,
+  first_child_hierarchy_id  INTEGER       NULL,
+  last_child_hierarchy_id   INTEGER       NULL,
+  leaf_node_ind             CHAR(1)       NOT NULL,
+  version_no 				        INTEGER			  NOT NULL,
+  version_status		        CHAR(1)			  NOT NULL,
+  version_user			        VARCHAR(20)	  NOT NULL,
+  version_from_date		      DATETIME		  NOT NULL,
+  version_to_date			      DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_hierarchy_node_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_hierarchy_node_name_idx ON resdb_hierarchy_node (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_hierarchy_type;
+
+SELECT 'Creating table resdb_hierarchy_type' AS '';
+CREATE TABLE resdb_hierarchy_type
+(
+  id							    INTEGER			  NOT NULL AUTO_INCREMENT,
+  name            		VARCHAR(30)		NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_hierarchy_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_hierarchy_type_name_idx ON resdb_hierarchy_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_image;
+
+SELECT 'Creating table resdb_image' AS '';
+CREATE TABLE resdb_image
+(
+  id              		INTEGER			  NOT NULL AUTO_INCREMENT,
+  file_path       		VARCHAR(30)		NOT NULL,
+  file_name       		VARCHAR(30)		NOT NULL,
+  image_type_id   		INTEGER     	NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_image_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_image_name_idx ON resdb_image (file_path, file_name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_image_collection;
+
+SELECT 'Creating table resdb_image_collection' AS '';
+CREATE TABLE resdb_image_collection
+(
+  id                  	INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                	VARCHAR(30)		NOT NULL,
+  number_of_rows      	INTEGER       NULL,
+  number_of_columns   	INTEGER       NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_image_collection_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_image_collection_name_idx ON resdb_image_collection (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_image_collection_seq;
+
+SELECT 'Creating table resdb_image_collection_seq' AS '';
+CREATE TABLE resdb_image_collection_seq
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  image_collection_id		INTEGER			  NOT NULL,
+  row_number          	INTEGER     	NOT NULL,
+  column_number       	INTEGER     	NOT NULL,
+  artefact_image_id   	INTEGER     	NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_image_collection_seq_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_image_collection_seq_idx ON resdb_image_collection_seq (image_collection_id, row_number, column_number, version_to_date);
+
+DROP TABLE IF EXISTS resdb_image_type;
+
+SELECT 'Creating table resdb_image_type' AS '';
+CREATE TABLE resdb_image_type
+(
+  id				            INTEGER			  NOT NULL AUTO_INCREMENT,
+  name    	            VARCHAR(20)	  NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_image_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_image_typ_nam_idx on resdb_image_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_language;
+
+SELECT 'Creating table resdb_language' AS '';
+create table resdb_language
+(
+  id						INTEGER   		NOT NULL AUTO_INCREMENT,
+  iso_6391_code             VARCHAR(5)      NULL,
+  iso_6392_code_alpha_3b    VARCHAR(3)      NULL,
+  iso_6392_code_alpha_3t    VARCHAR(3)      NULL,
+  iso_6392_code_alpha_2     VARCHAR(3)      NULL,
+  name                	    VARCHAR(30)		NOT NULL,
+  language_group_id   	    INTEGER     	NULL,
+  territory                 VARCHAR(2)      NULL,
+  version_no 			    INTEGER			NOT NULL,
+  version_status		    CHAR(1)			NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		NOT NULL,
+  version_to_date			DATETIME		NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_language_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_language_code_idx1 ON resdb_language (iso_6391_code, version_to_date);
+CREATE UNIQUE INDEX resdb_language_code_idx2 ON resdb_language (iso_6392_code_alpha_3b, version_to_date);
+CREATE UNIQUE INDEX resdb_language_code_idx3 ON resdb_language (iso_6392_code_alpha_3t, version_to_date);
+CREATE UNIQUE INDEX resdb_language_code_idx4 ON resdb_language (iso_6392_code_alpha_2, version_to_date);
+CREATE UNIQUE INDEX resdb_language_name_idx5 ON resdb_language (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_language_group;
+
+SELECT 'Creating table resdb_language_group' AS '';
+create table resdb_language_group
+(
+  id					          INTEGER			  NOT NULL AUTO_INCREMENT,
+  name        		      VARCHAR(30)  	NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_language_group_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX language_group_name_idx ON resdb_language_group (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_language_pattern_symbol;
+
+SELECT 'Creating table resdb_language_pattern_symbol' AS '';
+CREATE TABLE resdb_language_pattern_symbol
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  language_id           INTEGER   	  NOT NULL,
+  pattern_symbol_id     INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_language_pttrn_smbl_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX language_pattern_symbol_idx ON resdb_language_pattern_symbol (language_id, pattern_symbol_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_library_location;
+
+SELECT 'Creating table resdb_library_location' AS '';
+CREATE TABLE resdb_library_location
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  publication_id        INTEGER   	  NOT NULL,
+  entity_id             INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_library_location_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_library_location_idx ON resdb_library_location (publication_id, entity_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_measure;
+
+SELECT 'Creating table resdb_measure' AS '';
+CREATE TABLE resdb_measure
+(
+  id                      INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                    VARCHAR(30)		NOT NULL,
+  from_measure_type_id    INTEGER     	NOT NULL,
+  from_quantity           FLOAT       	NOT NULL,
+  to_measure_type_id      INTEGER     	NOT NULL,
+  to_quantity             FLOAT       	NOT NULL,
+  version_no 				      INTEGER			  NOT NULL,
+  version_status		      CHAR(1)			  NOT NULL,
+  version_user			      VARCHAR(20)	  NOT NULL,
+  version_from_date		    DATETIME		  NOT NULL,
+  version_to_date			    DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_measure_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_measure_name_idx ON resdb_measure (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_material;
+
+SELECT 'Creating table resdb_material' AS '';
+CREATE TABLE resdb_material
+(
+  id                        INTEGER			  NOT NULL AUTO_INCREMENT,
+  name                      VARCHAR(30)		NOT NULL,
+  from_measure_type_id      INTEGER			  NOT NULL,
+  from_quantity             FLOAT       	NOT NULL,
+  to_measure_type_id        INTEGER     	NOT NULL,
+  to_quantity               FLOAT       	NOT NULL,
+  version_no 				        INTEGER			  NOT NULL,
+  version_status		        CHAR(1)			  NOT NULL,
+  version_user			        VARCHAR(20)	  NOT NULL,
+  version_from_date		      DATETIME		  NOT NULL,
+  version_to_date			      DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_material_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_material_name_idx ON resdb_material (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_measure_type;
+
+SELECT 'Creating table resdb_measure_type' AS '';
+CREATE TABLE resdb_measure_type
+(
+  id						        INTEGER			  NOT NULL AUTO_INCREMENT,
+  name        			    VARCHAR(30)		NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_measure_type_name_idx ON resdb_measure_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_menu;
+
+SELECT 'Creating table resdb_menu' AS '';
+CREATE TABLE `resdb_menu`
+(
+  `id`              	INTEGER			  NOT NULL AUTO_INCREMENT,
+  `name`            	VARCHAR(30)		NOT NULL,
+  `owner_name`        VARCHAR(20)   NOT NULL,
+  `owner_type`      	VARCHAR(1)    NOT NULL,
+  CONSTRAINT `resdb_menu_pk` PRIMARY KEY (`id`)
+);
+CREATE UNIQUE INDEX `resdb_menu_name_idx` ON `resdb_menu` (`name`);
+
+DROP TABLE IF EXISTS resdb_menu_item;
+
+SELECT 'Creating table resdb_menu_item' AS '';
+CREATE TABLE `resdb_menu_item`
+(
+  `id`                      INTEGER       NOT NULL AUTO_INCREMENT,
+  `menu_id`                 INTEGER			  NOT NULL,
+  `menu_level`              INTEGER     	NOT NULL,
+  `sequence_no`             INTEGER     	NOT NULL,
+  `internal_menuoption_id`  INTEGER     	NOT NULL,
+  `parent_menuitem_id`      INTEGER     	NOT NULL,
+  `item_text`               VARCHAR(30)		NOT NULL,
+  `prompt`                  varchar(50)		NOT NULL,
+  `is_leaf_node`            CHAR(1)       NOT NULL,
+  `has_separator_before`    CHAR(1)       NOT NULL,
+  `has_separator_after`     CHAR(1)       NOT NULL,
+  `permission`              INTEGER     	NOT NULL,
+  CONSTRAINT `resdb_menu_item_pk` PRIMARY KEY (`id`)
+);
+CREATE UNIQUE INDEX `resdb_menu_item_level` ON `resdb_menu_item` (`menu_id`, `menu_level`, `sequence_no`, `id`);
+CREATE UNIQUE INDEX resdb_menu_item_idx ON resdb_menu_item (`menu_id`, `internal_menuoption_id`, `item_text`);
+
+DROP TABLE IF EXISTS resdb_menu_option;
+
+SELECT 'Creating table resdb_menu_option' AS '';
+CREATE TABLE `resdb_menu_option`
+(
+  `id`						    INTEGER       NOT NULL  AUTO_INCREMENT,
+  `name`    				  VARCHAR(50)   NOT NULL,
+  `data_object`       VARCHAR(50)   NOT NULL,
+  `default_menu_text` VARCHAR(50)   NOT NULL,
+  `operation`         VARCHAR(250)  NOT NULL,
+  `version_no` 			  INTEGER			  NOT NULL,
+  CONSTRAINT `resdb_menu_option_pk` PRIMARY KEY (`id`)
+);
+CREATE UNIQUE INDEX `resdb_menu_option_name_idx` ON `resdb_menu_option` (`name`);
+
+DROP TABLE IF EXISTS resdb_other_address;
+
+SELECT 'Creating table resdb_other_address' AS '';
+CREATE TABLE resdb_other_address
+(
+  id						        INTEGER       NOT NULL AUTO_INCREMENT,
+  address_text			    VARCHAR(30)   NOT NULL,
+  address_id            INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_other_address_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_other_address_name_idx ON resdb_other_address (address_text, version_to_date);
+
+DROP TABLE IF EXISTS resdb_pattern_symbol;
+
+SELECT 'Creating table resdb_pattern_symbol' AS '';
+CREATE TABLE resdb_pattern_symbol
+(
+  id              		  INTEGER       NOT NULL AUTO_INCREMENT,
+  name            		  VARCHAR(30)   NOT NULL,
+  description     		  VARCHAR(250)  NOT NULL,
+  image_id        		  INTEGER       NOT NULL,
+  race_id         		  INTEGER       NOT NULL,
+  reference_id    		  INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_pattern_symbol_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_pattern_symbol_name_idx ON resdb_pattern_symbol (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_period;
+
+SELECT 'Creating table resdb_period' AS '';
+CREATE TABLE resdb_period
+(
+  id      				      INTEGER       NOT NULL AUTO_INCREMENT,
+  name    				      VARCHAR(30)   NOT NULL,
+  period_start_year     INTEGER     	NOT NULL,
+  period_start_month    INTEGER       NULL,
+  period_start_day      INTEGER       NULL,
+  period_end_year       INTEGER     	NOT NULL,
+  period_end_month      INTEGER       NULL,
+  period_end_day        INTEGER       NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_period_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_period_name_idx ON resdb_period (name,version_to_date);
+
+DROP TABLE IF EXISTS resdb_permission;
+
+SELECT 'Creating table resdb_permission' AS '';
+CREATE TABLE resdb_permission
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  name                  VARCHAR(30)   NOT NULL,
+  description           VARCHAR(100)  NOT NULL,
+  status                VARCHAR(1)    NOT NULL,
+  operation_type        VARCHAR(1)    NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_permission_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_permission_name_idx ON resdb_permission (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_person;
+
+SELECT 'Creating table resdb_person' AS '';
+CREATE TABLE resdb_person
+(
+  id              		  INTEGER        	NOT NULL AUTO_INCREMENT,
+  first_name      		  VARCHAR(30)     NOT NULL,
+  middle_name     		  VARCHAR(30)     NULL,
+  family_name     		  VARCHAR(50)     NOT NULL,
+  birth_year      		  INTEGER         NULL,
+  birth_month     		  INTEGER         NULL,
+  birth_day       		  INTEGER         NULL,
+  death_year      		  INTEGER         NULL,
+  death_month     		  INTEGER         NULL,
+  death_day       		  INTEGER         NULL,
+  prefix_title_id 		  INTEGER         NULL,
+  suffix_title_id 		  INTEGER         NULL,
+  birth_place_id   		  INTEGER         NULL,
+  death_place_id  		  INTEGER         NULL,
+  person_definition_id  INTEGER         NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_person_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE INDEX resdb_person_name_idx ON resdb_person (family_name, middle_name, first_name, version_to_date);
+CREATE INDEX resdb_person_def_non_uniq_idx ON resdb_person (person_definition_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_person_alias;
+
+SELECT 'Creating table resdb_person_alias' AS '';
+CREATE TABLE resdb_person_alias
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  from_person_id      INTEGER       NOT NULL,
+  to_person_id        INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_person_alias_pk PRIMARY KEY (from_person_id, to_person_id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_person_alias_idx ON resdb_person_alias (from_person_id, to_person_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_person_definition;
+
+SELECT 'Creating table resdb_person_definition' AS '';
+CREATE TABLE resdb_person_definition
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  person_id           INTEGER       NOT NULL,
+  person_type_id      INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_person_definition_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_person_def_idx ON resdb_person_definition (person_id, person_type_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_person_role;
+
+SELECT 'Creating table resdb_person_role' AS '';
+CREATE TABLE resdb_person_role
+(
+  id      				    INTEGER       NOT NULL AUTO_INCREMENT,
+  role_name    			  VARCHAR(30)   NOT NULL,
+  person_def_id       INTEGER       NULL,
+  user_modifiable     CHAR(1)       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_person_role_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_person_role_name_idx ON resdb_person_role (role_name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_person_type;
+
+SELECT 'Creating table resdb_person_type' AS '';
+CREATE TABLE resdb_person_type
+(
+  id      				    INTEGER       NOT NULL AUTO_INCREMENT,
+  name    				    VARCHAR(30)   NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_person_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_person_type_name_idx ON resdb_person_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_place;
+
+SELECT 'Creating table resdb_place' AS '';
+CREATE TABLE resdb_place
+(
+  id          			  INTEGER			  NOT NULL AUTO_INCREMENT,
+  name        			  VARCHAR(30)		NOT NULL,
+  latitude    			  VARCHAR(10)		NOT NULL,
+  longitude   			  VARCHAR(10)		NOT NULL,
+  altitude    			  VARCHAR(10)		NOT NULL,
+  river_id    			  INTEGER       NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_place_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX place_name_idx ON resdb_place (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_place_alias;
+
+SELECT 'Creating table resdb_place_alias' AS '';
+CREATE TABLE resdb_place_alias
+(
+  id          			  INTEGER			  NOT NULL AUTO_INCREMENT,
+  from_place_id       INTEGER       NOT NULL,
+  to_place_id         INTEGER       NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_place_alias_pk PRIMARY KEY (from_place_id, to_place_id, version_to_date)
+);
+
+DROP TABLE IF EXISTS resdb_postal_address;
+
+SELECT 'Creating table resdb_postal_address' AS '';
+CREATE TABLE resdb_postal_address
+(
+  id                  INTEGER       NOT NULL AUTO_INCREMENT,
+  entity_address_id   INTEGER			  NOT NULL,
+  address_line_1      VARCHAR(30)		NOT NULL,
+  address_line_2      VARCHAR(30)		NOT NULL,
+  address_line_3      VARCHAR(30)		NOT NULL,
+  address_line_4      VARCHAR(30)		NOT NULL,
+  address_line_5      VARCHAR(30)		NOT NULL,
+  version_no 				  INTEGER			  NOT NULL,
+  version_status		  CHAR(1)			  NOT NULL,
+  version_user			  VARCHAR(20)	  NOT NULL,
+  version_from_date		DATETIME		  NOT NULL,
+  version_to_date			DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_postal_address_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX postal_address_idx ON resdb_postal_address (entity_address_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_publication;
+
+SELECT 'Creating table resdb_publication' AS '';
+CREATE TABLE resdb_publication
+(
+  id                  	INTEGER         NOT NULL AUTO_INCREMENT,
+  title               	VARCHAR(75)     NOT NULL,
+  publication_type_id 	INTEGER         NOT NULL,
+  author_person_id    	INTEGER         NOT NULL,
+  publisher_entity_id 	INTEGER         NOT NULL,
+  isbn                	VARCHAR(20)     NULL,
+  published_year      	INTEGER         NULL,
+  published_month     	INTEGER         NULL,
+  published_day       	INTEGER         NULL,
+  is_primary          	CHAR(1)         NULL,
+  keywords            	VARCHAR(250)    NULL,
+  assessment          	VARCHAR(250)    NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_publication_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_publication_idx ON resdb_publication (title, publication_type_id, author_person_id, publisher_entity_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_publication_role;
+
+SELECT 'Creating table resdb_publication_role' AS '';
+CREATE TABLE resdb_publication_role
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  publication_id        INTEGER     	NOT NULL,
+  person_id             INTEGER     	NOT NULL,
+  role_id               INTEGER     	NOT NULL,
+  chapter_title         VARCHAR(50)   NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_publication_role_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_public_role_idx ON resdb_publication_role (publication_id, person_id, role_id, chapter_title, version_to_date);
+
+DROP TABLE IF EXISTS resdb_publication_type;
+
+SELECT 'Creating table resdb_publication_type' AS '';
+CREATE TABLE resdb_publication_type
+(
+  id      				      INTEGER       NOT NULL AUTO_INCREMENT,
+  name    				      VARCHAR(30)   NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_publication_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_publication_type_name_idx ON resdb_publication_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_race;
+
+SELECT 'Creating table resdb_race' AS '';
+CREATE TABLE resdb_race
+(
+  id              		  INTEGER       NOT NULL AUTO_INCREMENT,
+  name            		  VARCHAR(30)   NOT NULL,
+  race_type_id    		  INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_race_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_race_name_idx ON resdb_race (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_race_alias;
+
+SELECT 'Creating table resdb_race_alias' AS '';
+CREATE TABLE resdb_race_alias
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  from_race_id          INTEGER       NOT NULL,
+  to_race_id            INTEGER       NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_race_alias_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_race_alias_idx ON resdb_race_alias (from_race_id, to_race_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_race_place;
+
+SELECT 'Creating table resdb_race_place' AS '';
+CREATE TABLE resdb_race_place
+(
+  id                    INTEGER       NOT NULL AUTO_INCREMENT,
+  race_id     			    INTEGER     	NOT NULL,
+  place_id    			    INTEGER     	NOT NULL,
+  from_year   			    INTEGER       NULL,
+  from_month  			    INTEGER       NULL,
+  from_day    			    INTEGER       NULL,
+  to_year     			    INTEGER       NULL,
+  to_month    			    INTEGER       NULL,
+  to_day      			    INTEGER       NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_race_place_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_race_place_idx ON resdb_race_place (race_id, place_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_race_type;
+
+SELECT 'Creating table resdb_race_type' AS '';
+CREATE TABLE resdb_race_type
+(
+  id      				      INTEGER       NOT NULL AUTO_INCREMENT,
+  name    				      VARCHAR(30)   NOT NULL,
+  version_no 				    INTEGER			  NOT NULL,
+  version_status		    CHAR(1)			  NOT NULL,
+  version_user			    VARCHAR(20)	  NOT NULL,
+  version_from_date		  DATETIME		  NOT NULL,
+  version_to_date			  DATETIME		  NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_race_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_race_type_name_idx ON resdb_race_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_reference;
+
+SELECT 'Creating table resdb_reference' AS '';
+CREATE TABLE resdb_reference
+(
+  id                      INTEGER        	NOT NULL AUTO_INCREMENT,
+  description             VARCHAR(250)    NOT NULL,
+  reference_type_id       INTEGER         NOT NULL,
+  publication_id          INTEGER         NULL,
+  page_number             INTEGER         NULL,
+  relates_to_theory_id    INTEGER         NULL,
+  relates_to_tale_id      INTEGER         NULL,
+  location_in_pub         VARCHAR(30)     NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_reference_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_reference_name_idx ON resdb_reference (reference_type_id, publication_id, relates_to_theory_id, relates_to_tale_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_reference_type;
+
+SELECT 'Creating table resdb_reference_type' AS '';
+CREATE TABLE resdb_reference_type
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_reference_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_reference_type_name_idx ON resdb_reference_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_region;
+
+SELECT 'Creating table resdb_region' AS '';
+CREATE TABLE resdb_region
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_region_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_region_name_idx ON resdb_region (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_religion;
+
+SELECT 'Creating table resdb_religion' AS '';
+CREATE TABLE resdb_religion
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_religion_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_religion_name_idx ON resdb_religion (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_river;
+
+SELECT 'Creating table resdb_river' AS '';
+CREATE TABLE resdb_river
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_river_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_river_name_idx ON resdb_river (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_river_alias;
+
+SELECT 'Creating table resdb_river_alias' AS '';
+CREATE TABLE resdb_river_alias
+(
+  id                      INTEGER         NOT NULL AUTO_INCREMENT,
+  from_river_id           INTEGER         NOT NULL,
+  to_river_id             INTEGER         NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_river_alias_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_river_alias_idx ON resdb_river_alias (from_river_id, to_river_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_role;
+
+SELECT 'Creating table resdb_role' AS '';
+CREATE TABLE resdb_role
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_role_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_role_idx ON resdb_role (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_system_parameters;
+
+SELECT 'Creating table resdb_system_parameters' AS '';
+CREATE TABLE resdb_system_parameters
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  description             VARCHAR(100)    NULL,
+  string_value            VARCHAR(30)     NULL,
+  integer_value           INTEGER         NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_sysparams_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_sysparams_idx ON resdb_system_parameters (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_tale;
+
+SELECT 'Creating table resdb_tale' AS '';
+CREATE TABLE resdb_tale
+(
+  id              		    INTEGER        	NOT NULL AUTO_INCREMENT,
+  name            		    VARCHAR(30)     NOT NULL,
+  tale_type_id    		    INTEGER         NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_tale_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_tale_name_idx ON resdb_tale (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_tale_type;
+
+SELECT 'Creating table resdb_tale_type' AS '';
+CREATE TABLE resdb_tale_type
+(
+  id      				        INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				        VARCHAR(30)     NOT NULL,
+  version_no 				      INTEGER			    NOT NULL,
+  version_status		      CHAR(1)			    NOT NULL,
+  version_user			      VARCHAR(20)	    NOT NULL,
+  version_from_date		    DATETIME		    NOT NULL,
+  version_to_date			    DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_tale_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_tale_type_name_idx ON resdb_tale_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_technology;
+
+SELECT 'Creating table resdb_technology' AS '';
+CREATE TABLE resdb_technology
+(
+  id                  	INTEGER     	  NOT NULL AUTO_INCREMENT,
+  name                	VARCHAR(30)		  NOT NULL,
+  technology_type_id  	INTEGER     	  NOT NULL,
+  description           VARCHAR(500)    NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_technology_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_technology_name_idx ON resdb_technology (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_technology_type;
+
+SELECT 'Creating table resdb_technology_type' AS '';
+CREATE TABLE resdb_technology_type
+(
+  id      				      INTEGER         NOT NULL AUTO_INCREMENT,
+  name    				      VARCHAR(30)     NOT NULL,
+  tech_type_grp_id      INTEGER         NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_technology_type_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX technology_type_name_idx ON resdb_technology_type (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_technology_type_group;
+
+SELECT 'Creating table resdb_technology_type_group' AS '';
+CREATE TABLE resdb_technology_type_group
+(
+  id      				      INTEGER        	NOT NULL AUTO_INCREMENT,
+  name    				      VARCHAR(30)     NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_technolgy_typ_grp_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_technlgy_typ_grp_nam_idx ON resdb_technology_type_group (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_theory;
+
+SELECT 'Creating table resdb_theory' AS '';
+CREATE TABLE resdb_theory
+(
+  id                  	INTEGER        	NOT NULL AUTO_INCREMENT,
+  name                	VARCHAR(30)     NOT NULL,
+  description         	VARCHAR(250)    NOT NULL,
+  author_person_id    	INTEGER         NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_theory_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_theory_name_idx ON resdb_theory (name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_title;
+
+SELECT 'Creating table resdb_title' AS '';
+create table resdb_title
+(
+  id                    INTEGER         NOT NULL AUTO_INCREMENT,
+  title                 VARCHAR(30)     NOT NULL,
+  description           VARCHAR(250)    NOT NULL,
+  author_person_id      INTEGER         NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_title_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_title_idx ON resdb_title (title, version_to_date);
+
+DROP TABLE IF EXISTS resdb_user_account;
+
+SELECT 'Creating table resdb_user_account' AS '';
+CREATE TABLE resdb_user_account
+(
+  id                    INTEGER         NOT NULL AUTO_INCREMENT,
+  logon_name          	VARCHAR(20)     NOT NULL,
+  first_name          	VARCHAR(30)     NOT NULL,
+  family_name         	VARCHAR(50)     NOT NULL,
+  language_id         	INTEGER         NOT NULL,
+  status              	VARCHAR(1)      NOT NULL,
+  last_logon          	DATETIME        NOT NULL,
+  invalid_logon_count 	INTEGER         not null,
+  pwd_last_updated      DATETIME        NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_user_account_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_user_acc_idx ON resdb_user_account (logon_name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_user_group;
+
+SELECT 'Creating table resdb_user_group' AS '';
+CREATE TABLE resdb_user_group
+(
+  id                    INTEGER         NOT NULL AUTO_INCREMENT,
+  group_name      	    VARCHAR(20)     NOT NULL,
+  status                VARCHAR(1)      NOT NULL,
+  display_name    	    VARCHAR(30)     NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_user_group_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_user_grp_idx ON resdb_user_group (group_name, version_to_date);
+
+DROP TABLE IF EXISTS resdb_user_group_membership;
+
+SELECT 'Creating table resdb_user_group_membership' AS '';
+CREATE TABLE resdb_user_group_membership
+(
+  id                    INTEGER         NOT NULL AUTO_INCREMENT,
+  account_id            INTEGER         NOT NULL,
+  group_id              INTEGER         NOT NULL,
+  valid_from            DATETIME        NOT NULL,
+  valid_to              DATETIME        NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_user_group_membership_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE  UNIQUE  INDEX resdb_user_grp_mbr_idx2 ON resdb_user_group_membership (account_id, group_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_user_group_permission;
+
+SELECT 'Creating table resdb_user_group_permission' AS '';
+CREATE TABLE resdb_user_group_permission (
+  id                    INTEGER         NOT NULL AUTO_INCREMENT,
+  group_id              INTEGER         NOT NULL,
+  permission_id         INTEGER         NOT NULL,
+  version_no 				    INTEGER			    NOT NULL,
+  version_status		    CHAR(1)			    NOT NULL,
+  version_user			    VARCHAR(20)	    NOT NULL,
+  version_from_date		  DATETIME		    NOT NULL,
+  version_to_date			  DATETIME		    NOT NULL DEFAULT '3999-12-31 23:59:59',
+  CONSTRAINT resdb_user_grp_perm_pk PRIMARY KEY (id, version_to_date)
+);
+CREATE UNIQUE INDEX resdb_user_grp_perm_idx ON resdb_user_group_permission (group_id, permission_id, version_to_date);
+
+DROP TABLE IF EXISTS resdb_user_password;
+
+SELECT 'Creating table resdb_user_password' AS '';
+CREATE TABLE resdb_user_password
+(
+  id                  INTEGER         NOT NULL AUTO_INCREMENT,
+  account_id          INTEGER         NOT NULL,
+  logon_name          VARCHAR(20)     NOT NULL,
+  valid_from          DATETIME        NOT NULL,
+  valid_to            DATETIME        NOT NULL,
+  password            VARCHAR(30)     NOT NULL,
+  CONSTRAINT resdb_user_password_pk PRIMARY KEY (id, valid_to)
+);
+CREATE UNIQUE INDEX resdb_user_pwd_idx1 ON resdb_user_password (account_id);
+CREATE UNIQUE INDEX resdb_user_pwd_idx2 ON resdb_user_password (logon_name);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

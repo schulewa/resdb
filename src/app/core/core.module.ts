@@ -17,9 +17,10 @@ import { ErrorNessageComponent } from './error-nessage/error-nessage.component';
 import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { PopupMenuComponent } from './popup-menu/popup-menu.component';
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent, MenuComponent, HeaderComponent, FooterComponent],
+  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent, MenuComponent, HeaderComponent, FooterComponent, PopupMenuComponent],
   imports: [
     AgGridModule,
     BrowserAnimationsModule,

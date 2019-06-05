@@ -14,9 +14,12 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorNessageComponent } from './error-nessage/error-nessage.component';
+import { MenuComponent } from './menu/menu.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent],
+  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent, MenuComponent, HeaderComponent, FooterComponent],
   imports: [
     AgGridModule,
     BrowserAnimationsModule,
@@ -36,7 +39,10 @@ import { ErrorNessageComponent } from './error-nessage/error-nessage.component';
     HttpClientModule,
     NgxPermissionsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    FooterComponent,
+    HeaderComponent,
+    MenuComponent
   ]
 })
 export class CoreModule { }

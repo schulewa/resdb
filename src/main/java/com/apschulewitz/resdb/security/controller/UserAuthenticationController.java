@@ -8,7 +8,6 @@ import com.apschulewitz.resdb.security.model.dto.UserLogonDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,13 +21,10 @@ import java.util.Arrays;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600, allowedHeaders = {"x-auth-token", "x-requested-with", "x-xsrf-token"})
-//@RequestMapping("/resdb/api/auth")
 @Slf4j
 public class UserAuthenticationController {
 
     private UserAuthenticationService userAuthenticationService;
-
-    private Gson gson = new Gson();
 
     @Value("${authentication.expiryInMinutes}")
     private Integer expiryInMinutes;
@@ -70,17 +66,7 @@ public class UserAuthenticationController {
         return ResponseEntity.ok(message);
     }
 
-
-//    @RequestMapping(value = RestUrlPaths.AUTHENTICATE_URL, method = {RequestMethod.POST}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<ApplicationResponse<UserDto>> authenticate(@RequestBody UserLogonDto userLogonDto) {
-//        log.info("Processing authentication request at url {} with userLogonDto {}/{}", RestUrlPaths.AUTHENTICATE_URL, userLogonDto.getUserName(), userLogonDto.getPassword());
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-
     @RequestMapping(value = RestUrlPaths.LOGIN_PAGE_URL, method = {RequestMethod.POST}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public ResponseEntity<ApplicationResponse<UserDto>> logon(@RequestBody UserLogonDto userLogonDto) {
     public ResponseEntity<UserDto> logon(@RequestBody UserLogonDto userLogonDto) {
         log.info("Processing logon request at {} with userLogonDto={}", RestUrlPaths.LOGIN_PAGE_URL, userLogonDto);
         ApplicationResponse<UserDto> applicationResponse = new ApplicationResponse<>();
@@ -115,32 +101,7 @@ public class UserAuthenticationController {
                 httpStatus = HttpStatus.UNAUTHORIZED;
         }
 
-//        String json = gson.toJson(applicationResponse);
-//        return new ResponseEntity<>(json, httpStatus);
         return new ResponseEntity<>(userDto, httpStatus);
     }
-
-/*
-    @PostMapping("/authenticate")
-    @Timed
-    public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletResponse response) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
-
-        try {
-            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-            String jwt = tokenProvider.createToken(authentication, rememberMe);
-            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-            return ResponseEntity.ok(new JWTToken(jwt));
-        } catch (AuthenticationException ae) {
-            log.trace("Authentication exception trace: {}", ae);
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
-                ae.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
-        }
-    }
- */
 
 }

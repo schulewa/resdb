@@ -12,9 +12,11 @@ import { MatMenuModule } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
+import { ErrorNessageComponent } from './error-nessage/error-nessage.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent],
   imports: [
     AgGridModule,
     BrowserAnimationsModule,

@@ -58,11 +58,16 @@
 
     </form>
 
+
   </div>
 
   <div class="col-md-3">
   </div>
 
+</div>
+
+<div *ngIf="httpError">
+  <app-error-nessage [failedOperation]="operationMessage" [error]="httpError"></app-error-nessage>
 </div>
 
 <!--</div>-->

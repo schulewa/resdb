@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SecurityService } from '../services/security.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { User } from '../../model/entity/user';
+import { HttpErrorResponse } from '@angular/common/http';
+import {CoreOperationsMessages} from '../core-operations-messages';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,9 @@ import { User } from '../../model/entity/user';
 })
 export class LoginComponent implements OnInit, OnChanges {
 
-  loginForm: FormGroup;
+  private loginForm: FormGroup;
+  private httpError: HttpErrorResponse;
+  private operationMessage: string;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -27,6 +31,8 @@ export class LoginComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('login.ngOnit');
+    this.httpError = null;
+    this.operationMessage = null;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -52,7 +58,11 @@ export class LoginComponent implements OnInit, OnChanges {
           this.onSuccessfulLogin(data);
           // localStorage.setItem('currentUser', this.loginForm.controls['userName'].value); // store the current user for later use
         },
-        err => console.error('login.authenticate: err="' + err)
+        err => {
+          console.error('login.authenticate: err="' + err);
+          this.httpError = err;
+          this.operationMessage = CoreOperationsMessages.AUTHENTICATE_USER;
+        }
       );
   }
 
@@ -66,6 +76,9 @@ export class LoginComponent implements OnInit, OnChanges {
     this.ngxPermissionsService.loadPermissions(perms);
     const loadedPerms = this.ngxPermissionsService.getPermissions();
     localStorage.setItem('currentUser', this.loginForm.controls['userName'].value); // store the current user for later use
+    //
+    this.httpError = null;
+    //
     this.router.navigate(['home']);
   }
 }

@@ -2,9 +2,9 @@ import { OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { IAuditedNameDataType } from '../model/entity/interfaces/audited-name-data-type';
 import { PopupMenuComponent } from '../core/popup-menu/popup-menu.component';
-import {DataStatus} from './data-status';
-import {DataAction} from './data-action';
-import {RefdataPopupMenuAction} from './refdata-popup-menu-action';
+import { DataStatus } from './data-status';
+import { DataAction } from './data-action';
+import { RefdataPopupMenuAction } from './refdata-popup-menu-action';
 
 
 export abstract class BaseNameComponent<T extends IAuditedNameDataType> implements OnInit {

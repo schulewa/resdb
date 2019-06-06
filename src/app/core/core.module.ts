@@ -20,7 +20,15 @@ import { FooterComponent } from './footer/footer.component';
 import { PopupMenuComponent } from './popup-menu/popup-menu.component';
 
 @NgModule({
-  declarations: [LoginComponent, HomeComponent, ErrorNessageComponent, MenuComponent, HeaderComponent, FooterComponent, PopupMenuComponent],
+  declarations: [
+    LoginComponent,
+    HomeComponent,
+    ErrorNessageComponent,
+    MenuComponent,
+    HeaderComponent,
+    FooterComponent,
+    PopupMenuComponent
+  ],
   imports: [
     AgGridModule,
     BrowserAnimationsModule,
@@ -43,7 +51,10 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     RouterModule,
     FooterComponent,
     HeaderComponent,
-    MenuComponent
+    HomeComponent,
+    LoginComponent,
+    MenuComponent,
+    PopupMenuComponent
   ]
 })
 export class CoreModule { }

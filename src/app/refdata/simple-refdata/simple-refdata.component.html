@@ -17,6 +17,7 @@
           <div class="col-md-4">
             <select formControlName="refDataType">
               <option>Please select</option>
+              <option>Address type</option>
             </select>
 
           </div>
@@ -34,6 +35,9 @@
     <div *ngIf="!disableRefDataTypeSubmit()">
 
       <div [ngSwitch]="refDataTypeForm.controls['refDataType']">
+
+        <app-address-type *ngIf="isAddressTypeDataRefType()"></app-address-type>
+
       </div>
 
     </div>

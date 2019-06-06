@@ -4,4 +4,41 @@
 
 <div class=" w-100 h-100">
 
+  <div class="row">
+
+    <label>Select the type of data to maintain from the dropdown list:</label>
+
+    <div class="col-md-6">
+
+      <form class="form-horizontal col-md-12" [formGroup]="refDataTypeForm" (change)="onChangedRefDataType($event)" role="form">
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <select formControlName="refDataType">
+              <option>Please select</option>
+            </select>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div *ngIf="!disableRefDataTypeSubmit()">
+
+      <div [ngSwitch]="refDataTypeForm.controls['refDataType']">
+      </div>
+
+    </div>
+
+  </div>
+
+
 </div>

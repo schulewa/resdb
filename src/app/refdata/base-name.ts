@@ -127,12 +127,12 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   }
 
   protected  markRowForDeletion() {
-    console.log('AddressTypeComponent.markRowForDeletion');
+    console.log('BaseNameComponent.markRowForDeletion');
     let nameOfAction;
     this.rowData.filter(this.isSelected).forEach(function (value) {
       value.action = DataAction.Delete;
       nameOfAction = DataAction[value.action];
-      console.log('AddressTypeComponent.delete: mark for deletion - ' + value.name + '     name of action=' + nameOfAction);
+      console.log('BaseNameComponent.delete: mark for deletion - ' + value.name + '     name of action=' + nameOfAction);
     } );
     this.gridApi.setRowData(this.rowData);
     this.gridApi.refreshCells();
@@ -169,7 +169,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   }
 
   protected actionSelected(popupMenuAction: any) {
-    console.log('AddressTypeComponent.actionSelected: popupMenuAction=' + popupMenuAction);
+    console.log('BaseNameComponent.actionSelected: popupMenuAction=' + popupMenuAction);
     switch (popupMenuAction) {
       case RefdataPopupMenuAction.AddEmptyRow:
         this.addEmptyRow();
@@ -184,7 +184,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
         this.unmarkForDeletion();
         break;
       default:
-        console.error('AddressTypeComponent.actionSelected: popup menu action not recognized');
+        console.error('BaseNameComponent.actionSelected: popup menu action not recognized');
     }
   }
 

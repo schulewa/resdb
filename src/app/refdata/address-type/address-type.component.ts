@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { AddressType } from '../../model/entity/address-type';
-import { AddressTypeService } from './address-type.service';
-import { BaseNameComponent } from '../base-name.component';
-import { DataAction } from '../data-action';
-import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {AddressType} from '../../model/entity/address-type';
+import {AddressTypeService} from './address-type.service';
+import {BaseNameComponent} from '../base-name.component';
+import {DataAction} from '../data-action';
+import {CoreOperationsMessages} from '../../core/core-operations-messages';
+import {DataStatus} from '../data-status';
 
 
 @Component({
@@ -69,7 +69,7 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
               this.httpError = err;
               this.operationMessage = CoreOperationsMessages.ADD_ADDRESS_TYPE;
           });
-        } else if (DataAction.Update === addressType.action || DataAction.Delete === addressType.action) {
+        } else if (DataAction.Update === addressType.action) {
           addressType.status = DataStatus.Amend;
           this.addressTypeService.update(addressType).subscribe(
             data => {
@@ -83,6 +83,19 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
             }
           );
 
+        } else if (DataAction.Delete === addressType.action) {
+          addressType.status = DataStatus.Delete;
+          this.addressTypeService.update(addressType).subscribe(
+            data => {
+              console.log('Address type ' + addressType.action + 'ed - result=' + data);
+              this.updateGrid(data);
+            },
+            err => {
+              console.error('AddressTypeComponent.delete: err="' + err);
+              this.httpError = err;
+              this.operationMessage = CoreOperationsMessages.DELETE_ADDRESS_TYPE;
+            }
+          );
         }
       }
     }

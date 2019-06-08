@@ -1,6 +1,6 @@
 export enum DataStatus {
-  New,
-  Amend,
-  Cancel,
-  Delete
+  New = 'New',
+  Amend = 'Amend',
+  Cancel = 'Cancel',
+  Delete = 'Delete'
 }

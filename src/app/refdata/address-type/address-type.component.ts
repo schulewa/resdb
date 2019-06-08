@@ -71,7 +71,6 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
           });
         } else if (DataAction.Update === addressType.action || DataAction.Delete === addressType.action) {
           addressType.status = DataStatus.Amend;
-          // addressType.lastUpdated = new Date();
           this.addressTypeService.update(addressType).subscribe(
             data => {
             console.log('Address type ' + addressType.action + 'ed - result=' + data);

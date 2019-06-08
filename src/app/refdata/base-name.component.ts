@@ -5,6 +5,8 @@ import { PopupMenuComponent } from '../core/popup-menu/popup-menu.component';
 import { DataStatus } from './data-status';
 import { DataAction } from './data-action';
 import { RefdataPopupMenuAction } from './refdata-popup-menu-action';
+import { HttpErrorResponse } from '@angular/common/http';
+import { DateFormatters } from '../core/formatters/date-formatters';
 
 
 export abstract class BaseNameComponent<T extends IAuditedNameDataType> implements OnInit {
@@ -19,11 +21,15 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   protected rowSelection: IAuditedNameDataType;
   protected selectedRow: IAuditedNameDataType;
 
-  constructor(private child: new () => T) { }
+  protected httpError: HttpErrorResponse;
+  protected operationMessage: string;
+
+  protected constructor(private child: new () => T) { }
 
   ngOnInit() {
     this.initRowData();
     this.haveEmptyRow = false;
+    console.log('BaseNameComponent: user language=' + navigator.language);
   }
 
   onGridReady(params) {
@@ -37,22 +43,19 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
       { headerName: '', field: 'selected', width: 30, headerCheckboxSelection: true, checkboxSelection: true, editable: true },
       { headerName: 'ID', field: 'id', width: 60, editable: false, filter: true },
       { headerName: 'Name', field: 'name', width: 200, editable: true, filter: true },
-      { headerName: 'Status', field: 'status', valueGetter: this.statusValueGetter, width: 100, editable: false, filter: true },
+      { headerName: 'Status', field: 'status', width: 100, editable: false, filter: true },
       { headerName: 'Created by', field: 'createdBy', width: 110, editable: false, filter: true },
       { headerName: 'Last updated by', field: 'updatedBy', width: 150, editable: false, filter: true },
-      { headerName: 'Last updated', field: 'lastUpdated', width: 220, editable: false, filter: true },
-      { headerName: 'Action', field: 'action', valueGetter: this.actionValueGetter, width: 100, editable: false, filter: true }
+      {
+        headerName: 'Last updated',
+        field: 'lastUpdated',
+        width: 220,
+        editable: false,
+        filter: true,
+        valueFormatter: DateFormatters.dateWithTimeAsString
+      },
+      { headerName: 'Action', field: 'action', width: 100, editable: false, filter: true }
     ];
-  }
-
-  protected actionValueGetter(params) {
-    console.log('actionValueGetter: params.data.action=' + params.data.action +
-      ' DataAction[params.data.action]=' + DataAction[params.data.action]);
-    return params.data.action ? DataAction[params.data.action] : '';
-  }
-
-  protected statusValueGetter(params) {
-    return params.data.status ? DataStatus[params.data.status] : DataStatus.New;
   }
 
   protected createGridOptions(cellValueChanged): GridOptions {
@@ -75,18 +78,26 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
     };
   }
 
-  mapStatus(value: any): DataStatus {
+  protected mapStatus(value: string): DataStatus {
     if (value) {
-      if ('NEW' === value) {
-        return DataStatus.New;
-      } else if ('AMEND' === value) {
-        return DataStatus.Amend;
-      } else {
-        console.error('Unrecognized DataStatus returned from database: ' + value);
-        return DataStatus.New;
-      }
-    } else {
+      const allKeys = Object.keys(DataStatus);
+      const keys = Object.keys(DataStatus).filter(v => DataStatus[v] === value);
+      // return keys.length > 0 ? keys[0] : null;;
       return DataStatus.New;
+    //   const key = DataStatus[value];
+    //   console.log('mapStatus: value={}  key={}', value, key);
+    //   const mappedStatus: DataStatus = DataStatus.[key];
+    //   // if ('NEW' === value || 'N' === value) {
+    //   if (DataStatus.New === mappedStatus) {
+    //     return DataStatus.New;
+    //   } else if ('AMEND' === value || 'A' === value) {
+    //     return DataStatus.Amend;
+    //   } else {
+    //     console.error('Unrecognized DataStatus returned from database: ' + value);
+    //     return DataStatus.New;
+    //   }
+    // } else {
+    //   return DataStatus.New;
     }
   }
 
@@ -210,6 +221,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   }
 
   protected onCellValueChanged(event ) {
+    // handle updated 'name' value
     console.log('onCellValueChanged - entry: event=' + event + ' haveEmptyRow=' + this.haveEmptyRow);
     if (event.data && event.data.id && event.data.id > 0) {
       event.data.action = DataAction.Update;

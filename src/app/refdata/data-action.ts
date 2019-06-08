@@ -1,5 +1,5 @@
 export enum DataAction {
-  Add = 1,
+  Add,
   Update,
   Cancel,
   Delete

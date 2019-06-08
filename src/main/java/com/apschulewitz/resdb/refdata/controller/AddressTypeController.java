@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -50,7 +47,7 @@ public class AddressTypeController extends AbstractController<AddressType, Long>
   }
 
   @RequestMapping(value = RestUrlPaths.ADDRESS_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<AddressType> update(AddressType toBeSaved) {
+  public ResponseEntity<AddressType> update(@RequestBody AddressType toBeSaved) {
     log.info("Update existing address type: {}", toBeSaved);
     Optional<AddressType> existing = addressTypeDao.findById(toBeSaved.getId());
 

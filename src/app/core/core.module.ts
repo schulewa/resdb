@@ -49,6 +49,7 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     NgxPermissionsModule,
     ReactiveFormsModule,
     RouterModule,
+    ErrorNessageComponent,
     FooterComponent,
     HeaderComponent,
     HomeComponent,

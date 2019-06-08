@@ -1,5 +1,5 @@
 export enum DataStatus {
-  New = 1,
+  New,
   Amend,
   Cancel,
   Delete

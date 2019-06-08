@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AddressType } from '../../model/entity/address-type';
 import { AddressTypeService } from './address-type.service';
-import { BaseNameComponent } from '../base-name';
-
+import { BaseNameComponent } from '../base-name.component';
+import { DataAction } from '../data-action';
+import { CoreOperationsMessages } from '../../core/core-operations-messages';
+import { DataStatus } from '../data-status';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
           const addressType: AddressType = resp[datum];
           addressType.selected = false;
           addressType.isDataChanged = false;
-          addressType.status = this.mapStatus(addressType.status);
+          console.log('Mapped address type [{}]', addressType);
         }
       }
       this.rowData = resp;
@@ -54,21 +56,36 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
     const results: AddressType[] = [];
 
     if (toBeSaved) {
-      // for (const addressType of toBeSaved) {
-      //   if (DataAction.Add === addressType.action) {
-      //     this.enrichAuditData(addressType);
-      //     this.addressTypeService.add(addressType).subscribe( (res) => {
-      //       console.log('Address type ' + addressType.action + 'ed - typeof result=' + typeof res);
-      //       this.updateGrid(res);
-      //     });
-      //   } else if (DataAction.Update === addressType.action || DataAction.Delete === addressType.action) {
-      //     this.addressTypeService.update(addressType).subscribe( (res) => {
-      //       console.log('Address type ' + addressType.action + 'ed - result=' + res);
-      //       this.updateGrid(res);
-      //     });
-      //
-      //   }
-      // }
+      for (const addressType of toBeSaved) {
+        if (DataAction.Add === addressType.action) {
+          this.enrichAuditData(addressType);
+          this.addressTypeService.add(addressType).subscribe(
+            data => {
+            console.log('Address type ' + addressType.action + 'ed - typeof result=' + typeof data);
+            this.updateGrid(data);
+          },
+            err => {
+              console.error('AddressTypeComponent.add: err="' + err);
+              this.httpError = err;
+              this.operationMessage = CoreOperationsMessages.ADD_ADDRESS_TYPE;
+          });
+        } else if (DataAction.Update === addressType.action || DataAction.Delete === addressType.action) {
+          addressType.status = DataStatus.Amend;
+          // addressType.lastUpdated = new Date();
+          this.addressTypeService.update(addressType).subscribe(
+            data => {
+            console.log('Address type ' + addressType.action + 'ed - result=' + data);
+            this.updateGrid(data);
+          },
+            err => {
+              console.error('AddressTypeComponent.update: err="' + err);
+              this.httpError = err;
+              this.operationMessage = CoreOperationsMessages.UPDATE_ADDRESS_TYPE;
+            }
+          );
+
+        }
+      }
     }
 
     console.log('AddressTypeComponent.saveChanges - after POST - results=' + results);

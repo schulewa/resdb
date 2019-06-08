@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
  */
 public enum VersionStatus {
 
-    NEW("N"), AMEND("A"), CANCEL("C"),
+    New("N"), Amend("A"), Cancel("C"),
     N("N"), A("A"), C("C"); // TODO remove these once JPA converters work correctly with Spring Boot (currently 1.5.2)
 
     private String code;
@@ -31,17 +31,17 @@ public enum VersionStatus {
 
         switch (code) {
             case "N":
-                return NEW;
+                return New;
             case "A":
-                return AMEND;
+                return Amend;
             case "C":
-                return CANCEL;
+                return Cancel;
             default:
                 return null;
         }
     }
 
     public static boolean isActive(VersionStatus status) {
-        return status != null && (NEW.equals(status) || AMEND.equals(status));
+        return status != null && (New.equals(status) || Amend.equals(status));
     }
 }

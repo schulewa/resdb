@@ -31,6 +31,25 @@ export class AddressTypeService {
     return this.http.post<AddressType>(url, addressType, httpOptions);
   }
 
+  delete(addressType: AddressType): Observable<AddressType> {
+    const url = this.constructUrlWithId(ResdbUrlEndpoints.ADDRESS_TYPE_URL, addressType.id);
+    console.log('URL for marking address type for deletion=[' + url + ']');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8'
+      })
+    };
+    console.log('AddressTypeService: marking ' + addressType.name + ' for deletion');
+    return this.http.delete<AddressType>(url, httpOptions);
+  }
+
+  private constructUrlWithId(baseUrl: string, id: number): string {
+    if (id) {
+      return baseUrl + '/' + id.toString();
+    }
+    return '';
+  }
+
   update(addressType: AddressType): Observable<AddressType> {
     const url = ResdbUrlEndpoints.ADDRESS_TYPE_URL;
     const httpOptions = {

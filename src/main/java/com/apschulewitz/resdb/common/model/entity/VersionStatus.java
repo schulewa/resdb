@@ -2,6 +2,9 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import org.springframework.util.StringUtils;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Adrian
@@ -16,7 +19,7 @@ public enum VersionStatus {
 
     private String code;
 
-    private VersionStatus(String code) {
+    VersionStatus(String code) {
         this.code = code;
     }
 
@@ -43,5 +46,9 @@ public enum VersionStatus {
 
     public static boolean isActive(VersionStatus status) {
         return status != null && (New.equals(status) || Amend.equals(status));
+    }
+
+    public static List<VersionStatus> getLiveStatuses() {
+      return Arrays.asList(VersionStatus.New, VersionStatus.Amend);
     }
 }

@@ -1,12 +1,12 @@
-import { OnInit, ViewChild } from '@angular/core';
-import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
-import { IAuditedNameDataType } from '../model/entity/interfaces/audited-name-data-type';
-import { PopupMenuComponent } from '../core/popup-menu/popup-menu.component';
-import { DataStatus } from './data-status';
-import { DataAction } from './data-action';
-import { RefdataPopupMenuAction } from './refdata-popup-menu-action';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DateFormatters } from '../core/formatters/date-formatters';
+import {OnInit, ViewChild} from '@angular/core';
+import {ColDef, GridApi, GridOptions} from 'ag-grid-community';
+import {IAuditedNameDataType} from '../model/entity/interfaces/audited-name-data-type';
+import {PopupMenuComponent} from '../core/popup-menu/popup-menu.component';
+import {DataStatus} from './data-status';
+import {DataAction} from './data-action';
+import {RefdataPopupMenuAction} from './refdata-popup-menu-action';
+import {HttpErrorResponse} from '@angular/common/http';
+import {DateFormatters} from '../core/formatters/date-formatters';
 
 
 export abstract class BaseNameComponent<T extends IAuditedNameDataType> implements OnInit {
@@ -24,12 +24,16 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   protected httpError: HttpErrorResponse;
   protected operationMessage: string;
 
+  protected liveStatuses: Array<DataStatus> = [];
+
   protected constructor(private child: new () => T) { }
 
   ngOnInit() {
     this.initRowData();
     this.haveEmptyRow = false;
     console.log('BaseNameComponent: user language=' + navigator.language);
+    this.liveStatuses.push(DataStatus.New);
+    this.liveStatuses.push(DataStatus.Amend);
   }
 
   onGridReady(params) {

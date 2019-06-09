@@ -1,10 +1,11 @@
-import {Component, HostListener, OnInit} from '@angular/core';
-import {AddressType} from '../../model/entity/address-type';
-import {AddressTypeService} from './address-type.service';
-import {BaseNameComponent} from '../base-name.component';
-import {DataAction} from '../data-action';
-import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { AddressType } from '../../model/entity/address-type';
+import { AddressTypeService } from './address-type.service';
+import { BaseNameComponent } from '../base-name.component';
+import { DataAction } from '../data-action';
+import { CoreOperationsMessages } from '../../core/core-operations-messages';
+import { DataStatus } from '../data-status';
+import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 
 
 @Component({
@@ -85,10 +86,13 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
 
         } else if (DataAction.Delete === addressType.action) {
           addressType.status = DataStatus.Delete;
-          this.addressTypeService.update(addressType).subscribe(
+          this.addressTypeService.delete(addressType).subscribe(
             data => {
               console.log('Address type ' + addressType.action + 'ed - result=' + data);
-              this.updateGrid(data);
+              const remainingRows: IAuditedNameDataType[] = this.rowData.filter(r => (this.liveStatuses.includes(r.status)));
+              // this.updateGrid(remainingRows);
+              this.gridApi.setRowData(remainingRows);
+              this.gridApi.refreshCells();
             },
             err => {
               console.error('AddressTypeComponent.delete: err="' + err);
@@ -100,8 +104,6 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
       }
     }
 
-    console.log('AddressTypeComponent.saveChanges - after POST - results=' + results);
-    console.log('AddressTypeComponent.saveChanges - exit');
   }
 
   @HostListener('blur', ['$event'])

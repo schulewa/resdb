@@ -51,6 +51,7 @@ export class ArtefactGroupComponent extends BaseNameComponent<ArtefactGroup> imp
           this.enrichAuditData(artefactGroup);
           this.artefactGroupService.add(artefactGroup).subscribe(
             data => {
+            this.httpError = null;
             this.updateGrid(data);
           },
             err => {
@@ -62,6 +63,7 @@ export class ArtefactGroupComponent extends BaseNameComponent<ArtefactGroup> imp
           artefactGroup.status = DataStatus.Amend;
           this.artefactGroupService.update(artefactGroup).subscribe(
             data => {
+            this.httpError = null;
             this.updateGrid(data);
           },
             err => {
@@ -75,6 +77,7 @@ export class ArtefactGroupComponent extends BaseNameComponent<ArtefactGroup> imp
           this.artefactGroupService.delete(artefactGroup).subscribe(
             data => {
               console.log('Artefact group ' + artefactGroup.action + 'ed - result=' + data);
+              this.httpError = null;
               const remainingRows: IAuditedNameDataType[] = this.rowData.filter(r => (this.liveStatuses.includes(r.status)));
               this.gridApi.setRowData(remainingRows);
               this.gridApi.refreshCells();

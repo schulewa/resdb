@@ -24,6 +24,7 @@
               <option>Deity type</option>
               <option>Entity type</option>
               <option>Event type group</option>
+              <option>Hierarchy type</option>
             </select>
 
           </div>
@@ -55,6 +56,8 @@
         <app-entity-type *ngIf="isEntityTypeDataRefType()"></app-entity-type>
 
         <app-event-type-group *ngIf="isEventTypeGroupDataRefType()"></app-event-type-group>
+
+        <app-hierarchy-type *ngIf="isHierarchyTypeDataRefType()"></app-hierarchy-type>
 
       </div>
 

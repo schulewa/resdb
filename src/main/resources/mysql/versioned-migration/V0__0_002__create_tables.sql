@@ -457,7 +457,7 @@ CREATE TABLE resdb_hierarchy_type
   updated_by          VARCHAR(20) NOT NULL,
 	CONSTRAINT resdb_hierarchy_type_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_hierarchy_type_name_idx ON resdb_hierarchy_node (name);
+CREATE UNIQUE INDEX resdb_hierarchy_type_name_idx ON resdb_hierarchy_type (name);
 
 
 CREATE TABLE resdb_image

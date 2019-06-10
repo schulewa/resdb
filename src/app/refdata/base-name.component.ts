@@ -53,7 +53,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
       {
         headerName: 'Last updated',
         field: 'lastUpdated',
-        width: 220,
+        width: 160,
         editable: false,
         filter: true,
         valueFormatter: DateFormatters.dateWithTimeAsString
@@ -80,29 +80,6 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
       },
       unSortIcon: true
     };
-  }
-
-  protected mapStatus(value: string): DataStatus {
-    if (value) {
-      const allKeys = Object.keys(DataStatus);
-      const keys = Object.keys(DataStatus).filter(v => DataStatus[v] === value);
-      // return keys.length > 0 ? keys[0] : null;;
-      return DataStatus.New;
-    //   const key = DataStatus[value];
-    //   console.log('mapStatus: value={}  key={}', value, key);
-    //   const mappedStatus: DataStatus = DataStatus.[key];
-    //   // if ('NEW' === value || 'N' === value) {
-    //   if (DataStatus.New === mappedStatus) {
-    //     return DataStatus.New;
-    //   } else if ('AMEND' === value || 'A' === value) {
-    //     return DataStatus.Amend;
-    //   } else {
-    //     console.error('Unrecognized DataStatus returned from database: ' + value);
-    //     return DataStatus.New;
-    //   }
-    // } else {
-    //   return DataStatus.New;
-    }
   }
 
   protected enrichAuditData(auditData: IAuditedNameDataType) {

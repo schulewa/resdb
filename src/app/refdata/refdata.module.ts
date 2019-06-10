@@ -6,9 +6,14 @@ import { SimpleRefdataComponent } from './simple-refdata/simple-refdata.componen
 import { CoreModule } from '../core/core.module';
 import { AddressTypeComponent } from './address-type/address-type.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ArtefactGroupComponent } from './artefact-group/artefact-group.component';
 
 @NgModule({
-  declarations: [SimpleRefdataComponent, AddressTypeComponent],
+  declarations: [
+    SimpleRefdataComponent,
+    AddressTypeComponent,
+    ArtefactGroupComponent,
+  ],
   imports: [
     AgGridModule.withComponents([
       AddressTypeComponent

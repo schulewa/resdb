@@ -18,6 +18,7 @@
             <select formControlName="refDataType">
               <option>Please select</option>
               <option>Address type</option>
+              <option>Artefact group</option>
             </select>
 
           </div>
@@ -37,6 +38,8 @@
       <div [ngSwitch]="refDataTypeForm.controls['refDataType']">
 
         <app-address-type *ngIf="isAddressTypeDataRefType()"></app-address-type>
+
+        <app-artefact-group *ngIf="isArtefactGroupDataRefType()"></app-artefact-group>
 
       </div>
 

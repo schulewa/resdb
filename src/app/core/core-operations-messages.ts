@@ -10,4 +10,8 @@ export class CoreOperationsMessages {
   public static get DELETE_ARTEFACT_GROUP(): string { return 'Attempting to mark artefact group for deletion'; }
   public static get UPDATE_ARTEFACT_GROUP(): string { return 'Attempting to update artefact group'; }
 
+  public static get ADD_ARTEFACT_TYPE(): string { return 'Attempting to add new artefact type'; }
+  public static get DELETE_ARTEFACT_TYPE(): string { return 'Attempting to mark artefact type for deletion'; }
+  public static get UPDATE_ARTEFACT_TYPE(): string { return 'Attempting to update artefact type'; }
+
 }

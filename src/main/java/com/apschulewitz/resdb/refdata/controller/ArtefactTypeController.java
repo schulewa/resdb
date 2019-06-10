@@ -1,9 +1,11 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.ArtefactGroupDao;
 import com.apschulewitz.resdb.refdata.model.dao.ArtefactTypeDao;
+import com.apschulewitz.resdb.refdata.model.entity.ArtefactGroup;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class ArtefactTypeController extends AbstractController<ArtefactType, Lon
   public ResponseEntity<List<ArtefactType>> findAll() {
 
     List<ArtefactType> artefactTypes = new ArrayList<>();
-    Iterable<ArtefactType> iter = artefactTypeDao.findAll();
+    Iterable<ArtefactType> iter = artefactTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
       .forEach(at -> artefactTypes.add(at));
     log.info("findAll: {} artefact types founs", artefactTypes.size());
@@ -50,8 +49,23 @@ public class ArtefactTypeController extends AbstractController<ArtefactType, Lon
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
+  @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<ArtefactType> delete(@PathVariable long id) {
+    log.info("Marking artefact type [{}] for deletion", id);
+    Optional<ArtefactType> existing = artefactTypeDao.findById(id);
+
+    if (existing.isEmpty()) {
+      log.error("No existing artefact type found for id {} - unable to mark for deletion", id);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    existing.get().setStatus(VersionStatus.Cancel);
+    ArtefactType saved = artefactTypeDao.save(existing.get());
+    return new ResponseEntity<>(saved, HttpStatus.OK);
+  }
+
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ArtefactType> update(ArtefactType toBeSaved) {
+  public ResponseEntity<ArtefactType> update(@RequestBody ArtefactType toBeSaved) {
     log.info("Update existing artefact type: {}", toBeSaved);
     Optional<ArtefactType> existing = artefactTypeDao.findById(toBeSaved.getId());
 
@@ -60,7 +74,18 @@ public class ArtefactTypeController extends AbstractController<ArtefactType, Lon
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    ArtefactType saved = artefactTypeDao.save(toBeSaved);
+    ArtefactType saved;
+    String errMsg;
+
+    try {
+      saved = artefactTypeDao.save(toBeSaved);
+    } catch (Exception e) {
+      String msg = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+      errMsg = "Error saving artefact type [" + toBeSaved.getName() + "]: " + msg;
+      log.error(errMsg, e);
+      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+    }
+
     return new ResponseEntity<>(saved, HttpStatus.OK);
   }
 

@@ -9,6 +9,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ArtefactGroupComponent } from './artefact-group/artefact-group.component';
 import { ArtefactTypeComponent } from './artefact-type/artefact-type.component';
 import { CalendarTypeComponent } from './calendar-type/calendar-type.component';
+import { DeityTypeComponent } from './deity-type/deity-type.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CalendarTypeComponent } from './calendar-type/calendar-type.component';
     ArtefactGroupComponent,
     ArtefactTypeComponent,
     CalendarTypeComponent,
+    DeityTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

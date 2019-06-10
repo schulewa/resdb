@@ -22,4 +22,8 @@ export class CoreOperationsMessages {
   public static get DELETE_DEITY_TYPE(): string { return 'Attempting to mark deity type for deletion'; }
   public static get UPDATE_DEITY_TYPE(): string { return 'Attempting to update deity type'; }
 
+  public static get ADD_ENTITY_TYPE(): string { return 'Attempting to add new entity type'; }
+  public static get DELETE_ENTITY_TYPE(): string { return 'Attempting to mark entity type for deletion'; }
+  public static get UPDATE_ENTITY_TYPE(): string { return 'Attempting to update entity type'; }
+
 }

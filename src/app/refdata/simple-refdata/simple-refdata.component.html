@@ -22,6 +22,7 @@
               <option>Artefact type</option>
               <option>Calendar type</option>
               <option>Deity type</option>
+              <option>Entity type</option>
             </select>
 
           </div>
@@ -49,6 +50,8 @@
         <app-calendar-type *ngIf="isCalendarTypeDataRefType()"></app-calendar-type>
 
         <app-deity-type *ngIf="isDeityTypeDataRefType()"></app-deity-type>
+
+        <app-entity-type *ngIf="isEntityTypeDataRefType()"></app-entity-type>
 
       </div>
 

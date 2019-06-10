@@ -16,6 +16,9 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
   selectedArtefactGroup: boolean;
   selectedArtefactType: boolean;
   selectedCalendarType: boolean;
+  selectedDeityType: boolean;
+  selectedEntityType: boolean;
+  selectedEventTypeGroup: boolean;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -96,11 +99,18 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
     return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Entity type';
   }
 
+  isEventTypeGroupDataRefType(): boolean {
+    return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Event type group';
+  }
+
   disableAllRefDataTypeForms() {
     this.selectedAddressType = false;
     this.selectedArtefactGroup = false;
     this.selectedArtefactType = false;
     this.selectedCalendarType = false;
+    this.selectedDeityType = false;
+    this.selectedEntityType = false;
+    this.selectedEventTypeGroup = false;
   }
 
 }

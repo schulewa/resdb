@@ -420,7 +420,7 @@ CREATE TABLE resdb_event_type_group
   updated_by          VARCHAR(20) NOT NULL,
 	CONSTRAINT resdb_event_type_group_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_event_type_group_name_idx ON resdb_entity_type (name);
+CREATE UNIQUE INDEX resdb_event_type_group_name_idx ON resdb_event_type_group (name);
 
 
 CREATE TABLE resdb_hierarchy

@@ -23,6 +23,7 @@
               <option>Calendar type</option>
               <option>Deity type</option>
               <option>Entity type</option>
+              <option>Event type group</option>
             </select>
 
           </div>
@@ -52,6 +53,8 @@
         <app-deity-type *ngIf="isDeityTypeDataRefType()"></app-deity-type>
 
         <app-entity-type *ngIf="isEntityTypeDataRefType()"></app-entity-type>
+
+        <app-event-type-group *ngIf="isEventTypeGroupDataRefType()"></app-event-type-group>
 
       </div>
 

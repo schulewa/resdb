@@ -4,7 +4,6 @@ import com.apschulewitz.resdb.common.controller.AbstractController;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.ArtefactGroupDao;
-import com.apschulewitz.resdb.refdata.model.entity.AddressType;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +44,7 @@ public class ArtefactGroupController extends AbstractController<ArtefactGroup, L
     ArtefactGroup saved = artefactGroupDao.save(toBeSaved);
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
+
   @RequestMapping(value = RestUrlPaths.ARTEFACT_GROUP_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<ArtefactGroup> delete(@PathVariable long id) {
     log.info("Marking artefact group [{}] for deletion", id);

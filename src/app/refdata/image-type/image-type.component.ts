@@ -48,7 +48,7 @@ export class ImageTypeComponent extends BaseNameComponent<ImageType> implements 
     if (toBeSaved) {
       for (const imageType of toBeSaved) {
         if (DataAction.Add === imageType.action) {
-          this.operationMessage = CoreOperationsMessages.ADD_HIERARCHY_TYPE;
+          this.operationMessage = CoreOperationsMessages.ADD_IMAGE_TYPE;
           this.enrichAuditData(imageType);
           this.imageTypeService.add(imageType).subscribe(
             data => {
@@ -60,7 +60,7 @@ export class ImageTypeComponent extends BaseNameComponent<ImageType> implements 
               this.httpError = err;
             });
         } else if (DataAction.Update === imageType.action) {
-          this.operationMessage = CoreOperationsMessages.UPDATE_HIERARCHY_TYPE;
+          this.operationMessage = CoreOperationsMessages.UPDATE_IMAGE_TYPE;
           imageType.status = DataStatus.Amend;
           this.imageTypeService.update(imageType).subscribe(
             data => {
@@ -73,7 +73,7 @@ export class ImageTypeComponent extends BaseNameComponent<ImageType> implements 
             }
           );
         } else if (DataAction.Delete === imageType.action) {
-          this.operationMessage = CoreOperationsMessages.DELETE_HIERARCHY_TYPE;
+          this.operationMessage = CoreOperationsMessages.DELETE_IMAGE_TYPE;
           imageType.status = DataStatus.Delete;
           this.imageTypeService.delete(imageType).subscribe(
             data => {

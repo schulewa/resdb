@@ -40,3 +40,7 @@
   </app-popup-menu>
 
 </div>
+
+<div *ngIf="httpError">
+  <app-error-nessage [failedOperation]="operationMessage" [error]="httpError"></app-error-nessage>
+</div>

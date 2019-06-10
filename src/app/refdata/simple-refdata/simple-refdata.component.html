@@ -20,6 +20,7 @@
               <option>Address type</option>
               <option>Artefact group</option>
               <option>Artefact type</option>
+              <option>Calendar type</option>
             </select>
 
           </div>
@@ -43,6 +44,8 @@
         <app-artefact-group *ngIf="isArtefactGroupDataRefType()"></app-artefact-group>
 
         <app-artefact-type *ngIf="isArtefactTypeDataRefType()"></app-artefact-type>
+
+        <app-calendar-type *ngIf="isCalendarTypeDataRefType()"></app-calendar-type>
 
       </div>
 

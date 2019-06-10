@@ -14,6 +14,8 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
   refDataTypeForm: FormGroup;
   selectedAddressType: boolean;
   selectedArtefactGroup: boolean;
+  selectedArtefactType: boolean;
+  selectedCalendarType: boolean;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -82,9 +84,15 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
     return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Artefact type';
   }
 
+  isCalendarTypeDataRefType(): boolean {
+    return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Calendar type';
+  }
+
   disableAllRefDataTypeForms() {
     this.selectedAddressType = false;
     this.selectedArtefactGroup = false;
+    this.selectedArtefactType = false;
+    this.selectedCalendarType = false;
   }
 
 }

@@ -204,7 +204,7 @@ CREATE TABLE resdb_calendar_type
   updated_by          VARCHAR(20) NOT NULL,
   CONSTRAINT resdb_calendar_type_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_calendar_type_name_idx ON resdb_calendar (name);
+CREATE UNIQUE INDEX resdb_calendar_type_name_idx ON resdb_calendar_type (name);
 
 
 CREATE TABLE resdb_country

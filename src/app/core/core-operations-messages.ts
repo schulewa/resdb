@@ -14,4 +14,8 @@ export class CoreOperationsMessages {
   public static get DELETE_ARTEFACT_TYPE(): string { return 'Attempting to mark artefact type for deletion'; }
   public static get UPDATE_ARTEFACT_TYPE(): string { return 'Attempting to update artefact type'; }
 
+  public static get ADD_CALENDAR_TYPE(): string { return 'Attempting to add new calendar type'; }
+  public static get DELETE_CALENDAR_TYPE(): string { return 'Attempting to mark calendar type for deletion'; }
+  public static get UPDATE_CALENDAR_TYPE(): string { return 'Attempting to update calendar type'; }
+
 }

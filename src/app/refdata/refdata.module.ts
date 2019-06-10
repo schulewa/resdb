@@ -8,6 +8,7 @@ import { AddressTypeComponent } from './address-type/address-type.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { ArtefactGroupComponent } from './artefact-group/artefact-group.component';
 import { ArtefactTypeComponent } from './artefact-type/artefact-type.component';
+import { CalendarTypeComponent } from './calendar-type/calendar-type.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ArtefactTypeComponent } from './artefact-type/artefact-type.component';
     AddressTypeComponent,
     ArtefactGroupComponent,
     ArtefactTypeComponent,
+    CalendarTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

@@ -4,8 +4,8 @@ import { DataAction } from '../data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { DeityType } from '../../model/entity/deity-type';
 import { BaseNameComponent } from '../base-name.component';
-import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import { CoreOperationsMessages } from '../../core/core-operations-messages';
+import { DataStatus } from '../data-status';
 
 @Component({
   selector: 'app-deity-type',

@@ -25,6 +25,7 @@
               <option>Entity type</option>
               <option>Event type group</option>
               <option>Hierarchy type</option>
+              <option>Image type</option>
             </select>
 
           </div>
@@ -58,6 +59,8 @@
         <app-event-type-group *ngIf="isEventTypeGroupDataRefType()"></app-event-type-group>
 
         <app-hierarchy-type *ngIf="isHierarchyTypeDataRefType()"></app-hierarchy-type>
+
+        <app-image-type *ngIf="isImageTypeDataRefType()"></app-image-type>
 
       </div>
 

@@ -13,6 +13,7 @@ import { DeityTypeComponent } from './deity-type/deity-type.component';
 import { EntityTypeComponent } from './entity-type/entity-type.component';
 import { EventTypeGroupComponent } from './event-type-group/event-type-group.component';
 import { HierarchyTypeComponent } from './hierarchy-type/hierarchy-type.component';
+import { ImageTypeComponent } from './image-type/image-type.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HierarchyTypeComponent } from './hierarchy-type/hierarchy-type.componen
     EntityTypeComponent,
     EventTypeGroupComponent,
     HierarchyTypeComponent,
+    ImageTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

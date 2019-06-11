@@ -24,16 +24,23 @@ export class ArtefactTypeComponent extends BaseNameComponent<ArtefactType> imple
   initRowData() {
     this.rowData = [];
     //
-    this.artefactTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const artefactType: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_ARTEFACT_TYPE;
+    this.artefactTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const artefactType: IAuditedNameDataType = data[datum];
           artefactType.selected = false;
           artefactType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('ArtefactTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

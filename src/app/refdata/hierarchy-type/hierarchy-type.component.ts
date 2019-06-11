@@ -24,16 +24,23 @@ export class HierarchyTypeComponent extends BaseNameComponent<HierarchyType> imp
   initRowData() {
     this.rowData = [];
     //
-    this.hierarchyTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const calendarType: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_HIERARCHY_TYPE;
+    this.hierarchyTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const calendarType: IAuditedNameDataType = data[datum];
           calendarType.selected = false;
           calendarType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('HierarchyTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
-import { catchError } from 'rxjs/operators';
 import { HierarchyType } from '../../model/entity/hierarchy-type';
 
 @Injectable({
@@ -13,10 +12,8 @@ export class HierarchyTypeService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<HierarchyType[]> {
-    console.log('HierarchyTypeService.findAll');
     const url = ResdbUrlEndpoints.HIERARCHY_TYPE_URL;
-    console.log('HierarchyTypeService.findAll: initiating REST call to url ' + url);
-    return this.http.get<HierarchyType[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<HierarchyType[]>(url);
   }
 
   add(toBeSaved: HierarchyType): Observable<HierarchyType> {
@@ -55,12 +52,6 @@ export class HierarchyTypeService {
       })
     };
     return this.http.put<HierarchyType>(url, toBeSaved, httpOptions);
-  }
-
-  private handleError(error: any) {
-    const errmsg = error.message || error;
-    console.log('Error: ' + errmsg);
-    return of([]);
   }
 
 }

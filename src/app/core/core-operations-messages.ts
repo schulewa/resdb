@@ -38,6 +38,7 @@ export class CoreOperationsMessages {
   public static get DELETE_EVENT_TYPE_GROUP(): string { return 'Attempting to mark event type group for deletion'; }
   public static get UPDATE_EVENT_TYPE_GROUP(): string { return 'Attempting to update event type group'; }
 
+  public static get FINDALL_HIERARCHY_TYPE(): string { return 'Attempting to find all live hierarchy types'; }
   public static get ADD_HIERARCHY_TYPE(): string { return 'Attempting to add new hierarchy type'; }
   public static get DELETE_HIERARCHY_TYPE(): string { return 'Attempting to mark hierarchy for deletion'; }
   public static get UPDATE_HIERARCHY_TYPE(): string { return 'Attempting to update hierarchy type'; }

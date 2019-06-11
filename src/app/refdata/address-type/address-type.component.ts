@@ -25,26 +25,24 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
   initRowData() {
     this.rowData = [];
     //
-    this.addressTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const addressType: AddressType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_ADDRESS_TYPE;
+    this.addressTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const addressType: AddressType = data[datum];
           addressType.selected = false;
           addressType.isDataChanged = false;
-          console.log('Mapped address type [{}]', addressType);
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('AddressTypeComponent.findAll: err="' + err);
+        this.httpError = err;
+      });
   }
-
-  //
-  // TODO
-  // 1. Set focus on blank row (after "Add empty row") has been executed
-  // 2. disable "Add empty row" once a blank one has been added until focus is lost or the row is deleted
-  // 3. check that "Name" is not duplicated; when focus exits Name field on current row
-  // 4.
-
 
   revertChanges() {
     console.log('AddressTypeComponent.revertChanges: TODO');

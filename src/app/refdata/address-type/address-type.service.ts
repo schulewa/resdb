@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 import { AddressType } from '../../model/entity/address-type';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
 
@@ -15,10 +14,8 @@ export class AddressTypeService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<AddressType[]> {
-    console.log('AddressTypesService.findAll');
     const url = ResdbUrlEndpoints.ADDRESS_TYPE_URL;
-    console.log('AddressTypesService.findAll: initiating REST call to url ' + url);
-    return this.http.get<AddressType[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<AddressType[]>(url);
   }
 
   add(addressType: AddressType): Observable<AddressType> {

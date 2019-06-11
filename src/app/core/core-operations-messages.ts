@@ -22,6 +22,7 @@ export class CoreOperationsMessages {
   public static get DELETE_CALENDAR_TYPE(): string { return 'Attempting to mark calendar type for deletion'; }
   public static get UPDATE_CALENDAR_TYPE(): string { return 'Attempting to update calendar type'; }
 
+  public static get FINDALL_DEITY_TYPE(): string { return 'Attempting to find all live deity types'; }
   public static get ADD_DEITY_TYPE(): string { return 'Attempting to add new deity type'; }
   public static get DELETE_DEITY_TYPE(): string { return 'Attempting to mark deity type for deletion'; }
   public static get UPDATE_DEITY_TYPE(): string { return 'Attempting to update deity type'; }

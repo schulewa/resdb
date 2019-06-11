@@ -24,6 +24,7 @@ export class DeityTypeComponent extends BaseNameComponent<DeityType> implements 
   initRowData() {
     this.rowData = [];
     //
+    this.operationMessage = CoreOperationsMessages.FINDALL_DEITY_TYPE;
     this.deityTypeService.findAll().subscribe(
       data => {
       for (const datum in data) {

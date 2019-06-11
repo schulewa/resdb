@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
-import { catchError } from 'rxjs/operators';
 import { ImageType } from '../../model/entity/image-type';
-import {HierarchyType} from '../../model/entity/hierarchy-type';
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +14,7 @@ export class ImageTypeService {
 
   findAll(): Observable<ImageType[]> {
     const url = ResdbUrlEndpoints.IMAGE_TYPE_URL;
-    return this.http.get<ImageType[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<ImageType[]>(url);
   }
 
   add(toBeSaved: ImageType): Observable<ImageType> {
@@ -54,12 +53,6 @@ export class ImageTypeService {
       })
     };
     return this.http.put<ImageType>(url, toBeSaved, httpOptions);
-  }
-
-  private handleError(error: any) {
-    const errmsg = error.message || error;
-    console.log('Error: ' + errmsg);
-    return of([]);
   }
 
 }

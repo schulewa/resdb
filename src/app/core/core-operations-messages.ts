@@ -43,6 +43,7 @@ export class CoreOperationsMessages {
   public static get DELETE_HIERARCHY_TYPE(): string { return 'Attempting to mark hierarchy for deletion'; }
   public static get UPDATE_HIERARCHY_TYPE(): string { return 'Attempting to update hierarchy type'; }
 
+  public static get FINDALL_IMAGE_TYPE(): string { return 'Attempting to find all live image types'; }
   public static get ADD_IMAGE_TYPE(): string { return 'Attempting to add new image type'; }
   public static get DELETE_IMAGE_TYPE(): string { return 'Attempting to mark image type for deletion'; }
   public static get UPDATE_IMAGE_TYPE(): string { return 'Attempting to update image type'; }

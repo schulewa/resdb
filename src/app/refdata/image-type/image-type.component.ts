@@ -16,7 +16,6 @@ export class ImageTypeComponent extends BaseNameComponent<ImageType> implements 
 
   constructor(private imageTypeService: ImageTypeService) {
     super(ImageType);
-    console.log('ImageTypeComponent constructor');
     this.columnDefs = this.createColumnDefs();
     this.gridOptions = this.createGridOptions(this.onCellValueChanged);
   }
@@ -24,16 +23,23 @@ export class ImageTypeComponent extends BaseNameComponent<ImageType> implements 
   initRowData() {
     this.rowData = [];
     //
-    this.imageTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const imageType: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_IMAGE_TYPE;
+    this.imageTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const imageType: IAuditedNameDataType = data[datum];
           imageType.selected = false;
           imageType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('ImageTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

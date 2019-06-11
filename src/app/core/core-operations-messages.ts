@@ -53,4 +53,9 @@ export class CoreOperationsMessages {
   public static get DELETE_LANGUAGE_GROUP(): string { return 'Attempting to mark language group for deletion'; }
   public static get UPDATE_LANGUAGE_GROUP(): string { return 'Attempting to update language group'; }
 
+  public static get FINDALL_MEASURE_TYPE(): string { return 'Attempting to final all live measure types'; }
+  public static get ADD_MEASURE_TYPE(): string { return 'Attempting to add new measure type'; }
+  public static get DELETE_MEASURE_TYPE(): string { return 'Attempting to mark measure type for deletion'; }
+  public static get UPDATE_MEASURE_TYPE(): string { return 'Attempting to update measure type'; }
+
 }

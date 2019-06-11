@@ -23,16 +23,23 @@ export class CalendarTypeComponent extends BaseNameComponent<CalendarType> imple
   initRowData() {
     this.rowData = [];
     //
-    this.calendarTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const calendarType: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_CALENDAR_TYPE;
+    this.calendarTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const calendarType: IAuditedNameDataType = data[datum];
           calendarType.selected = false;
           calendarType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('CalendarTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

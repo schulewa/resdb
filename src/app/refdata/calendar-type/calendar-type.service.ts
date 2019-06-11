@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
-import { catchError } from 'rxjs/operators';
 import { CalendarType } from '../../model/entity/calendar-type';
 
 
@@ -14,10 +13,8 @@ export class CalendarTypeService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<CalendarType[]> {
-    console.log('CalendarTypeService.findAll');
     const url = ResdbUrlEndpoints.CALENDAR_TYPE_URL;
-    console.log('CalendarTypeService.findAll: initiating REST call to url ' + url);
-    return this.http.get<CalendarType[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<CalendarType[]>(url);
   }
 
   add(toBeSaved: CalendarType): Observable<CalendarType> {
@@ -57,12 +54,6 @@ export class CalendarTypeService {
       })
     };
     return this.http.put<CalendarType>(url, toBeSaved, httpOptions);
-  }
-
-  private handleError(error: any) {
-    const errmsg = error.message || error;
-    console.log('Error: ' + errmsg);
-    return of([]);
   }
 
 }

@@ -1,18 +1,17 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.LanguageGroupDao;
+import com.apschulewitz.resdb.refdata.model.entity.ImageType;
 import com.apschulewitz.resdb.refdata.model.entity.LanguageGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -48,8 +47,23 @@ public class LanguageGroupController extends AbstractController<LanguageGroup, L
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
+  @RequestMapping(value = RestUrlPaths.LANGUAGE_GROUP_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<LanguageGroup> delete(@PathVariable long id) {
+    log.info("Marking language group [{}] for deletion", id);
+    Optional<LanguageGroup> existing = languageGroupDao.findById(id);
+
+    if (existing.isEmpty()) {
+      log.error("No existing language group found for id {} - unable to mark for deletion", id);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    existing.get().setStatus(VersionStatus.Cancel);
+    LanguageGroup saved = languageGroupDao.save(existing.get());
+    return new ResponseEntity<>(saved, HttpStatus.OK);
+  }
+
   @RequestMapping(value = RestUrlPaths.LANGUAGE_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<LanguageGroup> update(LanguageGroup toBeSaved) {
+  public ResponseEntity<LanguageGroup> update(@RequestBody LanguageGroup toBeSaved) {
     log.info("Update existing language group: {}", toBeSaved);
     Optional<LanguageGroup> existing = languageGroupDao.findById(toBeSaved.getId());
 

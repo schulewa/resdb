@@ -111,6 +111,10 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
     return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Image type';
   }
 
+  isLanguageGroupDataRefType(): boolean {
+    return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Language group';
+  }
+
   disableAllRefDataTypeForms() {
     this.selectedAddressType = false;
     this.selectedArtefactGroup = false;

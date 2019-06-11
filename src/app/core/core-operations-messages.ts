@@ -35,7 +35,12 @@ export class CoreOperationsMessages {
   public static get UPDATE_HIERARCHY_TYPE(): string { return 'Attempting to update hierarchy type'; }
 
   public static get ADD_IMAGE_TYPE(): string { return 'Attempting to add new image type'; }
-  public static get DELETE_IMAGE_TYPE(): string { return 'Attempting to mark image for deletion'; }
+  public static get DELETE_IMAGE_TYPE(): string { return 'Attempting to mark image type for deletion'; }
   public static get UPDATE_IMAGE_TYPE(): string { return 'Attempting to update image type'; }
+
+  public static get FINDALL_LANGUAGE_GROUP(): string { return 'Attempting to final all live language groups'; }
+  public static get ADD_LANGUAGE_GROUP(): string { return 'Attempting to add new language group'; }
+  public static get DELETE_LANGUAGE_GROUP(): string { return 'Attempting to mark language group for deletion'; }
+  public static get UPDATE_LANGUAGE_GROUP(): string { return 'Attempting to update language group'; }
 
 }

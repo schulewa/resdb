@@ -26,6 +26,7 @@
               <option>Event type group</option>
               <option>Hierarchy type</option>
               <option>Image type</option>
+              <option>Language group</option>
             </select>
 
           </div>
@@ -61,6 +62,8 @@
         <app-hierarchy-type *ngIf="isHierarchyTypeDataRefType()"></app-hierarchy-type>
 
         <app-image-type *ngIf="isImageTypeDataRefType()"></app-image-type>
+
+        <app-language-group *ngIf="isLanguageGroupDataRefType()"></app-language-group>
 
       </div>
 

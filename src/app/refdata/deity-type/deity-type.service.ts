@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
-import { catchError } from 'rxjs/operators';
 import { DeityType } from '../../model/entity/deity-type';
 
 
@@ -15,7 +14,7 @@ export class DeityTypeService {
 
   findAll(): Observable<DeityType[]> {
     const url = ResdbUrlEndpoints.DEITY_TYPE_URL;
-    return this.http.get<DeityType[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<DeityType[]>(url);
   }
 
   add(toBeSaved: DeityType): Observable<DeityType> {
@@ -55,12 +54,6 @@ export class DeityTypeService {
       })
     };
     return this.http.put<DeityType>(url, toBeSaved, httpOptions);
-  }
-
-  private handleError(error: any) {
-    const errmsg = error.message || error;
-    console.log('Error: ' + errmsg);
-    return of([]);
   }
 
 }

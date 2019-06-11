@@ -24,16 +24,22 @@ export class DeityTypeComponent extends BaseNameComponent<DeityType> implements 
   initRowData() {
     this.rowData = [];
     //
-    this.deityTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const deityType: IAuditedNameDataType = resp[datum];
+    this.deityTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const deityType: IAuditedNameDataType = data[datum];
           deityType.selected = false;
           deityType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('DeityTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

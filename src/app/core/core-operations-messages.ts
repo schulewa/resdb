@@ -32,6 +32,8 @@ export class CoreOperationsMessages {
   public static get DELETE_ENTITY_TYPE(): string { return 'Attempting to mark entity type for deletion'; }
   public static get UPDATE_ENTITY_TYPE(): string { return 'Attempting to update entity type'; }
 
+
+  public static get FINDALL_EVENT_TYPE_GROUP(): string { return 'Attempting to find all live event type groups'; }
   public static get ADD_EVENT_TYPE_GROUP(): string { return 'Attempting to add new event type group'; }
   public static get DELETE_EVENT_TYPE_GROUP(): string { return 'Attempting to mark event type group for deletion'; }
   public static get UPDATE_EVENT_TYPE_GROUP(): string { return 'Attempting to update event type group'; }

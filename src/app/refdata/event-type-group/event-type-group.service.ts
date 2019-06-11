@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
-import { catchError } from 'rxjs/operators';
 import { EventTypeGroup } from '../../model/entity/event-type-group';
 
 
@@ -15,7 +14,7 @@ export class EventTypeGroupService {
 
   findAll(): Observable<EventTypeGroup[]> {
     const url = ResdbUrlEndpoints.EVENT_TYPE_GROUP_URL;
-    return this.http.get<EventTypeGroup[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<EventTypeGroup[]>(url);
   }
 
   add(toBeSaved: EventTypeGroup): Observable<EventTypeGroup> {
@@ -55,12 +54,6 @@ export class EventTypeGroupService {
       })
     };
     return this.http.put<EventTypeGroup>(url, toBeSaved, httpOptions);
-  }
-
-  private handleError(error: any) {
-    const errmsg = error.message || error;
-    console.log('Error: ' + errmsg);
-    return of([]);
   }
 
 }

@@ -24,16 +24,23 @@ export class EventTypeGroupComponent extends BaseNameComponent<EventTypeGroup> i
   initRowData() {
     this.rowData = [];
     //
-    this.eventTypeGroupService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const eventTypeGroup: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_EVENT_TYPE_GROUP;
+    this.eventTypeGroupService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const eventTypeGroup: IAuditedNameDataType = data[datum];
           eventTypeGroup.selected = false;
           eventTypeGroup.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('EventTypeGroupComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

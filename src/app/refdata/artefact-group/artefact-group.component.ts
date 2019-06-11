@@ -24,16 +24,23 @@ export class ArtefactGroupComponent extends BaseNameComponent<ArtefactGroup> imp
   initRowData() {
     this.rowData = [];
     //
-    this.artefactGroupService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const artefactGroup: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_ARTEFACT_GROUP;
+    this.artefactGroupService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const artefactGroup: IAuditedNameDataType = data[datum];
           artefactGroup.selected = false;
           artefactGroup.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('ArtefactGroupComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

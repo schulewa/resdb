@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
 import { catchError } from 'rxjs/operators';
 import { ArtefactGroup } from '../../model/entity/artefact-group';
-import {AddressType} from '../../model/entity/address-type';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +13,8 @@ export class ArtefactGroupService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<ArtefactGroup[]> {
-    console.log('ArtefactGroupService.findAll');
     const url = ResdbUrlEndpoints.ARTEFACT_GROUP_URL;
-    console.log('ArtefactGroupService.findAll: initiating REST call to url ' + url);
-    return this.http.get<ArtefactGroup[]>(url).pipe(catchError(this.handleError));
+    return this.http.get<ArtefactGroup[]>(url);
   }
 
   add(toBeSaved: ArtefactGroup): Observable<ArtefactGroup> {

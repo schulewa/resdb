@@ -15,6 +15,7 @@ import { EventTypeGroupComponent } from './event-type-group/event-type-group.com
 import { HierarchyTypeComponent } from './hierarchy-type/hierarchy-type.component';
 import { ImageTypeComponent } from './image-type/image-type.component';
 import { LanguageGroupComponent } from './language-group/language-group.component';
+import { MeasureTypeComponent } from './measure-type/measure-type.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LanguageGroupComponent } from './language-group/language-group.componen
     HierarchyTypeComponent,
     ImageTypeComponent,
     LanguageGroupComponent,
+    MeasureTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

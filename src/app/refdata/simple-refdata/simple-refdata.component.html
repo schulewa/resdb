@@ -27,6 +27,7 @@
               <option>Hierarchy type</option>
               <option>Image type</option>
               <option>Language group</option>
+              <option>Measure type</option>
             </select>
 
           </div>
@@ -64,6 +65,8 @@
         <app-image-type *ngIf="isImageTypeDataRefType()"></app-image-type>
 
         <app-language-group *ngIf="isLanguageGroupDataRefType()"></app-language-group>
+
+        <app-measure-type *ngIf="isMeasureTypeDataRefType()"></app-measure-type>
 
       </div>
 

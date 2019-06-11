@@ -23,16 +23,23 @@ export class EntityTypeComponent extends BaseNameComponent<EntityType> implement
   initRowData() {
     this.rowData = [];
     //
-    this.entityTypeService.findAll().subscribe((resp) => {
-      for (const datum in resp) {
-        if (resp.hasOwnProperty(datum)) {
-          const entityType: IAuditedNameDataType = resp[datum];
+    this.operationMessage = CoreOperationsMessages.FINDALL_ENTITY_TYPE;
+    this.entityTypeService.findAll().subscribe(
+      data => {
+      for (const datum in data) {
+        if (data.hasOwnProperty(datum)) {
+          const entityType: IAuditedNameDataType = data[datum];
           entityType.selected = false;
           entityType.isDataChanged = false;
         }
       }
-      this.rowData = resp;
-    });
+      this.rowData = data;
+      this.httpError = null;
+    },
+      err => {
+        console.error('EnityTypeComponent.findall: err="' + err);
+        this.httpError = err;
+      });
   }
 
   revertChanges() {

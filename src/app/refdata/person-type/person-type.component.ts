@@ -23,6 +23,7 @@ export class PersonTypeComponent extends BaseNameComponent<PersonType> implement
   initRowData() {
     this.rowData = [];
     //
+    this.operationMessage = CoreOperationsMessages.FINDALL_PERSON_TYPE;
     this.personTypeService.findAll().subscribe((resp) => {
       for (const datum in resp) {
         if (datum.hasOwnProperty(datum)) {

@@ -16,7 +16,6 @@ export class PublicationTypeComponent extends BaseNameComponent<PublicationType>
 
   constructor(private publicationTypeService: PublicationTypeService) {
     super(PublicationType);
-    console.log('PublicationTypeService constructor');
     this.columnDefs = this.createColumnDefs();
     this.gridOptions = this.createGridOptions(this.onCellValueChanged);
   }
@@ -24,6 +23,7 @@ export class PublicationTypeComponent extends BaseNameComponent<PublicationType>
   initRowData() {
     this.rowData = [];
     //
+    this.operationMessage = CoreOperationsMessages.FINDALL_PUBLICATION_TYPE;
     this.publicationTypeService.findAll().subscribe(
       data => {
       for (const datum in data) {
@@ -42,14 +42,13 @@ export class PublicationTypeComponent extends BaseNameComponent<PublicationType>
   }
 
   saveChanges() {
-    console.log('PublicationTypeService.saveChanges - entry - number of rows = ' + this.rowData.length);
     // save only new and modified rows
     const toBeSaved = this.rowData.filter(row => row.action != null);
 
     if (toBeSaved) {
       for (const publicationType of toBeSaved) {
         if (DataAction.Add === publicationType.action) {
-          this.operationMessage = CoreOperationsMessages.ADD_PERSON_TYPE;
+          this.operationMessage = CoreOperationsMessages.ADD_PUBLICATION_TYPE;
           this.enrichAuditData(publicationType);
           this.publicationTypeService.add(publicationType).subscribe(
             data => {
@@ -60,7 +59,7 @@ export class PublicationTypeComponent extends BaseNameComponent<PublicationType>
               this.httpError = err;
             });
         } else if (DataAction.Update === publicationType.action) {
-          this.operationMessage = CoreOperationsMessages.UPDATE_PERSON_TYPE;
+          this.operationMessage = CoreOperationsMessages.UPDATE_PUBLICATION_TYPE;
           publicationType.status = DataStatus.Amend;
           this.publicationTypeService.update(publicationType).subscribe(
             data => {
@@ -72,7 +71,7 @@ export class PublicationTypeComponent extends BaseNameComponent<PublicationType>
             }
           );
         } else if (DataAction.Delete === publicationType.action) {
-          this.operationMessage = CoreOperationsMessages.DELETE_PERSON_TYPE;
+          this.operationMessage = CoreOperationsMessages.DELETE_PUBLICATION_TYPE;
           publicationType.status = DataStatus.Delete;
           this.publicationTypeService.delete(publicationType).subscribe(
             data => {

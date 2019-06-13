@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
 import { PublicationType } from '../../model/entity/publication-type';
-import {PersonType} from '../../model/entity/person-type';
-import {MeasureType} from '../../model/entity/measure-type';
+import { MeasureType } from '../../model/entity/measure-type';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +13,7 @@ export class PublicationTypeService {
   constructor(private http: HttpClient) { }
 
   findAll(): Observable<PublicationType[]> {
-    console.log('PublicationTypeService.findAll');
     const url = ResdbUrlEndpoints.PUBLICATION_TYPE_URL;
-    console.log('PublicationTypeService.findAll: initiating REST call to url ' + url);
     return this.http.get<PublicationType[]>(url);
   }
 

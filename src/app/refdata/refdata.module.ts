@@ -20,6 +20,7 @@ import { PersonTypeComponent } from './person-type/person-type.component';
 import { PublicationTypeComponent } from './publication-type/publication-type.component';
 import { RaceTypeComponent } from './race-type/race-type.component';
 import { TaleTypeComponent } from './tale-type/tale-type.component';
+import { TechnologyTypeGroupComponent } from './technology-type-group/technology-type-group.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TaleTypeComponent } from './tale-type/tale-type.component';
     PublicationTypeComponent,
     RaceTypeComponent,
     TaleTypeComponent,
+    TechnologyTypeGroupComponent,
   ],
   imports: [
     AgGridModule.withComponents([

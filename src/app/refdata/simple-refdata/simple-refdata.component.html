@@ -32,6 +32,7 @@
               <option>Publication type</option>
               <option>Race type</option>
               <option>Tale type</option>
+              <option>Technology type group</option>
             </select>
 
           </div>
@@ -79,6 +80,8 @@
         <app-race-type *ngIf="isRaceTypeDataRefType()"></app-race-type>
 
         <app-tale-type *ngIf="isTaleTypeDataRefType()"></app-tale-type>
+
+        <app-technology-type-group *ngIf="isTechnologyTypeGroupDataRefType()"></app-technology-type-group>
 
       </div>
 

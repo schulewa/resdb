@@ -78,4 +78,9 @@ export class CoreOperationsMessages {
   public static get DELETE_TALE_TYPE(): string { return 'Attempting to mark tale type for deletion'; }
   public static get UPDATE_TALE_TYPE(): string { return 'Attempting to update tale type'; }
 
+  public static get FINDALL_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to final all live technology type groups'; }
+  public static get ADD_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to add new technology type group'; }
+  public static get DELETE_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to mark technology type group for deletion'; }
+  public static get UPDATE_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to update technology type group'; }
+
 }

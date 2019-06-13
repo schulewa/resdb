@@ -33,7 +33,7 @@ public class LanguageGroupController extends AbstractController<LanguageGroup, L
   public ResponseEntity<List<LanguageGroup>> findAll() {
 
     List<LanguageGroup> languageGroups = new ArrayList<>();
-    Iterable<LanguageGroup> iter = languageGroupDao.findAll();
+    Iterable<LanguageGroup> iter = languageGroupDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
       .forEach(at -> languageGroups.add(at));
     log.info("findAll: {} language groups found", languageGroups.size());

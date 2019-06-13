@@ -18,6 +18,7 @@ import { LanguageGroupComponent } from './language-group/language-group.componen
 import { MeasureTypeComponent } from './measure-type/measure-type.component';
 import { PersonTypeComponent } from './person-type/person-type.component';
 import { PublicationTypeComponent } from './publication-type/publication-type.component';
+import { RaceTypeComponent } from './race-type/race-type.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PublicationTypeComponent } from './publication-type/publication-type.co
     MeasureTypeComponent,
     PersonTypeComponent,
     PublicationTypeComponent,
+    RaceTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

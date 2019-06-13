@@ -62,4 +62,15 @@ export class CoreOperationsMessages {
   public static get ADD_PERSON_TYPE(): string { return 'Attempting to add new person type'; }
   public static get DELETE_PERSON_TYPE(): string { return 'Attempting to mark person type for deletion'; }
   public static get UPDATE_PERSON_TYPE(): string { return 'Attempting to update person type'; }
+
+  public static get FINDALL_PUBLICATION_TYPE(): string { return 'Attempting to final all live publication types'; }
+  public static get ADD_PUBLICATION_TYPE(): string { return 'Attempting to add new publication type'; }
+  public static get DELETE_PUBLICATION_TYPE(): string { return 'Attempting to mark publication type for deletion'; }
+  public static get UPDATE_PUBLICATION_TYPE(): string { return 'Attempting to update publication type'; }
+
+  public static get FINDALL_RACE_TYPE(): string { return 'Attempting to final all live race types'; }
+  public static get ADD_RACE_TYPE(): string { return 'Attempting to add new race type'; }
+  public static get DELETE_RACE_TYPE(): string { return 'Attempting to mark race type for deletion'; }
+  public static get UPDATE_RACE_TYPE(): string { return 'Attempting to update race type'; }
+
 }

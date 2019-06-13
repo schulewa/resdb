@@ -30,6 +30,7 @@
               <option>Measure type</option>
               <option>Person type</option>
               <option>Publication type</option>
+              <option>Race type</option>
             </select>
 
           </div>
@@ -73,6 +74,8 @@
         <app-person-type *ngIf="isPersonTypeDataRefType()"></app-person-type>
 
         <app-publication-type *ngIf="isPublicationTypeDataRefType()"></app-publication-type>
+
+        <app-race-type *ngIf="isRaceTypeDataRefType()"></app-race-type>
 
       </div>
 

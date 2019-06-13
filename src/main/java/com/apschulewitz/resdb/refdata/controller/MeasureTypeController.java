@@ -33,7 +33,7 @@ public class MeasureTypeController extends AbstractController<MeasureType, Long>
   public ResponseEntity<List<MeasureType>> findAll() {
 
     List<MeasureType> measureTypes = new ArrayList<>();
-    Iterable<MeasureType> iter = measureTypeDao.findAll();
+    Iterable<MeasureType> iter = measureTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
       .forEach(at -> measureTypes.add(at));
 

@@ -19,6 +19,7 @@ import { MeasureTypeComponent } from './measure-type/measure-type.component';
 import { PersonTypeComponent } from './person-type/person-type.component';
 import { PublicationTypeComponent } from './publication-type/publication-type.component';
 import { RaceTypeComponent } from './race-type/race-type.component';
+import { TaleTypeComponent } from './tale-type/tale-type.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { RaceTypeComponent } from './race-type/race-type.component';
     PersonTypeComponent,
     PublicationTypeComponent,
     RaceTypeComponent,
+    TaleTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

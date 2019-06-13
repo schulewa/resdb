@@ -31,6 +31,7 @@
               <option>Person type</option>
               <option>Publication type</option>
               <option>Race type</option>
+              <option>Tale type</option>
             </select>
 
           </div>
@@ -76,6 +77,8 @@
         <app-publication-type *ngIf="isPublicationTypeDataRefType()"></app-publication-type>
 
         <app-race-type *ngIf="isRaceTypeDataRefType()"></app-race-type>
+
+        <app-tale-type *ngIf="isTaleTypeDataRefType()"></app-tale-type>
 
       </div>
 

@@ -28,6 +28,7 @@
               <option>Image type</option>
               <option>Language group</option>
               <option>Measure type</option>
+              <option>Person type</option>
             </select>
 
           </div>
@@ -67,6 +68,8 @@
         <app-language-group *ngIf="isLanguageGroupDataRefType()"></app-language-group>
 
         <app-measure-type *ngIf="isMeasureTypeDataRefType()"></app-measure-type>
+
+        <app-person-type *ngIf="isPersonTypeDataRefType()"></app-person-type>
 
       </div>
 

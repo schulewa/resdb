@@ -1,18 +1,17 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.PersonTypeDao;
+import com.apschulewitz.resdb.refdata.model.entity.MeasureType;
 import com.apschulewitz.resdb.refdata.model.entity.PersonType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -34,7 +33,7 @@ public class PersonTypeController extends AbstractController<PersonType, Long> {
   public ResponseEntity<List<PersonType>> findAll() {
 
     List<PersonType> personTypes = new ArrayList<>();
-    Iterable<PersonType> iter = personTypeDao.findAll();
+    Iterable<PersonType> iter = personTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
       .forEach(at -> personTypes.add(at));
 
@@ -48,8 +47,23 @@ public class PersonTypeController extends AbstractController<PersonType, Long> {
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
+  @RequestMapping(value = RestUrlPaths.PERSON_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
+  public ResponseEntity<PersonType> delete(@PathVariable long id) {
+    log.info("Marking person type [{}] for deletion", id);
+    Optional<PersonType> existing = personTypeDao.findById(id);
+
+    if (existing.isEmpty()) {
+      log.error("No existing person type found for id {} - unable to mark for deletion", id);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    existing.get().setStatus(VersionStatus.Cancel);
+    PersonType saved = personTypeDao.save(existing.get());
+    return new ResponseEntity<>(saved, HttpStatus.OK);
+  }
+
   @RequestMapping(value = RestUrlPaths.PERSON_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<PersonType> update(PersonType toBeSaved) {
+  public ResponseEntity<PersonType> update(@RequestBody PersonType toBeSaved) {
     log.info("Update existing person type: {}", toBeSaved);
     Optional<PersonType> existing = personTypeDao.findById(toBeSaved.getId());
 

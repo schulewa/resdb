@@ -16,6 +16,7 @@ import { HierarchyTypeComponent } from './hierarchy-type/hierarchy-type.componen
 import { ImageTypeComponent } from './image-type/image-type.component';
 import { LanguageGroupComponent } from './language-group/language-group.component';
 import { MeasureTypeComponent } from './measure-type/measure-type.component';
+import { PersonTypeComponent } from './person-type/person-type.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MeasureTypeComponent } from './measure-type/measure-type.component';
     ImageTypeComponent,
     LanguageGroupComponent,
     MeasureTypeComponent,
+    PersonTypeComponent,
   ],
   imports: [
     AgGridModule.withComponents([

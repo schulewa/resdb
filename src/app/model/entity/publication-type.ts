@@ -1,8 +1,8 @@
 import { DataStatus } from '../../refdata/data-status';
+import { IAuditedNameDataType } from './interfaces/audited-name-data-type';
 import { DataAction } from '../../refdata/data-action';
-import {IAuditedNameDataType} from './interfaces/audited-name-data-type';
 
-export class PersonType implements IAuditedNameDataType {
+export class PublicationType implements IAuditedNameDataType {
 
   id: number;
   name: string;
@@ -18,14 +18,15 @@ export class PersonType implements IAuditedNameDataType {
     this.isDataChanged = false;
     this.selected = false;
     this.id = 0;
-    this.name = "";
+    this.name = '';
     this.action = DataAction.Add;
     this.status = DataStatus.New;
   }
 
   public toString(): string {
-    return 'PersonType: id=' + this.id + ' name=' + this.name + ' status=' + this.status + ' createdBy=' + this.createdBy +
-            ' updatedBy=' + this.updatedBy + ' lastUpdated=' + this.lastUpdated + ' selected=' + this.selected + ' action=' + this.action +
-            ' isDataChanged=' + this.isDataChanged;
+    return 'PublicationType: id=' + this.id + ' name=' + this.name + ' status=' + this.status + ' createdBy=' + this.createdBy +
+      ' updatedBy=' + this.updatedBy + ' lastUpdated=' + this.lastUpdated + ' selected=' + this.selected + ' action=' + this.action +
+      ' isDataChanged=' + this.isDataChanged;
   }
+
 }

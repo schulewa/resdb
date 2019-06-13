@@ -29,6 +29,7 @@
               <option>Language group</option>
               <option>Measure type</option>
               <option>Person type</option>
+              <option>Publication type</option>
             </select>
 
           </div>
@@ -70,6 +71,8 @@
         <app-measure-type *ngIf="isMeasureTypeDataRefType()"></app-measure-type>
 
         <app-person-type *ngIf="isPersonTypeDataRefType()"></app-person-type>
+
+        <app-publication-type *ngIf="isPublicationTypeDataRefType()"></app-publication-type>
 
       </div>
 

@@ -123,6 +123,10 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
     return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Person type';
   }
 
+  isPublicationTypeDataRefType(): boolean {
+    return this.refDataTypeForm.controls['refDataType'] && this.refDataTypeForm.controls['refDataType'].value === 'Publication type';
+  }
+
   disableAllRefDataTypeForms() {
     this.selectedAddressType = false;
     this.selectedArtefactGroup = false;

@@ -1,6 +1,5 @@
 # resdb
-Research Database for my historian wife
-# Resdb
+Research Database for my historian wife for research into pre-Columbian textfiles from Central and South America.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 

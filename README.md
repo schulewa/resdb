@@ -3,6 +3,9 @@ Research Database for my historian wife for research into pre-Columbian textfile
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 
+### Prerequisites
+Install MySQL database server, 5.6+.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

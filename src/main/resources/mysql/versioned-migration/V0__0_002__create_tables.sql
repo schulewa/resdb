@@ -713,6 +713,10 @@ CREATE TABLE resdb_person
   suffix_title_id 		BIGINT       NULL,
   birth_place_id   		BIGINT       NULL,
   death_place_id  		BIGINT       NULL,
+  status              VARCHAR(1) NOT NULL,
+  created_by          VARCHAR(20) NOT NULL,
+  last_updated        TIMESTAMP NOT NULL,
+  updated_by          VARCHAR(20) NOT NULL,
 	CONSTRAINT resdb_person_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_person_name_idx ON resdb_person (family_name, middle_name, first_name);

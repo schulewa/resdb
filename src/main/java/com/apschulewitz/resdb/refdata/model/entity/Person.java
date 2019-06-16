@@ -4,14 +4,17 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.HistoricalDate;
 import com.apschulewitz.resdb.common.model.entity.Title;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -98,8 +101,23 @@ public class Person {
 //    @JoinColumn(name = "person_definition_id", nullable = true)
 //    PersonDefinition personDefinition;
 
-    @Tolerate
-    public Person() {
+  @Column
+  private VersionStatus status;
 
-    }
+  @Column
+  private String createdBy;
+
+  @Column
+  private String updatedBy;
+
+  @Version
+  @Column(name = "last_updated")
+  private LocalDateTime lastUpdated;
+
+  private transient DataOperation operation;
+
+  @Tolerate
+  public Person() {
+
+  }
 }

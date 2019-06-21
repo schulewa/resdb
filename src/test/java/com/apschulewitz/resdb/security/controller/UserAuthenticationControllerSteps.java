@@ -25,7 +25,6 @@ public class UserAuthenticationControllerSteps extends AbstractFeatureStepTest {
 
   @Given("I am not logged in")
   public void i_am_not_logged_in() {
-    LOGGER.info("++ GIVEN -> I am not logged in");
     userLogonDto = new UserLogonDto();
   }
 
@@ -33,14 +32,12 @@ public class UserAuthenticationControllerSteps extends AbstractFeatureStepTest {
 
   @When("I supply a valid user name and password")
   public void i_supply_a_valid_user_and_password() {
-    LOGGER.info("I supply a valid user name and password");
     userLogonDto.setUserName("adrian");
     userLogonDto.setPassword("nepal1");
   }
 
   @Then("I should be authorised")
   public void i_should_be_authorised() {
-    LOGGER.info("I should be authorised");
     ResponseEntity<UserDto> responseEntity = controller.logon(userLogonDto);
     assertEquals("Response status should be OK", HttpStatus.OK, responseEntity.getStatusCode());
   }
@@ -49,14 +46,12 @@ public class UserAuthenticationControllerSteps extends AbstractFeatureStepTest {
 
   @When("I supply an invalid user name and password")
   public void i_supply_an_invalid_user_name_and_password() {
-    LOGGER.info("I supply an invalid user name and password");
     userLogonDto.setUserName("no such user");
     userLogonDto.setPassword("and pwd combo");
   }
 
   @Then("I should not be authorised")
   public void i_should_not_be_authorised() {
-    LOGGER.info("I should not be authorised");
     ResponseEntity<UserDto> responseEntity = controller.logon(userLogonDto);
     assertEquals("Response status should not be OK", HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
   }

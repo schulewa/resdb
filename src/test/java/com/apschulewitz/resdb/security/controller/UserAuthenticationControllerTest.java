@@ -4,6 +4,7 @@ import com.apschulewitz.resdb.common.ApplicationResponse;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.security.UserAuthenticationService;
 import com.apschulewitz.resdb.security.model.dto.UserDto;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.hamcrest.Matchers.is;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserAuthenticationController.class)
 public class UserAuthenticationControllerTest {

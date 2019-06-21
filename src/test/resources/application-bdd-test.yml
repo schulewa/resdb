@@ -1,0 +1,34 @@
+jdbc:
+  driverClassName: org.h2.Driver
+  url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+
+hibernate:
+  dialect: org.hibernate.dialect.H2Dialect
+  hbm2ddl:
+    auto: create
+
+spring:
+  datasource:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/resdb_dev?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    username: resdb_dev
+    password: resdb_dev
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  session:
+    store-type: none
+
+authentication:
+  expiryInMinutes: 7200
+
+client:
+  cors:
+    base:
+      url: http://localhost:50545
+
+
+

@@ -43,6 +43,16 @@ spring:
   session:
     store-type: none
 
+# Enable zipkin support, sample all requests
+  zipkin:
+    baseUrl: http://zipkin:9411
+  sleuth:
+    sampler:
+      percentage: 1.0
+sample:
+  zipkin:
+    enabled: true
+
 server:
   port: 8080
 
@@ -57,7 +67,7 @@ environment: dev
 authentication:
   expiryInMinutes: 7200
 
-security:
-  ignored:
-    - "*.bundle.*"
-  sessions: NEVER
+#security:
+#  ignored:
+#    - "*.bundle.*"
+#  sessions: NEVER

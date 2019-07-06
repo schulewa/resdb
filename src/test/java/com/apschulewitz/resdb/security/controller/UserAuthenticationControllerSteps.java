@@ -6,17 +6,15 @@ import com.apschulewitz.resdb.security.model.dto.UserLogonDto;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.assertEquals;
 
+@Slf4j
 public class UserAuthenticationControllerSteps extends AbstractFeatureStepTest {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserAuthenticationControllerSteps.class);
 
   @Autowired
   private UserAuthenticationController controller;

@@ -41,7 +41,7 @@ export class AddressTypeComponent extends BaseNameComponent<AddressType> impleme
       err => {
         console.error('AddressTypeComponent.findAll: err="' + err);
         this.httpError = err;
-      });
+    });
   }
 
   revertChanges() {

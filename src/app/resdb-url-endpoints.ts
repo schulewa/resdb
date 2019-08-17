@@ -2,6 +2,7 @@ export class ResdbUrlEndpoints {
 
   public static get API_URL(): string { return '/resdb/api'; }
   public static get REFDATA_URL(): string { return this.API_URL + '/refdata'; }
+  public static get RESEARCH_URL(): string { return  this.API_URL + '/research'; }
 
   public static get LOGIN_URL(): string { return this.API_URL + '/auth/login'; }
 
@@ -29,6 +30,7 @@ export class ResdbUrlEndpoints {
   public static get REFERENCE_TYPE_URL(): string { return this.REFDATA_URL + '/referencetypes'; }
   public static get REGION_URL(): string { return this.REFDATA_URL + '/regions'; }
   public static get TALE_TYPE_URL(): string { return this.REFDATA_URL + '/taletypes'; }
+  public static get TITLE_URL(): string { return this.RESEARCH_URL + '/titles'; }
   public static get TECHNOLOGY_TYPE_GROUP_URL(): string { return this.REFDATA_URL + '/technologytypegroups'; }
 
 }

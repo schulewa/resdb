@@ -5,9 +5,10 @@ import { ResearchRoutingModule } from './research-routing.module';
 import { AgGridModule } from 'ag-grid-angular';
 import { PersonComponent } from './person/person.component';
 import { CoreModule } from '../core/core.module';
+import { TitlesComponent } from './titles/titles.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [TitlesComponent],
   imports: [
     AgGridModule.withComponents([
       PersonComponent

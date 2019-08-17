@@ -18,7 +18,7 @@ export class TaleType implements IAuditedNameDataType {
     this.isDataChanged = false;
     this.selected = false;
     this.id = 0;
-    this.name = "";
+    this.name = '';
     this.action = DataAction.Add;
     this.status = DataStatus.New;
   }

@@ -16,6 +16,8 @@ import lombok.experimental.Tolerate;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
@@ -33,19 +35,24 @@ public class AddressType implements EqualsAll {
   private Long id;
 
   @Column(name = "name", nullable = false, length = 30)
+  @NotBlank
   private String name;
 
   @Column
+  @NotNull
   private VersionStatus status;
 
   @Column
+  @NotBlank
   private String createdBy;
 
   @Column
+  @NotBlank
   private String updatedBy;
 
   @Version
   @Column(name = "last_updated")
+  @NotNull
   private LocalDateTime lastUpdated;
 
   private transient DataOperation operation;

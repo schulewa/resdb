@@ -4,6 +4,7 @@ public final class RestUrlPaths {
 
   public static final String RESEARCH_DATABASE_BASE_URL = "/resdb/api";
   public static final String REFDATA_URL = RESEARCH_DATABASE_BASE_URL + "/refdata";
+  public static final String RESEARCH_URL = RESEARCH_DATABASE_BASE_URL + "/research";
 
   // ref data
 
@@ -26,6 +27,10 @@ public final class RestUrlPaths {
   public static final String REGION_CONTROLLER_BASE_URL = REFDATA_URL + "/regions";
   public static final String TALE_TYPE_CONTROLLER_BASE_URL = REFDATA_URL + "/taletypes";
   public static final String TECHNOLOGY_TYPE_GROUP_CONTROLLER_BASE_URL = REFDATA_URL + "/technologytypegroups";
+
+  // research data
+
+  public static final String TITLE_CONTROLLER_BASE_URL = RESEARCH_URL + "/titles";
 
   // authentication and authorization url's
   private static final String AUTH_CONTROLLER_BASE_URL = RESEARCH_DATABASE_BASE_URL + "/auth";

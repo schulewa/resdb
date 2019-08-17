@@ -701,6 +701,7 @@ CREATE TABLE resdb_person
   first_name      		VARCHAR(30)   NOT NULL,
   middle_name     		VARCHAR(30)   NULL,
   family_name     		VARCHAR(50)   NOT NULL,
+  gender              VARCHAR(1)    NULL,
   birth_calendar_id		BIGINT			  NULL,
   birth_year      	  BIGINT        NULL,
   birth_month     		INTEGER       NULL,
@@ -1053,13 +1054,20 @@ CREATE UNIQUE INDEX resdb_theory_name_idx ON resdb_theory (name);
 
 create table resdb_title
 (
-	id                  BIGINT NOT NULL AUTO_INCREMENT,
-  name                VARCHAR(30)   NOT NULL,
-  description         VARCHAR(250)  NOT NULL,
-  author_person_id    BIGINT       NOT NULL,
+	id                BIGINT NOT NULL AUTO_INCREMENT,
+  title             VARCHAR(30)   NOT NULL,
+  description       VARCHAR(250)  NOT NULL,
+  applies_to        VARCHAR(1)    NOT NULL, -- P=prefix, S=suffix
+  title_type        VARCHAR(1)    NOT NULL, -- M=Male, F=Female
+  status            VARCHAR(1) NOT NULL,
+  created_by        VARCHAR(20) NOT NULL,
+  last_updated      TIMESTAMP NOT NULL,
+  updated_by        VARCHAR(20) NOT NULL,
 	CONSTRAINT resdb_title_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_title_name_idx ON resdb_title (name);
+CREATE UNIQUE INDEX resdb_title_title_idx ON resdb_title (title, applies_to);
+CREATE UNIQUE INDEX resdb_title_desc_idx ON resdb_title (description, applies_to);
+CREATE INDEX resdb_title_applies_idx ON resdb_title (applies_to);
 
 
 CREATE TABLE resdb_user_account

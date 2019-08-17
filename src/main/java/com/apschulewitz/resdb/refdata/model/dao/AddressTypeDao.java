@@ -17,4 +17,6 @@ public interface AddressTypeDao extends CrudRepository<AddressType, Long> {
 
   List<AddressType> findByStatusIn(List<VersionStatus> livestatuses);
 
+  List<AddressType> findByStatusInAndNameStartsWith(List<VersionStatus> livestatuses, String name);
+
 }

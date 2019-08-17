@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
   "com.apschulewitz.resdb.common.model",
   "com.apschulewitz.resdb.config.model",
   "com.apschulewitz.resdb.refdata.model",
+  "com.apschulewitz.resdb.research.model",
   "com.apschulewitz.resdb.security.model"
 })
 @EnableJpaRepositories
@@ -21,4 +22,3 @@ public class ResearchDatabaseApplication {
 
 }
 
-// config, security,

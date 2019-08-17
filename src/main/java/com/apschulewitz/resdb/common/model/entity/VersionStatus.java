@@ -2,6 +2,8 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public enum VersionStatus {
 
     private String code;
 
-    VersionStatus(String code) {
+    VersionStatus(@NotBlank String code) {
         this.code = code;
     }
 
@@ -27,11 +29,7 @@ public enum VersionStatus {
         return code;
     }
 
-    public static VersionStatus getInstance(String code) {
-        if (StringUtils.isEmpty(code)) {
-            return null;
-        }
-
+    public static VersionStatus getInstance(@NotBlank String code) {
         switch (code) {
             case "N":
                 return New;
@@ -44,8 +42,8 @@ public enum VersionStatus {
         }
     }
 
-    public static boolean isActive(VersionStatus status) {
-        return status != null && (New.equals(status) || Amend.equals(status));
+    public static boolean isActive(@NotNull VersionStatus status) {
+        return New.equals(status) || Amend.equals(status);
     }
 
     public static List<VersionStatus> getLiveStatuses() {

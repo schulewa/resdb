@@ -31,6 +31,7 @@ public class DateColumn extends AbstractTableColumn
      */
     public void setColumnLength(int length)
     {
+      throw new UnsupportedOperationException("Not allowed to set length on DateColumn");
     }
 
     /**
@@ -48,17 +49,17 @@ public class DateColumn extends AbstractTableColumn
      * <code>vsetValue</code> sets the value of DateTimeColumn.
      * @param year sets the year part of the value
      * @param month sets the month part of the value
-     * @param date sets the day of the month for the value
+     * @param day sets the day of the month for the value
      */
-    public void setValue(int year, int month, int date)
+    public void setValue(int year, int month, int day)
     {
         if (value == null)
-            value = new GregorianCalendar(year, month, date);
+            value = new GregorianCalendar(year, month, day);
         else
         {
             value.set(GregorianCalendar.YEAR, year);
             value.set(GregorianCalendar.MONTH, month);
-            value.set(GregorianCalendar.DAY_OF_MONTH, date);
+            value.set(GregorianCalendar.DAY_OF_MONTH, day);
         }
         nullifyTimeElements();
     }

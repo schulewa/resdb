@@ -8,13 +8,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(
-  classes = ResearchDatabaseApplication.class,
-  loader = SpringBootContextLoader.class
-)
-@TestPropertySource(locations = "classpath:application-bdd-test.yml")
-@ActiveProfiles("bdd-test")
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@ContextConfiguration(
+//  classes = ResearchDatabaseApplication.class,
+//  loader = SpringBootContextLoader.class
+//)
+//@TestPropertySource(locations = "classpath:application-bdd-test.yml")
+//@ActiveProfiles("bdd-test")
 public class AbstractFeatureStepTest {
 }

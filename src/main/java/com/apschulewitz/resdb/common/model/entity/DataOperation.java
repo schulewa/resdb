@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.common.model.entity;
 
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,7 +13,7 @@ public enum DataOperation {
 
     private String code;
 
-    DataOperation(String code) {
+    DataOperation(@NotBlank String code) {
         this.code = code;
     }
 
@@ -20,7 +21,7 @@ public enum DataOperation {
         return code;
     }
 
-    public static DataOperation getOperationFor(String code) {
+    public static DataOperation getOperationFor(@NotBlank String code) {
 
         switch (code) {
 

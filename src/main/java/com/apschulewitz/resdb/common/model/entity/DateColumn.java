@@ -2,6 +2,7 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import com.apschulewitz.resdb.common.model.DataEntityException;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.GregorianCalendar;
 
@@ -20,7 +21,7 @@ public class DateColumn extends AbstractTableColumn
      * Creates an instance of DateColumn.
      * @param name is the name for the column
      */
-    public DateColumn(String name)
+    public DateColumn(@NotBlank String name)
     throws DataEntityException
     {
         setType(DataType.DATE);

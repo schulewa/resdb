@@ -1,10 +1,12 @@
 package com.apschulewitz.resdb.common.model.entity;
 
+import javax.validation.constraints.NotNull;
+
 public enum DataType
 {
 	BLOB, CLOB, DATE, DATETIME, DOUBLE, FLOAT, INTEGER, LONG, SHORT, STRING, TIME, TIMESTAMP;
 
-    public static boolean isValidDataType(DataType type)
+    public static boolean isValidDataType(@NotNull DataType type)
     {
     	boolean valid = false;
 

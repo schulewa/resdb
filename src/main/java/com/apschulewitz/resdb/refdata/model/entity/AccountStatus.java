@@ -1,6 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
-import org.springframework.util.StringUtils;
+import javax.validation.constraints.NotBlank;
 
 public enum AccountStatus {
 
@@ -11,7 +11,7 @@ public enum AccountStatus {
     PasswordNeedsResetting("R"),
     Suspended("S");
 
-    private AccountStatus(String code) {
+    AccountStatus(String code) {
         this.code = code;
     }
 
@@ -21,14 +21,7 @@ public enum AccountStatus {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public static AccountStatus getStatusFor(String code) {
-        if (StringUtils.isEmpty(code))
-            return Unknown;
-
+    public static AccountStatus getStatusFor(@NotBlank String code) {
         switch (code) {
             case "A":
                 return Active;

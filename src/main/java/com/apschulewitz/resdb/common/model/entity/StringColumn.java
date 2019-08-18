@@ -2,6 +2,9 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import com.apschulewitz.resdb.common.model.DataEntityException;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class StringColumn extends AbstractTableColumn
 {
 	String value;
@@ -27,7 +30,7 @@ public class StringColumn extends AbstractTableColumn
      * @param name is the name of the column
      * @param length is the name of the column
      */
-    public StringColumn(String name, int length)
+    public StringColumn(@NotBlank String name, int length)
     throws DataEntityException
     {
         setType(DataType.STRING);
@@ -54,7 +57,7 @@ public class StringColumn extends AbstractTableColumn
 	}
 
 	@Override
-	public void setValue(Object value)
+	public void setValue(@NotNull Object value)
 	{
 		if (!(value instanceof String))
 			throw new DataEntityException(DataEntityException.TYPE.INVALIDDATATYPE);

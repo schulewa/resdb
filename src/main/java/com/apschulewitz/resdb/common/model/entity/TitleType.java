@@ -3,6 +3,8 @@ package com.apschulewitz.resdb.common.model.entity;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
 
+import javax.validation.constraints.NotBlank;
+
 @Getter
 public enum TitleType {
 
@@ -10,21 +12,18 @@ public enum TitleType {
 
   private String code;
 
-  TitleType(String code) {
+  TitleType(@NotBlank String code) {
     this.code = code;
   }
 
-  public static TitleType getTypeFor(String code) {
-    if (StringUtils.isEmpty(code))
-      return null;
-
+  public static TitleType getTypeFor(@NotBlank String code) {
     switch (code) {
       case "P":
         return Prefix;
       case "S":
         return Suffix;
         default:
-          return null;
+          throw new IllegalArgumentException("Invalid code for TitleType " + code);
     }
   }
 }

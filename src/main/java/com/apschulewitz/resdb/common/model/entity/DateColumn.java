@@ -2,6 +2,7 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import com.apschulewitz.resdb.common.model.DataEntityException;
 
+import javax.validation.constraints.NotNull;
 import java.util.GregorianCalendar;
 
 public class DateColumn extends AbstractTableColumn
@@ -39,7 +40,7 @@ public class DateColumn extends AbstractTableColumn
      * @param value sets the value of the column
      * @see GregorianCalendar
      */
-    public void setValue(GregorianCalendar value)
+    public void setValue(@NotNull GregorianCalendar value)
     {
         this.value = value;
         nullifyTimeElements();
@@ -92,7 +93,7 @@ public class DateColumn extends AbstractTableColumn
 	}
 
 	@Override
-	public void setValue(Object value) throws DataEntityException
+	public void setValue(@NotNull Object value) throws DataEntityException
 	{
 		if (!(value instanceof GregorianCalendar))
 			throw new DataEntityException(DataEntityException.TYPE.INVALIDDATATYPE);

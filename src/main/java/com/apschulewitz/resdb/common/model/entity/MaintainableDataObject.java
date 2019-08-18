@@ -104,10 +104,6 @@ public enum MaintainableDataObject {
         return dataObjectIdentifier;
     }
 
-    public void setDataObjectIdentifier(String dataObjectIdentifier) {
-        this.dataObjectIdentifier = dataObjectIdentifier;
-    }
-
     public static MaintainableDataObject getFor(String dataObjectIdentifier) {
 
         switch (dataObjectIdentifier) {
@@ -148,7 +144,7 @@ public enum MaintainableDataObject {
                 return PersonType;
             default:
                 System.err.println("Unrecognized fully qualified class: " + dataObjectIdentifier);
-                return null;
+                throw  new IllegalArgumentException("Invalid value for MaintainableDataObject " + dataObjectIdentifier);
         }
     }
 

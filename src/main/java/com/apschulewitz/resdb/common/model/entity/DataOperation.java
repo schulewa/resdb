@@ -12,16 +12,12 @@ public enum DataOperation {
 
     private String code;
 
-    private DataOperation(String code) {
+    DataOperation(String code) {
         this.code = code;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public static DataOperation getOperationFor(String code) {
@@ -34,10 +30,10 @@ public enum DataOperation {
                 return CREATE;
             case "Q":
                 return READ;
-            case "R":
+            case "U":
                 return UPDATE;
             default:
-                return null;
+                throw new IllegalArgumentException("Invalid code for DataOperation: " + code);
         }
     }
 

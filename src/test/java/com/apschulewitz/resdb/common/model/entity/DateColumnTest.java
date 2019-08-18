@@ -1,8 +1,10 @@
 package com.apschulewitz.resdb.common.model.entity;
 
 import com.apschulewitz.resdb.common.InvalidValueException;
+import com.apschulewitz.resdb.common.model.DataEntityException;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -19,6 +21,72 @@ public class DateColumnTest {
 
     // Then
     assertEquals("Default constructor data type", DataType.DATE, column.getType());
+  }
+
+  @Test
+  public void when_default_constructor_is_executed_then_return_DateColumn_with_null_value() {
+    // Given
+
+    // When
+    DateColumn column = new DateColumn();
+
+    // Then
+    assertTrue("DateColumn value", column.isNull());
+  }
+
+  @Test
+  public void when_default_constructor_is_executed_and_set_value_then_return_DateColumn_with_non_null_value() {
+    // Given
+    DateColumn column = new DateColumn();
+
+    // When
+    column.setValue(2019, 8, 18);
+
+    // Then
+    assertFalse("DateColumn value", column.isNull());
+  }
+
+  @Test
+  public void when_default_constructor_is_executed_and_set_value_without_calendar_value_then_throw_exception() {
+    // Given
+    DateColumn column = new DateColumn();
+    BigDecimal nonCalendarValue = new BigDecimal("1000.00");
+    boolean isExceptionThrown = false;
+
+    // When
+    try {
+      column.setValue(nonCalendarValue);
+    } catch (DataEntityException e) {
+      isExceptionThrown = true;
+    }
+
+    // Then
+    assertTrue("DateColumn exception", isExceptionThrown);
+  }
+
+  @Test
+  public void when_default_constructor_is_executed_and_set_value_with_calendar_value_then_value_is_set() {
+    // Given
+    DateColumn column = new DateColumn();
+    Calendar calendarValue = new GregorianCalendar();
+
+    // When
+    column.setValue(calendarValue);
+
+    // Then
+    assertNotNull("DateColumn calendar not null", column.getValue());
+  }
+
+  @Test
+  public void when_default_constructor_is_executed_and_set_null_value_then_return_DateColumn_with_null_value() {
+    // Given
+    DateColumn column = new DateColumn();
+
+    // When
+    column.setNull();
+
+    // Then
+    assertNull("DateColumn value", column.getValue());
   }
 
   @Test

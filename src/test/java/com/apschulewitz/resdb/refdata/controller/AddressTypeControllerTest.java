@@ -1,78 +1,114 @@
 package com.apschulewitz.resdb.refdata.controller;
 
-import com.apschulewitz.resdb.ResearchDatabaseApplication;
-import com.apschulewitz.resdb.config.RestUrlPaths;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dao.AddressTypeDao;
 import com.apschulewitz.resdb.refdata.model.entity.AddressType;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import javax.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.when;
 
-
-//@RunWith(SpringRunner.class)
-//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ResearchDatabaseApplication.class);
-//@WebMvcTest(AddressTypeController.class)
-@Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DataJpaTest
 public class AddressTypeControllerTest {
 
-  @LocalServerPort
-  private int port;
+  private LocalDateTime now = LocalDateTime.now();
 
-  TestRestTemplate restTemplate = new TestRestTemplate();
-
-  HttpHeaders headers = new HttpHeaders();
-
-  // TODO need to fix: Spring ApplicationContext not loading
-  // Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webSecurityConfig': Unsatisfied dependency expressed through field 'userAuthenticationProvider'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'com.apschulewitz.resdb.security.controller.UserAuthenticationProvider' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
-  // NoSuchBeanDefinitionException: No qualifying bean of type 'com.apschulewitz.resdb.security.controller.UserAuthenticationProvider
-
-//  @Autowired
-//  private MockMvc mvc;
+  private AddressTypeController addressTypeController;
 
   @MockBean
-  private AddressTypeDao mockedDao;
+  private AddressTypeDao mockedAddressTypeDao;
+
+  @Before
+  public void beforeEachTest() {
+    mockedAddressTypeDao.deleteAll();
+    addressTypeController = new AddressTypeController(mockedAddressTypeDao);
+  }
 
   @WithMockUser(value = "adrian")
   @Test
-  public void givenNone_whenGetAddressTypes_thenReturnJsonArray() throws Exception {
+  public void givenNone_when_findAll_is_executed_then_return_list() {
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
-    List<AddressType> data = new ArrayList<>();
-    AddressType datum = AddressType.builder().id(1L).name("Test").build();
-    data.add(datum);
+    // Given
 
-    given(mockedDao.findAll()).willReturn(data);
+    AddressType savedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
 
-//    mvc.perform(
-//      get(RestUrlPaths.ADDRESS_TYPE_CONTROLLER_BASE_URL)
-//      .contentType(MediaType.APPLICATION_JSON))
-//      .andExpect(status().isOk())
-//      .andExpect(jsonPath("$", hasSize(1)))
-//      .andExpect(jsonPath("$[0].id", is(datum.getId())))
-//      .andExpect(jsonPath("$[0].name", is(datum.getName())));
+    AddressType savedWork = AddressType.builder()
+      .name("Work")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
 
+    when(mockedAddressTypeDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(savedHome, savedWork));
+
+    // When
+    ResponseEntity<List<AddressType>> responseEntityList = addressTypeController.findAll();
+
+    // Then
+    assertEquals(HttpStatus.OK, responseEntityList.getStatusCode());
+    assertNotNull(responseEntityList.getBody());
+    assertEquals(2, responseEntityList.getBody().size());
   }
 
+  @WithMockUser(value = "adrian")
+  @Test
+  public void givenAddress_whensave_is_executed_then_return_saved_entity() {
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+
+    // Given
+
+    AddressType unsavedHome = AddressType.builder()
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType savedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+
+    // When
+    ResponseEntity<AddressType> responseEntity = addressTypeController.add(mockedRequest, unsavedHome);
+
+    // Then
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    assertNotNull(responseEntity.getBody());
+    assertNotNull(responseEntity.getBody().getId());
+  }
 }

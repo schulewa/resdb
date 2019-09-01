@@ -1,8 +1,63 @@
-jdbc:
-  driverClassName: org.h2.Driver
-  url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    driver: org.h2.Driver
+    url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+    username: resdb_dev
+    password: resdb_dev
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  session:
+    store-type: none
 
 hibernate:
   dialect: org.hibernate.dialect.H2Dialect
   hbm2ddl:
     auto: create
+
+flyway:
+#  locations: db/migration/mysql
+#  enabled: false
+#  locations: database/schema/mysql
+
+logging:
+  level:
+    org:
+      hibernate: trace
+      #        sql: debug
+      #        type:
+      #          descriptor:
+      #            sql:
+      #              BasicBinder: trace
+      springframework:
+        jdbc: debug
+        web:
+          filter:
+            CommonsRequestLoggingFilter: debug
+    com.apschulewitz.resdb: DEBUG
+    #    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+
+server:
+  port: 8080
+
+client:
+  cors:
+    base:
+      url: http://localhost:50545
+
+
+environment: test
+
+authentication:
+  expiryInMinutes: 7200
+
+#security:
+#  ignored:
+#    - "*.bundle.*"
+#  sessions: NEVER

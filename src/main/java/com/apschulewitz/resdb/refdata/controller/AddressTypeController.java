@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class AddressTypeController extends AbstractController<AddressType, Long> {
 
-  @Autowired
   private AddressTypeDao addressTypeDao;
+
+  public AddressTypeController(AddressTypeDao addressTypeDao) {
+    this.addressTypeDao = addressTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.ADDRESS_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<AddressType>> findAll() {

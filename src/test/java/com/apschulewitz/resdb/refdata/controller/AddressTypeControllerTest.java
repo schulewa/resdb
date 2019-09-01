@@ -15,15 +15,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.mockito.Mockito.when;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -36,6 +35,8 @@ public class AddressTypeControllerTest {
   @MockBean
   private AddressTypeDao mockedAddressTypeDao;
 
+  HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+
   @Before
   public void beforeEachTest() {
     mockedAddressTypeDao.deleteAll();
@@ -45,8 +46,6 @@ public class AddressTypeControllerTest {
   @WithMockUser(value = "adrian")
   @Test
   public void givenNone_when_findAll_is_executed_then_return_list() {
-    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-
     // Given
 
     AddressType savedHome = AddressType.builder()
@@ -79,9 +78,7 @@ public class AddressTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void givenAddress_whensave_is_executed_then_return_saved_entity() {
-    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-
+  public void givenAddress_when_save_is_executed_then_return_saved_entity() {
     // Given
 
     AddressType unsavedHome = AddressType.builder()
@@ -110,5 +107,98 @@ public class AddressTypeControllerTest {
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     assertNotNull(responseEntity.getBody());
     assertNotNull(responseEntity.getBody().getId());
+  }
+
+  @WithMockUser(value = "adrian")
+  @Test
+  public void given_existing_addresstype_when_delete_is_executed_then_return_mark_entity_as_cancelled() {
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+
+    // Given
+
+    AddressType unsavedHome = AddressType.builder()
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType savedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType deletedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.Cancel)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+
+    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
+
+    // When
+    ResponseEntity<AddressType> responseEntity = addressTypeController.delete(savedHome.getId());
+
+    // Then
+    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+    verify(mockedAddressTypeDao, times(1)).save(any(AddressType.class));
+
+  }
+
+  @WithMockUser(value = "adrian")
+  @Test
+  public void given_nonexisting_addresstype_when_delete_is_executed_then_return_not_found() {
+    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+
+    // Given
+
+    AddressType unsavedHome = AddressType.builder()
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType savedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType deletedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.Cancel)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+
+    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.empty());
+
+    // When
+    ResponseEntity<AddressType> responseEntity = addressTypeController.delete(savedHome.getId());
+
+    // Then
+    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    assertNull(responseEntity.getBody());
+
   }
 }

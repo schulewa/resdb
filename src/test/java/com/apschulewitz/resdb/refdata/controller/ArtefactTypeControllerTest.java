@@ -246,4 +246,56 @@ public class ArtefactTypeControllerTest {
     assertNotNull(responseUpdatedEntity);
     assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
   }
+
+  @Test
+  @WithMockUser(value = "adrian")
+  public void given_unknown_entity_when_update_is_executed_then_return_notfound() {
+    // Given
+    ArtefactType unsaved = ArtefactType.builder()
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Ceramics")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .build();
+
+    ArtefactType saved = ArtefactType.builder()
+      .id(1L)
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Ceramics")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .build();
+
+    ArtefactType updated = ArtefactType.builder()
+      .id(1L)
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Ceramics")
+      .status(VersionStatus.Amend)
+      .updatedBy("system")
+      .build();
+
+    when(mockedDao.save(unsaved)).thenReturn(saved);
+
+    when(mockedDao.save(saved)).thenReturn(updated);
+
+    when(mockedDao.save(updated)).thenReturn(updated);
+
+    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
+
+    // When
+    ResponseEntity<ArtefactType> responseEntity = controller.add(mockedRequest, unsaved);
+
+    ResponseEntity<ArtefactType> responseUpdatedEntity = controller.update(updated);
+
+    // Then
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    assertNotNull(responseEntity.getBody());
+    assertNotNull(responseEntity.getBody().getId());
+
+    assertNotNull(responseUpdatedEntity);
+    assertEquals(HttpStatus.NOT_FOUND, responseUpdatedEntity.getStatusCode());
+  }
 }

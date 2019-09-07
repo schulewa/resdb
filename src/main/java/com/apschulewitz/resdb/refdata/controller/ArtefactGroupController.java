@@ -6,7 +6,6 @@ import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.ArtefactGroupDao;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactGroup;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class ArtefactGroupController extends AbstractController<ArtefactGroup, Long> {
 
-  @Autowired
   private ArtefactGroupDao artefactGroupDao;
+
+  public ArtefactGroupController(ArtefactGroupDao artefactGroupDao) {
+    this.artefactGroupDao = artefactGroupDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.ARTEFACT_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<ArtefactGroup>> findAll() {

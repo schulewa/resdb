@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class DeityTypeController extends AbstractController<DeityType, Long> {
 
-  @Autowired
   private DeityTypeDao deityTypeDao;
+
+  public DeityTypeController(DeityTypeDao deityTypeDao) {
+    this.deityTypeDao = deityTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.DEITY_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<DeityType>> findAll() {

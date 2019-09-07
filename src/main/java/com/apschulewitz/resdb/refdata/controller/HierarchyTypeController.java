@@ -27,8 +27,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class HierarchyTypeController extends AbstractController<HierarchyType, Long> {
 
-  @Autowired
   private HierarchyTypeDao hierarchyTypeDao;
+
+  public HierarchyTypeController(HierarchyTypeDao hierarchyTypeDao) {
+    this.hierarchyTypeDao = hierarchyTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.HIERARCHY_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<HierarchyType>> findAll() {
@@ -36,7 +39,7 @@ public class HierarchyTypeController extends AbstractController<HierarchyType, L
     List<HierarchyType> hierarchyTypes = new ArrayList<>();
     Iterable<HierarchyType> iter = hierarchyTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> hierarchyTypes.add(at));
+      .forEach(hierarchyTypes::add);
     log.info("findAll: {} hierarchy types found", hierarchyTypes.size());
     return new ResponseEntity<>(hierarchyTypes, HttpStatus.OK);
   }

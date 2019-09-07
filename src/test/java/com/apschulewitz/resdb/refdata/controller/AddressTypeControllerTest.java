@@ -78,9 +78,8 @@ public class AddressTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void givenAddress_when_save_is_executed_then_return_saved_entity() {
+  public void given_addresstype_when_save_is_executed_then_return_saved_entity() {
     // Given
-
     AddressType unsavedHome = AddressType.builder()
       .name("Home")
       .status(VersionStatus.New)
@@ -112,10 +111,7 @@ public class AddressTypeControllerTest {
   @WithMockUser(value = "adrian")
   @Test
   public void given_existing_addresstype_when_delete_is_executed_then_return_mark_entity_as_cancelled() {
-    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-
     // Given
-
     AddressType unsavedHome = AddressType.builder()
       .name("Home")
       .status(VersionStatus.New)
@@ -162,10 +158,7 @@ public class AddressTypeControllerTest {
   @WithMockUser(value = "adrian")
   @Test
   public void given_nonexisting_addresstype_when_delete_is_executed_then_return_not_found() {
-    HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
-
     // Given
-
     AddressType unsavedHome = AddressType.builder()
       .name("Home")
       .status(VersionStatus.New)
@@ -208,7 +201,6 @@ public class AddressTypeControllerTest {
   @WithMockUser(value = "adrian")
   public void given_new_addresstype_when_update_is_executed_then_return_updated_addresstype() {
     // Given
-
     AddressType unsavedHome = AddressType.builder()
       .name("Home")
       .status(VersionStatus.New)

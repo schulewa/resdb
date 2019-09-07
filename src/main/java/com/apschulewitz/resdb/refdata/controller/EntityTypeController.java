@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class EntityTypeController extends AbstractController<EntityType, Long> {
 
-  @Autowired
   private EntityTypeDao entityTypeDao;
+
+  public EntityTypeController(EntityTypeDao entityTypeDao) {
+    this.entityTypeDao = entityTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.ENTITY_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<EntityType>> findAll() {

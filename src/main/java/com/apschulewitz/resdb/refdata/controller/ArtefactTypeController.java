@@ -28,8 +28,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class ArtefactTypeController extends AbstractController<ArtefactType, Long> {
 
-  @Autowired
   private ArtefactTypeDao artefactTypeDao;
+
+  public ArtefactTypeController(ArtefactTypeDao artefactTypeDao) {
+    this.artefactTypeDao = artefactTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<ArtefactType>> findAll() {
@@ -37,7 +40,7 @@ public class ArtefactTypeController extends AbstractController<ArtefactType, Lon
     List<ArtefactType> artefactTypes = new ArrayList<>();
     Iterable<ArtefactType> iter = artefactTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> artefactTypes.add(at));
+      .forEach(artefactTypes::add);
     log.info("findAll: {} artefact types founs", artefactTypes.size());
     return new ResponseEntity<>(artefactTypes, HttpStatus.OK);
   }

@@ -79,7 +79,7 @@ public class ArtefactGroupControllerTest {
   @Test
   public void given_entity_when_save_is_executed_then_return_saved_entity() {
     // Given
-    ArtefactGroup unsavedArtefactGroup = ArtefactGroup.builder()
+    ArtefactGroup unsaved = ArtefactGroup.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
@@ -87,7 +87,7 @@ public class ArtefactGroupControllerTest {
       .updatedBy("system")
       .build();
 
-    ArtefactGroup savedArtefactGroup = ArtefactGroup.builder()
+    ArtefactGroup saved = ArtefactGroup.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
@@ -96,10 +96,10 @@ public class ArtefactGroupControllerTest {
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsavedArtefactGroup)).thenReturn(savedArtefactGroup);
+    when(mockedDao.save(unsaved)).thenReturn(saved);
 
     // When
-    ResponseEntity<ArtefactGroup> responseEntity = controller.add(mockedRequest, unsavedArtefactGroup);
+    ResponseEntity<ArtefactGroup> responseEntity = controller.add(mockedRequest, unsaved);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -172,15 +172,6 @@ public class ArtefactGroupControllerTest {
       .lastUpdated(now)
       .name("Ceramics")
       .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactGroup deleted = ArtefactGroup.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.Cancel)
       .updatedBy("system")
       .build();
 

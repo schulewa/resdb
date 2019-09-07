@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class EventTypeGroupController extends AbstractController<EventTypeGroup, Long> {
 
-  @Autowired
   private EventTypeGroupDao eventTypeGroupDao;
+
+  public EventTypeGroupController(EventTypeGroupDao eventTypeGroupDao) {
+    this.eventTypeGroupDao = eventTypeGroupDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.EVENT_TYPE_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<EventTypeGroup>> findAll() {

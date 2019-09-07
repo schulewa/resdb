@@ -4,10 +4,8 @@ import com.apschulewitz.resdb.common.controller.AbstractController;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.CalendarTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.AddressType;
 import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +24,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class CalendarTypeController extends AbstractController<CalendarType, Long> {
 
-  @Autowired
   private CalendarTypeDao calendarTypeDao;
+
+  public CalendarTypeController(CalendarTypeDao calendarTypeDao) {
+    this.calendarTypeDao = calendarTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.CALENDAR_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<CalendarType>> findAll() {
@@ -35,7 +36,7 @@ public class CalendarTypeController extends AbstractController<CalendarType, Lon
     List<CalendarType> calendarTypes = new ArrayList<>();
     Iterable<CalendarType> iter = calendarTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> calendarTypes.add(at));
+      .forEach(calendarTypes::add);
     log.info("findAll: {} calendar types found", calendarTypes.size());
     return new ResponseEntity<>(calendarTypes, HttpStatus.OK);
   }

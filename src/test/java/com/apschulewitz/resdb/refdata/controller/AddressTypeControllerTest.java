@@ -35,7 +35,7 @@ public class AddressTypeControllerTest {
   @MockBean
   private AddressTypeDao mockedAddressTypeDao;
 
-  HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+  private HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
   @Before
   public void beforeEachTest() {
@@ -144,6 +144,8 @@ public class AddressTypeControllerTest {
 
     when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
 
+    when(mockedAddressTypeDao.save(savedHome)).thenReturn(deletedHome);
+
     when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
 
     // When
@@ -154,6 +156,7 @@ public class AddressTypeControllerTest {
 
     verify(mockedAddressTypeDao, times(1)).save(any(AddressType.class));
 
+    assertEquals(deletedHome, responseEntity.getBody());
   }
 
   @WithMockUser(value = "adrian")
@@ -199,6 +202,58 @@ public class AddressTypeControllerTest {
     // Then
     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     assertNull(responseEntity.getBody());
+  }
 
+  @Test
+  @WithMockUser(value = "adrian")
+  public void given_new_addresstype_when_update_is_executed_then_return_updated_addresstype() {
+    // Given
+
+    AddressType unsavedHome = AddressType.builder()
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType savedHome = AddressType.builder()
+      .id(1L)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    AddressType updatedHome = AddressType.builder()
+      .id(1L)
+      .name("Home UPDATE")
+      .status(VersionStatus.Amend)
+      .updatedBy("system")
+      .createdBy("system")
+      .lastUpdated(now)
+      .build();
+
+    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+
+    when(mockedAddressTypeDao.save(savedHome)).thenReturn(updatedHome);
+
+    when(mockedAddressTypeDao.save(updatedHome)).thenReturn(updatedHome);
+
+    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
+
+    // When
+    ResponseEntity<AddressType> responseEntity = addressTypeController.add(mockedRequest, unsavedHome);
+
+    ResponseEntity<AddressType> responseUpdatedEntity = addressTypeController.update(updatedHome);
+
+    // Then
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    assertNotNull(responseEntity.getBody());
+    assertNotNull(responseEntity.getBody().getId());
+
+    assertNotNull(responseUpdatedEntity);
+    assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
   }
 }

@@ -30,17 +30,17 @@ public class AddressTypeControllerTest {
 
   private LocalDateTime now = LocalDateTime.now();
 
-  private AddressTypeController addressTypeController;
+  private AddressTypeController controller;
 
   @MockBean
-  private AddressTypeDao mockedAddressTypeDao;
+  private AddressTypeDao mockedDao;
 
   private HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
 
   @Before
   public void beforeEachTest() {
-    mockedAddressTypeDao.deleteAll();
-    addressTypeController = new AddressTypeController(mockedAddressTypeDao);
+    mockedDao.deleteAll();
+    controller = new AddressTypeController(mockedDao);
   }
 
   @WithMockUser(value = "adrian")
@@ -65,10 +65,10 @@ public class AddressTypeControllerTest {
       .lastUpdated(now)
       .build();
 
-    when(mockedAddressTypeDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(savedHome, savedWork));
+    when(mockedDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(savedHome, savedWork));
 
     // When
-    ResponseEntity<List<AddressType>> responseEntityList = addressTypeController.findAll();
+    ResponseEntity<List<AddressType>> responseEntityList = controller.findAll();
 
     // Then
     assertEquals(HttpStatus.OK, responseEntityList.getStatusCode());
@@ -97,10 +97,10 @@ public class AddressTypeControllerTest {
       .lastUpdated(now)
       .build();
 
-    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+    when(mockedDao.save(unsavedHome)).thenReturn(savedHome);
 
     // When
-    ResponseEntity<AddressType> responseEntity = addressTypeController.add(mockedRequest, unsavedHome);
+    ResponseEntity<AddressType> responseEntity = controller.add(mockedRequest, unsavedHome);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -138,19 +138,19 @@ public class AddressTypeControllerTest {
       .lastUpdated(now)
       .build();
 
-    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+    when(mockedDao.save(unsavedHome)).thenReturn(savedHome);
 
-    when(mockedAddressTypeDao.save(savedHome)).thenReturn(deletedHome);
+    when(mockedDao.save(savedHome)).thenReturn(deletedHome);
 
-    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
+    when(mockedDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
 
     // When
-    ResponseEntity<AddressType> responseEntity = addressTypeController.delete(savedHome.getId());
+    ResponseEntity<AddressType> responseEntity = controller.delete(savedHome.getId());
 
     // Then
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-    verify(mockedAddressTypeDao, times(1)).save(any(AddressType.class));
+    verify(mockedDao, times(1)).save(any(AddressType.class));
 
     assertEquals(deletedHome, responseEntity.getBody());
   }
@@ -185,12 +185,12 @@ public class AddressTypeControllerTest {
       .lastUpdated(now)
       .build();
 
-    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+    when(mockedDao.save(unsavedHome)).thenReturn(savedHome);
 
-    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.empty());
+    when(mockedDao.findById(savedHome.getId())).thenReturn(Optional.empty());
 
     // When
-    ResponseEntity<AddressType> responseEntity = addressTypeController.delete(savedHome.getId());
+    ResponseEntity<AddressType> responseEntity = controller.delete(savedHome.getId());
 
     // Then
     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -227,18 +227,18 @@ public class AddressTypeControllerTest {
       .lastUpdated(now)
       .build();
 
-    when(mockedAddressTypeDao.save(unsavedHome)).thenReturn(savedHome);
+    when(mockedDao.save(unsavedHome)).thenReturn(savedHome);
 
-    when(mockedAddressTypeDao.save(savedHome)).thenReturn(updatedHome);
+    when(mockedDao.save(savedHome)).thenReturn(updatedHome);
 
-    when(mockedAddressTypeDao.save(updatedHome)).thenReturn(updatedHome);
+    when(mockedDao.save(updatedHome)).thenReturn(updatedHome);
 
-    when(mockedAddressTypeDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
+    when(mockedDao.findById(savedHome.getId())).thenReturn(Optional.of(savedHome));
 
     // When
-    ResponseEntity<AddressType> responseEntity = addressTypeController.add(mockedRequest, unsavedHome);
+    ResponseEntity<AddressType> responseEntity = controller.add(mockedRequest, unsavedHome);
 
-    ResponseEntity<AddressType> responseUpdatedEntity = addressTypeController.update(updatedHome);
+    ResponseEntity<AddressType> responseUpdatedEntity = controller.update(updatedHome);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -247,5 +247,57 @@ public class AddressTypeControllerTest {
 
     assertNotNull(responseUpdatedEntity);
     assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
+  }
+
+  @Test
+  @WithMockUser(value = "adrian")
+  public void given_unknown_entity_when_update_is_executed_then_return_notfound() {
+    // Given
+    AddressType unsaved = AddressType.builder()
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .build();
+
+    AddressType saved = AddressType.builder()
+      .id(1L)
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Home")
+      .status(VersionStatus.New)
+      .updatedBy("system")
+      .build();
+
+    AddressType updated = AddressType.builder()
+      .id(1L)
+      .createdBy("system")
+      .lastUpdated(now)
+      .name("Home UPDATE")
+      .status(VersionStatus.Amend)
+      .updatedBy("system")
+      .build();
+
+    when(mockedDao.save(unsaved)).thenReturn(saved);
+
+    when(mockedDao.save(saved)).thenReturn(updated);
+
+    when(mockedDao.save(updated)).thenReturn(updated);
+
+    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
+
+    // When
+    ResponseEntity<AddressType> responseEntity = controller.add(mockedRequest, unsaved);
+
+    ResponseEntity<AddressType> responseUpdatedEntity = controller.update(updated);
+
+    // Then
+    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    assertNotNull(responseEntity.getBody());
+    assertNotNull(responseEntity.getBody().getId());
+
+    assertNotNull(responseUpdatedEntity);
+    assertEquals(HttpStatus.NOT_FOUND, responseUpdatedEntity.getStatusCode());
   }
 }

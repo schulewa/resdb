@@ -156,7 +156,7 @@ public class ArtefactGroupControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_nonexisting_entityp_when_delete_is_executed_then_return_not_found() {
+  public void given_nonexisting_entity_when_delete_is_executed_then_return_not_found() {
     // Given
     ArtefactGroup unsaved = ArtefactGroup.builder()
       .createdBy("system")

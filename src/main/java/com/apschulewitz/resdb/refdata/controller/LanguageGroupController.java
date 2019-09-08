@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class LanguageGroupController extends AbstractController<LanguageGroup, Long> {
 
-  @Autowired
   private LanguageGroupDao languageGroupDao;
+
+  public LanguageGroupController(LanguageGroupDao languageGroupDao) {
+    this.languageGroupDao = languageGroupDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.LANGUAGE_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<LanguageGroup>> findAll() {
@@ -35,7 +38,7 @@ public class LanguageGroupController extends AbstractController<LanguageGroup, L
     List<LanguageGroup> languageGroups = new ArrayList<>();
     Iterable<LanguageGroup> iter = languageGroupDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> languageGroups.add(at));
+      .forEach(languageGroups::add);
     log.info("findAll: {} language groups found", languageGroups.size());
     return new ResponseEntity<>(languageGroups, HttpStatus.OK);
   }

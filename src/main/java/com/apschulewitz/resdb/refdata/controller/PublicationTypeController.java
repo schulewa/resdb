@@ -26,16 +26,19 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class PublicationTypeController extends AbstractController<PublicationType, Long> {
 
-  @Autowired
   private PublicationTypeDao publicationTypeDao;
+
+  public PublicationTypeController(PublicationTypeDao publicationTypeDao) {
+    this.publicationTypeDao = publicationTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.PUBLICATION_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<PublicationType>> findAll() {
 
     List<PublicationType> publicationTypes = new ArrayList<>();
-    Iterable<PublicationType> iter = publicationTypeDao.findAll();
+    Iterable<PublicationType> iter = publicationTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> publicationTypes.add(at));
+      .forEach(publicationTypes::add);
 
     return new ResponseEntity<>(publicationTypes, HttpStatus.OK);
   }

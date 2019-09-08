@@ -26,16 +26,19 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class RaceTypeController extends AbstractController<RaceType, Long> {
 
-  @Autowired
   private RaceTypeDao raceTypeDao;
+
+  public RaceTypeController(RaceTypeDao raceTypeDao) {
+    this.raceTypeDao = raceTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.RACE_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<RaceType>> findAll() {
 
     List<RaceType> raceTypes = new ArrayList<>();
-    Iterable<RaceType> iter = raceTypeDao.findAll();
+    Iterable<RaceType> iter = raceTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> raceTypes.add(at));
+      .forEach(raceTypes::add);
 
     return new ResponseEntity<>(raceTypes, HttpStatus.OK);
   }

@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class TechnologyTypeGroupController extends AbstractController<TechnologyTypeGroup, Long> {
 
-  @Autowired
   private TechnologyTypeGroupDao technologyTypeGroupDao;
+
+  public TechnologyTypeGroupController(TechnologyTypeGroupDao technologyTypeGroupDao) {
+    this.technologyTypeGroupDao = technologyTypeGroupDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.TECHNOLOGY_TYPE_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<TechnologyTypeGroup>> findAll() {
@@ -35,7 +38,7 @@ public class TechnologyTypeGroupController extends AbstractController<Technology
     List<TechnologyTypeGroup> technologyTypeGroups = new ArrayList<>();
     Iterable<TechnologyTypeGroup> iter = technologyTypeGroupDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> technologyTypeGroups.add(at));
+      .forEach(technologyTypeGroups::add);
 
     return new ResponseEntity<>(technologyTypeGroups, HttpStatus.OK);
   }

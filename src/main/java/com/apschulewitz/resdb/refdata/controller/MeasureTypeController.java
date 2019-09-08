@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class MeasureTypeController extends AbstractController<MeasureType, Long> {
 
-  @Autowired
   private MeasureTypeDao measureTypeDao;
+
+  public MeasureTypeController(MeasureTypeDao measureTypeDao) {
+    this.measureTypeDao = measureTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.MEASURE_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<MeasureType>> findAll() {

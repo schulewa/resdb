@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class ImageTypeController extends AbstractController<ImageType, Long> {
 
-  @Autowired
   private ImageTypeDao imageTypeDao;
+
+  public ImageTypeController(ImageTypeDao imageTypeDao) {
+    this.imageTypeDao = imageTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.IMAGE_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<ImageType>> findAll() {
@@ -35,7 +38,7 @@ public class ImageTypeController extends AbstractController<ImageType, Long> {
     List<ImageType> imageTypes = new ArrayList<>();
     Iterable<ImageType> iter = imageTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> imageTypes.add(at));
+      .forEach(imageTypes::add);
     log.info("findAll: {} image types found", imageTypes.size());
     return new ResponseEntity<>(imageTypes, HttpStatus.OK);
   }

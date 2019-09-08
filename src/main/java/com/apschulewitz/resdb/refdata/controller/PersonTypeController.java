@@ -26,8 +26,11 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class PersonTypeController extends AbstractController<PersonType, Long> {
 
-  @Autowired
   private PersonTypeDao personTypeDao;
+
+  public PersonTypeController(PersonTypeDao personTypeDao) {
+    this.personTypeDao = personTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.PERSON_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<PersonType>> findAll() {
@@ -35,7 +38,7 @@ public class PersonTypeController extends AbstractController<PersonType, Long> {
     List<PersonType> personTypes = new ArrayList<>();
     Iterable<PersonType> iter = personTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> personTypes.add(at));
+      .forEach(personTypes::add);
 
     return new ResponseEntity<>(personTypes, HttpStatus.OK);
   }

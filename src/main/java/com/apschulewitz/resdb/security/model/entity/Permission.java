@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * Entity implementation class for Entity: Permission
@@ -48,7 +49,7 @@ public class Permission implements GrantedAuthority {
         Inactive("I"),
         Suspended("S");
 
-        private PermissionStatus(String code) {
+        PermissionStatus(String code) {
             this.code = code;
         }
 
@@ -62,9 +63,7 @@ public class Permission implements GrantedAuthority {
             this.code = code;
         }
 
-        public static Permission.PermissionStatus getStatusFor(String code) {
-            if (StringUtils.isEmpty(code))
-                return Unknown;
+        public static Permission.PermissionStatus getStatusFor(@NotBlank String code) {
 
             switch (code) {
                 case "A":
@@ -90,7 +89,7 @@ public class Permission implements GrantedAuthority {
         CreateReadUpdate("CRU"),
         CreateReadUpdateDelete("CRUD");
 
-        private OperationType(String code) {
+        OperationType(String code) {
             this.code = code;
         }
 
@@ -104,13 +103,13 @@ public class Permission implements GrantedAuthority {
             this.code = code;
         }
 
-        public static Permission.OperationType getStatusFor(String code) {
-            if (StringUtils.isEmpty(code))
-                return Unknown;
+        public static Permission.OperationType getStatusFor(@NotBlank String code) {
 
             switch (code) {
                 case "C":
                     return Create;
+                case "R":
+                  return Read;
                 case "U":
                     return Update;
                 case "D":

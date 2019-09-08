@@ -25,16 +25,19 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class TaleTypeController extends AbstractController<TaleType, Long> {
 
-  @Autowired
   private TaleTypeDao taleTypeDao;
+
+  public TaleTypeController(TaleTypeDao taleTypeDao) {
+    this.taleTypeDao = taleTypeDao;
+  }
 
   @RequestMapping(value = RestUrlPaths.TALE_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<TaleType>> findAll() {
 
     List<TaleType> taleTypes = new ArrayList<>();
-    Iterable<TaleType> iter = taleTypeDao.findAll();
+    Iterable<TaleType> iter = taleTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> taleTypes.add(at));
+      .forEach(taleTypes::add);
 
     return new ResponseEntity<>(taleTypes, HttpStatus.OK);
   }

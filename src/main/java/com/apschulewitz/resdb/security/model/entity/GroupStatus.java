@@ -21,10 +21,6 @@ public enum GroupStatus {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public static GroupStatus getStatusFor(String code) {
         if (StringUtils.isEmpty(code))
             return Unknown;

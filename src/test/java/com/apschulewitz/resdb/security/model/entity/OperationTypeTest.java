@@ -3,6 +3,7 @@ package com.apschulewitz.resdb.security.model.entity;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class OperationTypeTest {
 
@@ -90,4 +91,16 @@ public class OperationTypeTest {
     assertEquals(Permission.OperationType.Unknown, operationType);
   }
 
+  @Test
+  public void given_OperationType_when_getCode_is_executed_then_return_code() {
+    // Given
+    Permission.OperationType operationType = Permission.OperationType.Create;
+
+    // When
+    String code = operationType.getCode();
+
+    // Then
+    assertNotNull(code);
+    assertEquals("C", code);
+  }
 }

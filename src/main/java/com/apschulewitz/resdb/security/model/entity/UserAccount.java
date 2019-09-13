@@ -85,8 +85,8 @@ public class UserAccount implements DataEntityId {
 //                    .filter(p -> (p.getValidFrom().isBefore(today) || p.getValidFrom().isEqual(today)) &&
 //                                    (p.getValidUntil() != null && p.getValidUntil().isAfter(today))).findFirst();
             for (UserPassword password : getPasswords()) {
-                if (password.getValidFrom().isBefore(today) || password.getValidFrom().isEqual(today) &&
-                        password.getValidUntil() == null || (password.getValidUntil() != null && password.getValidUntil().isAfter(today))) {
+                if ((password.getValidFrom().isBefore(today) || password.getValidFrom().isEqual(today)) &&
+                  (password.getValidUntil() == null || (password.getValidUntil() != null && password.getValidUntil().isAfter(today)))) {
                     return Optional.of(password);
                 }
             }

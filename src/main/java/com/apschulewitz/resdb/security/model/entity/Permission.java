@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -59,10 +58,6 @@ public class Permission implements GrantedAuthority {
             return code;
         }
 
-        public void setCode(String code) {
-            this.code = code;
-        }
-
         public static Permission.PermissionStatus getStatusFor(@NotBlank String code) {
 
             switch (code) {
@@ -97,10 +92,6 @@ public class Permission implements GrantedAuthority {
 
         public String getCode() {
             return code;
-        }
-
-        public void setCode(String code) {
-            this.code = code;
         }
 
         public static Permission.OperationType getStatusFor(@NotBlank String code) {

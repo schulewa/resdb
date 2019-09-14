@@ -8,9 +8,6 @@ import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
 
-import static com.apschulewitz.resdb.common.model.entity.DataOperation.VALID_DATA_OPERATIONS;
-import static com.apschulewitz.resdb.common.model.entity.MaintainableDataObject.VALID_MAINTAINABLE_DATA_OBJECT;
-
 /**
  *
  * @author adrian
@@ -36,17 +33,6 @@ public class MenuOption {
 
     @Column(name = "default_menu_text", nullable = false, length = 50)
     private String defaultMenuText;
-
-
-    public boolean isValidOperation(DataOperation op)
-    {
-        return VALID_DATA_OPERATIONS.contains(op);
-    }
-
-    public boolean isValidDataObject(MaintainableDataObject obj)
-    {
-        return VALID_MAINTAINABLE_DATA_OBJECT.contains(obj);
-    }
 
     @Tolerate
     public MenuOption() {

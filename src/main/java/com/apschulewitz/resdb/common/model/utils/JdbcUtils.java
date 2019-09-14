@@ -1,18 +1,16 @@
 package com.apschulewitz.resdb.common.model.utils;
 
 import com.apschulewitz.resdb.common.ResearchDatabaseModelException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -21,24 +19,18 @@ import java.util.stream.Collectors;
 import static java.sql.Types.*;
 
 @Component
-//@PropertySource({ "classpath:resdb.properties" })
+@Slf4j
 public class JdbcUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JdbcUtils.class);
-
-//    @Value("${resdb.db.url}")
-    @Value("spring.datasource.url}")
+    @Value("${spring.datasource.url}")
     private String databaseUrl;
 
-//    @Value("${resdb.db.user}")
-    @Value("spring.datasource.username}")
+    @Value("${spring.datasource.username}")
     private String databaseUser;
 
-//    @Value("${resdb.db.password}")
     @Value("${spring.datasource.password}")
     private String databasePassword;
 
-//    @Value("${resdb.db.driver}")
     @Value("${spring.datasource.driver}")
     private String databaseDriver;
 
@@ -52,7 +44,7 @@ public class JdbcUtils {
      */
     public JdbcResponse executeScript(Connection conn, JdbcActionType jdbcActionType, String scriptName) {
         String sql = readScript(scriptName);
-        LOGGER.debug("Executing sql: {}", sql);
+        log.debug("Executing sql: {}", sql);
         switch (jdbcActionType) {
             case Delete:
                 return executeDelete(conn, readScript(scriptName));
@@ -84,7 +76,7 @@ public class JdbcUtils {
     public static List<JdbcResponse> executeScripts(Connection connection, List<JdbcRequest> requests) {
         JdbcUtils utils = new JdbcUtils();
         return requests.stream()
-                        .peek(r -> LOGGER.debug("Processing request - type {} script {}", r.getType().name(), r.scriptName))
+                        .peek(r -> log.debug("Processing request - type {} script {}", r.getType().name(), r.scriptName))
                         .map(req -> utils.execute(connection, req))
                         .collect(Collectors.toList());
     }
@@ -99,7 +91,7 @@ public class JdbcUtils {
             connection = Optional.of(DriverManager.getConnection(dbUrl, dbUser, dbPassword));
         } catch (SQLException sqle) {
             String errMsg = "Error initialising database connection: " + sqle.getMessage();
-            LOGGER.error(errMsg, sqle);
+            log.error(errMsg, sqle);
             throw new ResearchDatabaseModelException(errMsg);
         }
         return connection;
@@ -118,7 +110,7 @@ public class JdbcUtils {
             return new JdbcResponse(rowsAffected);
         } catch (SQLException e) {
             String errMsg = "Error executing sql: " + e.getMessage();
-            LOGGER.error(errMsg, e);
+            log.error(errMsg, e);
             return new JdbcResponse(new ResearchDatabaseModelException(errMsg, e));
         } finally {
             if (stmt != null) {
@@ -191,7 +183,7 @@ public class JdbcUtils {
             return new JdbcResponse(someData);
         } catch (SQLException e) {
             String errMsg = "Error executing sql: " + e.getMessage();
-            LOGGER.error(errMsg, e);
+            log.error(errMsg, e);
             return new JdbcResponse(new ResearchDatabaseModelException(errMsg, e));
         } finally {
             if (stmt != null) {
@@ -208,17 +200,17 @@ public class JdbcUtils {
             return conn.createStatement();
         } catch (SQLException sqle) {
             String errMsg = "Error creating sql statement: " + sqle.getMessage();
-            LOGGER.error(errMsg, sqle);
+            log.error(errMsg, sqle);
             throw new ResearchDatabaseModelException(errMsg, sqle);
         }
     }
 
     private String readScript(String scriptName) {
         try (InputStream stream = new ClassPathResource(scriptName).getInputStream()) {
-            return IOUtils.toString(stream, Charset.forName("UTF-8"));
+            return IOUtils.toString(stream, StandardCharsets.UTF_8);
         } catch (IOException ioe) {
             String errMsg = "Error reading script " + scriptName + ": " + ioe.getMessage();
-            LOGGER.error(errMsg);
+            log.error(errMsg);
             throw new ResearchDatabaseModelException(errMsg, ioe);
         }
     }
@@ -297,7 +289,7 @@ public class JdbcUtils {
             List<Map<String, Object>> results = new ArrayList<>();
             if (hasResults) {
                 data.stream()
-                        .map(d -> results.add(d)).collect(Collectors.toList());
+                        .map(results::add).collect(Collectors.toList());
             }
             return results;
         }

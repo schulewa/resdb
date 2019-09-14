@@ -8,7 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertNotNull;
+import java.sql.Connection;
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,4 +30,14 @@ public class JdbcUtilsTest {
     assertNotNull(jdbcUtils);
   }
 
+  @Test
+  public void given_conn_details_when_getConnection_is_executed_then_return_connection() {
+    // Given
+
+    // When
+    Optional<Connection> connection = jdbcUtils.getConnection();
+
+    // Then
+    assertTrue(connection.isPresent());
+  }
 }

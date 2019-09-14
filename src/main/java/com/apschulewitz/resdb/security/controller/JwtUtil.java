@@ -10,6 +10,7 @@ import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.nimbusds.jwt.util.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,7 @@ import java.util.Set;
 
 import static com.nimbusds.jose.JWSAlgorithm.HS512;
 
+@Slf4j
 public final class JwtUtil {
 
     private final static String AUDIENCE_UNKNOWN = "unknown";
@@ -33,8 +35,6 @@ public final class JwtUtil {
     private final static String AUDIENCE_MOBILE = "mobile";
     private final static String AUDIENCE_TABLE = "tablet";
     private final static String ROLES_CLAIM = "roles";
-
-    private static Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
     /**
      * <CODE>generateHMACToken</CODE> generates a HMAC token for the supplied arguments.
@@ -66,7 +66,7 @@ public final class JwtUtil {
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(subject)
                 .issueTime(currentDate())
-//                    .expirationTime(expirationDate(expirationInMinutes)) // token renewal is not available and hence no expiry date is set
+                .expirationTime(new Date(expirationInMinutes)) // token renewal is not available and hence no expiry date is set
                 .claim(ROLES_CLAIM, roles)
                 .audience(AUDIENCE_WEB)
                 .build();
@@ -90,7 +90,7 @@ public final class JwtUtil {
             byte[] cipherText = cipher.doFinal(plainText.getBytes("UTF8"));
             return Optional.of(new String(cipherText));
         } catch (Exception e) {
-            logger.error("Error generating secret key: " + e.getMessage(), e);
+            log.error("Error generating secret key: " + e.getMessage(), e);
         }
 
         return Optional.empty();

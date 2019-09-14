@@ -6,24 +6,24 @@ flyway:
 logging:
   level:
     org:
-      hibernate: trace
+      hibernate: ERROR
 #        sql: debug
 #        type:
 #          descriptor:
 #            sql:
 #              BasicBinder: trace
       springframework:
-        jdbc: debug
+        jdbc: ERROR
         web:
           filter:
-            CommonsRequestLoggingFilter: debug
-    com.apschulewitz.resdb: DEBUG
+            CommonsRequestLoggingFilter: ERROR
+    com.apschulewitz.resdb: ERROR
 #    org.hibernate.type.descriptor.sql.BasicBinder: trace
     com:
       mysql:
         cj:
           jdbc:
-            ClientPreparedStatement: TRACE
+            ClientPreparedStatement: ERROR
 
 spring:
   datasource:

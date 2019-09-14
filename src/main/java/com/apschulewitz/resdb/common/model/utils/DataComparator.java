@@ -4,75 +4,77 @@
  */
 package com.apschulewitz.resdb.common.model.utils;
 
+import lombok.*;
+
 /**
  *
  * @author adrian
  */
+@Getter
+//@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DataComparator
 {
     private DataComparatorOperator operator;
     private Object value;
     private String valueType;
 
+//
+//    public DataComparator() {
+//
+//    }
 
-    public DataComparator()
-    {
+//    /**
+//     * <CODE>DataComparator</CODE> constructor.<br>
+//     * @param dataComparisonOperator a DataComparisonOperator controlling how the data value is to be compared
+//     * @param dataValue an Object holding the data value to use in the comparison
+//     * @param dataType a String representing the class of the data type of the value to compare
+//     * @see DataComparator.DataComparatorOperator
+//     *
+//     */
+//    public DataComparator(DataComparatorOperator dataComparisonOperator, Object dataValue, String dataType) {
+//        operator = dataComparisonOperator;
+//        value = dataValue;
+//        valueType = dataType;
+//    }
 
-    }
+//    public DataComparatorOperator getDataComparatorOperator()
+//    {
+//        return operator;
+//    }
 
-    /**
-     * <CODE>DataComparator</CODE> constructor.<br>
-     * @param dataComparisonOperator a DataComparisonOperator controlling how the data value is to be compared
-     * @param dataValue an Object holding the data value to use in the comparison
-     * @param dataType a String representing the class of the data type of the value to compare
-     * @see DataComparator.DataComparatorOperator
-     *
-     */
-    public DataComparator(DataComparatorOperator dataComparisonOperator, Object dataValue, String dataType)
-        //throws ResearchDatabaseModelException
-    {
-        operator = dataComparisonOperator;
-        value = dataValue;
-        valueType = dataType;
-    }
+//    public void setDataComparatorOperator(DataComparatorOperator dataComparatorOperator) {
+//        operator = dataComparatorOperator;
+//    }
 
-    public DataComparatorOperator getDataComparatorOperator()
-    {
-        return operator;
-    }
+//    public Object getValue()
+//    {
+//        return value;
+//    }
+//
+//    public void setValue(Object dataValue) {
+//        value = dataValue;
+//    }
 
-    public void setDataComparatorOperator(DataComparatorOperator dataComparatorOperator)
-    {
-        operator = dataComparatorOperator;
-    }
+//    public String getValueType()
+//    {
+//        return valueType;
+//    }
+//
+//    public void setValueType(String dataType)
+//    {
+//        valueType = dataType;
+//    }
 
-    public Object getValue()
-    {
-        return value;
-    }
-
-    public void setValue(Object dataValue) //throws ResearchDatabaseModelException
-    {
-        value = dataValue;
-    }
-
-    public String getValueType()
-    {
-        return valueType;
-    }
-
-    public void setValueType(String dataType)
-    {
-        valueType = dataType;
-    }
-
-    @Override
-    public String toString()
-    {
-        StringBuilder buffer = new StringBuilder();
-        buffer.append("DataComparator: operator=" + operator + " value=" + value + " valueType=" + valueType);
-        return buffer.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder buffer = new StringBuilder();
+//        buffer.append("DataComparator: operator=" + operator + " value=" + value + " valueType=" + valueType);
+//        return buffer.toString();
+//    }
 
     /*private void convertDataType(Object valueToConvert) throws ResearchDatabaseModelException
     {
@@ -88,8 +90,7 @@ public class DataComparator
         }
     }*/
 
-    public enum DataComparatorOperator
-    {
+    public enum DataComparatorOperator {
         EQUAL_TO("="),
         LESS_THAN("<"),
         LESS_THAN_OR_EQUAL_TO("<="),
@@ -113,8 +114,7 @@ public class DataComparator
          *
          * @return
          */
-        public static DataComparatorOperator toDataComparatorOperator(String opString)
-        {
+        public static DataComparatorOperator toDataComparatorOperator(String opString) {
             if (opString.equals("="))
                 return EQUAL_TO;
             else if (opString.equals("<"))
@@ -140,6 +140,5 @@ public class DataComparator
             return name;
         }
     }
-
 
 }

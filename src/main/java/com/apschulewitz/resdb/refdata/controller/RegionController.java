@@ -50,7 +50,7 @@ public class RegionController extends AbstractController<Region, Long> {
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
-  @RequestMapping(value = RestUrlPaths.RACE_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = RestUrlPaths.REGION_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<Region> delete(@PathVariable long id) {
     log.info("Marking region [{}] for deletion", id);
     Optional<Region> existing = regionDao.findById(id);

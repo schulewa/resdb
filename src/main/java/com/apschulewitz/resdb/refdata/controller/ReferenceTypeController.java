@@ -4,10 +4,8 @@ import com.apschulewitz.resdb.common.controller.AbstractController;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.ReferenceTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.RaceType;
 import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +48,7 @@ public class ReferenceTypeController extends AbstractController<ReferenceType, L
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
-  @RequestMapping(value = RestUrlPaths.RACE_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = RestUrlPaths.REFERENCE_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
   public ResponseEntity<ReferenceType> delete(@PathVariable long id) {
     log.info("Marking reference type [{}] for deletion", id);
     Optional<ReferenceType> existing = referenceTypeDao.findById(id);

@@ -81,6 +81,9 @@ public class UserAuthenticationService {
                 } else if (AccountStatus.PasswordNeedsResetting.equals(userAccount.getStatus())) {
                     log.info("User account {} password needs resetting", userAccount.getLogonName());
                     responseStatus = ResponseStatus.PASSWORD_NEEDS_RESET;
+                } else if (AccountStatus.Unknown.equals(userAccount.getStatus())) {
+                  log.info("User account {} is locked", userAccount.getLogonName());
+                  responseStatus = ResponseStatus.ACCOUNT_LOCKED;
                 }
 
             } else {
@@ -181,7 +184,7 @@ public class UserAuthenticationService {
             return Optional.empty();
         }
         return Optional.of(activePermissions.stream()
-                .map(p -> p.getName())
+                .map(Permission::getName)
                 .collect(Collectors.joining(",")));
     }
 

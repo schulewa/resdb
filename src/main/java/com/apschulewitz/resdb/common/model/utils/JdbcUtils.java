@@ -6,9 +6,9 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
@@ -43,8 +43,6 @@ public class JdbcUtils {
      * @see JdbcResponse
      */
     public JdbcResponse executeScript(Connection conn, JdbcActionType jdbcActionType, String scriptName) {
-        String sql = readScript(scriptName);
-        log.debug("Executing sql: {}", sql);
         switch (jdbcActionType) {
             case Delete:
                 return executeDelete(conn, readScript(scriptName));
@@ -53,7 +51,7 @@ public class JdbcUtils {
             case Update:
                 return executeUpdate(conn, readScript(scriptName));
             case Select:
-                return executeSelect(conn, scriptName);
+                return executeSelect(conn, readScript(scriptName));
         }
         return new JdbcResponse();
     }
@@ -70,7 +68,8 @@ public class JdbcUtils {
 
     public static List<JdbcResponse> executeScripts(List<JdbcRequest> requests) {
         JdbcUtils utils = new JdbcUtils();
-        return executeScripts(utils.getConnection().get(), requests);
+        Connection connection = utils.getConnection().orElseThrow();
+        return executeScripts(connection, requests);
     }
 
     public static List<JdbcResponse> executeScripts(Connection connection, List<JdbcRequest> requests) {
@@ -102,32 +101,15 @@ public class JdbcUtils {
 //    }
 
     private JdbcResponse executeInsert(Connection connection, String sql) {
-        Statement stmt = null;
-
-        try {
-           stmt = createStatement(connection);
-           int rowsAffected = stmt.executeUpdate(sql);
-            return new JdbcResponse(rowsAffected);
-        } catch (SQLException e) {
-            String errMsg = "Error executing sql: " + e.getMessage();
-            log.error(errMsg, e);
-            return new JdbcResponse(new ResearchDatabaseModelException(errMsg, e));
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {}
-            }
-        }
-
+      return executeSql(connection, sql);
     }
 
     private JdbcResponse executeDelete(Connection connection, String sql) {
-        return new JdbcResponse(3); // TODO
+      return executeSql(connection, sql);
     }
 
     private JdbcResponse executeUpdate(Connection connection, String sql) {
-        return new JdbcResponse(2); // TODO
+        return executeSql(connection, sql);
     }
 
     private JdbcResponse executeSelect(Connection connection, String sql) {
@@ -148,7 +130,7 @@ public class JdbcUtils {
             int colType;
             while (rs.next()) {
                 record = new HashMap<>();
-                for (int colNo = 0; colNo < columnCount; colNo++) {
+                for (int colNo = 1; colNo <= columnCount; colNo++) {
 
                     switch (meta.getColumnType(colNo)) {
                         case BIGINT:
@@ -176,6 +158,11 @@ public class JdbcUtils {
                         case INTEGER:
                             record.put(meta.getColumnName(colNo), rs.getInt(colNo));
                             break;
+                      case TIMESTAMP:
+                            record.put(meta.getColumnName(colNo), rs.getTimestamp(colNo));
+                            break;
+                      default:
+                        log.warn("Unrecognised data type {} for column no {} name {}", meta.getColumnType(colNo), colNo, meta.getColumnName(colNo));
                     }
                 }
                 someData.add(record);
@@ -195,6 +182,26 @@ public class JdbcUtils {
 //        return new JdbcResponse(someData); // TODO
     }
 
+    private JdbcResponse executeSql(Connection connection, String sql) {
+      Statement stmt = null;
+
+      try {
+        stmt = createStatement(connection);
+        int rowsAffected = stmt.executeUpdate(sql);
+        return new JdbcResponse(rowsAffected);
+      } catch (SQLException e) {
+        String errMsg = "Error executing sql: " + e.getMessage();
+        log.error(errMsg, e);
+        return new JdbcResponse(new ResearchDatabaseModelException(errMsg, e));
+      } finally {
+        if (stmt != null) {
+          try {
+            stmt.close();
+          } catch (SQLException e) {}
+        }
+      }
+    }
+
     private Statement createStatement(Connection conn) {
         try {
             return conn.createStatement();
@@ -206,6 +213,17 @@ public class JdbcUtils {
     }
 
     private String readScript(String scriptName) {
+      if (scriptName.startsWith("classpath")) {
+        try {
+          File file = ResourceUtils.getFile(scriptName);
+          return IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+          String errMsg = String.format("Error reading %s from classpath: %s", scriptName, e.getMessage());
+          log.error(errMsg, e);
+          throw new ResearchDatabaseModelException(errMsg, e);
+        }
+      }
+
         try (InputStream stream = new ClassPathResource(scriptName).getInputStream()) {
             return IOUtils.toString(stream, StandardCharsets.UTF_8);
         } catch (IOException ioe) {
@@ -261,6 +279,7 @@ public class JdbcUtils {
         public JdbcResponse(List<Map<String, Object>> results) {
             hasResults = true;
             data.addAll(results);
+            recordcount = data.size();
         }
 
         public JdbcResponse(int rowsAffected) {
@@ -278,7 +297,7 @@ public class JdbcUtils {
         }
 
         public boolean hasError() {
-            return error == null;
+            return error != null;
         }
 
         public int getRecordcount() {

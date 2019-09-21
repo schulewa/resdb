@@ -5,10 +5,12 @@
 
 package com.apschulewitz.resdb.common.model.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-
+@Data
 @Entity
 @Table(name = "resdb_sequence_number")
 @NamedQueries({
@@ -37,25 +39,25 @@ public class SequenceNumber implements Serializable
         nextId = id;
     }
 
-    public long getNextId()
-    {
-        return nextId;
-    }
-
-    public void setNextId(long nextId)
-    {
-        this.nextId = nextId;
-    }
-
-    public String getTableName()
-    {
-        return tableName;
-    }
-
-    public void setTableName(String tableName)
-    {
-        this.tableName = tableName;
-    }
+//    public long getNextId()
+//    {
+//        return nextId;
+//    }
+//
+//    public void setNextId(long nextId)
+//    {
+//        this.nextId = nextId;
+//    }
+//
+//    public String getTableName()
+//    {
+//        return tableName;
+//    }
+//
+//    public void setTableName(String tableName)
+//    {
+//        this.tableName = tableName;
+//    }
 
     @Override
     public Object clone()

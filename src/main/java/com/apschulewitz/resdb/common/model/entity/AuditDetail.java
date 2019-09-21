@@ -1,9 +1,13 @@
 package com.apschulewitz.resdb.common.model.entity;
 
+import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "resdb_audit_detail")
 //@TableGenerator(name = "AuditDetailGenerator", table = "resdb_sequence_number", pkColumnName = "table_name", valueColumnName = "next_id", pkColumnValue = "resdb_audit_detail")
@@ -35,71 +39,6 @@ public class AuditDetail implements Serializable {
 
 	@Column(name = "new_value", nullable = true)
 	private String newValue;
-
-//	public Integer getId() {
-//		return id;
-//	}
-//
-//	public void setId(Integer id) {
-//		this.id = id;
-//	}
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public String getColumnName() {
-		return columnName;
-	}
-
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-	public Date getAuditDate() {
-		return auditDate;
-	}
-
-	public void setAuditDate(Date auditDate) {
-		this.auditDate = auditDate;
-	}
-
-	public String getOldValue() {
-		return oldValue;
-	}
-
-	public void setOldValue(String oldValue) {
-		this.oldValue = oldValue;
-	}
-
-	public String getNewValue() {
-		return newValue;
-	}
-
-	public void setNewValue(String newValue) {
-		this.newValue = newValue;
-	}
 
 	@Override
 	public boolean equals(Object o) {

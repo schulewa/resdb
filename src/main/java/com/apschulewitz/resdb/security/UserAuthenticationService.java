@@ -74,6 +74,9 @@ public class UserAuthenticationService {
                                 .status(userAccount.getStatus())
                                 .token(csrfToken.getToken())
                                 .build();
+                        userAccount.setLastLogon(LocalDateTime.now());
+                        userAccountDao.save(userAccount);
+                        log.info("update last logon time to {} for user {}", userAccount.getLastLogon(), userAccount.getLogonName());
 //                        authenticationManager.authenticate(jwtUser); // TODO should we call this ??
                     } else {
                       log.info("Invalid credentials supplied for user {}", userAccount.getLogonName());

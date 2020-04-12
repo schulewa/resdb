@@ -19,3 +19,21 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200314_05_setup_default_user_menu.sql
       context: ALL
+  - include:
+      file: db/changelog/20200412_01_insert_address_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200412_02_insert_calendar_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200412_03_insert_calendar_groups.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200412_04_insert_calendars.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200412_05_insert_image_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200412_06_insert_countries.sql
+      context: ALL

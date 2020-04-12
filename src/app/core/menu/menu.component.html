@@ -20,9 +20,19 @@
     </div>
 
     <mat-menu #configMenu="matMenu" [overlapTrigger]="false">
+
       <div *ngxPermissionsOnly="['SYSTEM_PARAMETERS-R']">
-        <button mat-menu-item>System Parameters</button>
+        <button mat-menu-item routerLink="/systemparameters">System Parameters</button>
       </div>
+
+        <div *ngxPermissionsOnly="['USER_ACCOUNT_MAINTENANCE-R']">
+            <button mat-menu-item routerLink="/users">User account maintenance</button>
+        </div>
+
+        <div *ngxPermissionsOnly="['USER_GROUP_MAINTENANCE-R']">
+            <button mat-menu-item routerLink="/usergroups">User group maintenance</button>
+        </div>
+
     </mat-menu>
 
     <mat-menu #fileMenu="matMenu" [overlapTrigger]="false">
@@ -30,10 +40,6 @@
     </mat-menu>
 
     <mat-menu #staticDataMenu="matMenu" [overlapTrigger]="false">
-
-      <div *ngxPermissionsOnly="['ENTITY_TYPE-R']">
-        <button mat-menu-item routerLink="/entitytypes">Entity types</button>
-      </div>
 
       <button mat-menu-item [matMenuTriggerFor]="locationMenu">Locations and places</button>
 
@@ -49,9 +55,9 @@
         <button mat-menu-item routerLink="/referencetypes">Reference types</button>
       </div>
 
-      <div *ngxPermissionsOnly="['TALE_TYPE-R']">
-        <button mat-menu-item routerLink="/taletypes">Tale types</button>
-      </div>
+<!--      <div *ngxPermissionsOnly="['TALE_TYPE-R']">-->
+<!--        <button mat-menu-item routerLink="/taletypes">Tale types</button>-->
+<!--      </div>-->
 
       <div *ngxPermissionsOnly="['MENU_TIME']">
         <button mat-menu-item [matMenuTriggerFor]="timeMenu">Time</button>
@@ -119,9 +125,6 @@
   </mat-menu>
 
   <mat-menu #locationMenu="matMenu" [overlapTrigger]="false">
-    <div *ngxPermissionsOnly="['ADDRESS_TYPE-R']">
-      <button mat-menu-item routerLink="/addresstypes">Address types</button>
-    </div>
     <div *ngxPermissionsOnly="['COUNTRY-R']">
       <button mat-menu-item routerLink="/countries">Countries</button>
     </div>
@@ -143,7 +146,7 @@
     <button mat-menu-item routerLink="/hierarchies">Hierarchies</button>
     <button mat-menu-item routerLink="/hierarchytypes">Hierarchy types</button>
     <button mat-menu-item routerLink="/persons">Persons</button>
-    <button mat-menu-item routerLink="/persontypes">Person types</button>
+<!--    <button mat-menu-item routerLink="/persontypes">Person types</button>-->
     <button mat-menu-item routerLink="/races">Races</button>
     <button mat-menu-item routerLink="/racetypes">Race types</button>
     <button mat-menu-item routerLink="/titles">Titles</button>

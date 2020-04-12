@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PersonTypeService } from './person-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { PersonType } from '../../model/entity/person-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 @Component({
   selector: 'app-person-type',
   templateUrl: './person-type.component.html',
   styleUrls: ['./person-type.component.scss']
 })
-export class PersonTypeComponent extends BaseNameComponent<PersonType> implements OnInit {
+export class PersonTypeComponent extends AuditedNamedEntityGridComponent<PersonType> implements OnInit {
 
   constructor(private personTypeService: PersonTypeService) {
     super(PersonType);

@@ -22,6 +22,11 @@ export class CoreOperationsMessages {
   public static get DELETE_CALENDAR_TYPE(): string { return 'Attempting to mark calendar type for deletion'; }
   public static get UPDATE_CALENDAR_TYPE(): string { return 'Attempting to update calendar type'; }
 
+  public static get FINDALL_COUNTRY(): string { return 'Attempting to find all live countries'; }
+  public static get ADD_COUNTRY(): string { return 'Attempting to add new country'; }
+  public static get DELETE_COUNTRY(): string { return 'Attempting to mark country for deletion'; }
+  public static get UPDATE_COUNTRY(): string { return 'Attempting to update country'; }
+
   public static get FINDALL_DEITY_TYPE(): string { return 'Attempting to find all live deity types'; }
   public static get ADD_DEITY_TYPE(): string { return 'Attempting to add new deity type'; }
   public static get DELETE_DEITY_TYPE(): string { return 'Attempting to mark deity type for deletion'; }
@@ -63,6 +68,11 @@ export class CoreOperationsMessages {
   public static get DELETE_PERSON_TYPE(): string { return 'Attempting to mark person type for deletion'; }
   public static get UPDATE_PERSON_TYPE(): string { return 'Attempting to update person type'; }
 
+    public static get FINDALL_PLACE(): string { return 'Attempting to final all live places'; }
+    public static get ADD_PLACE(): string { return 'Attempting to add new place'; }
+    public static get DELETE_PLACE(): string { return 'Attempting to mark place for deletion'; }
+    public static get UPDATE_PLACE(): string { return 'Attempting to update place'; }
+
   public static get FINDALL_PUBLICATION_TYPE(): string { return 'Attempting to final all live publication types'; }
   public static get ADD_PUBLICATION_TYPE(): string { return 'Attempting to add new publication type'; }
   public static get DELETE_PUBLICATION_TYPE(): string { return 'Attempting to mark publication type for deletion'; }
@@ -87,5 +97,10 @@ export class CoreOperationsMessages {
   public static get ADD_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to add new technology type group'; }
   public static get DELETE_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to mark technology type group for deletion'; }
   public static get UPDATE_TECHNOLOGY_TYPE_GROUP(): string { return 'Attempting to update technology type group'; }
+
+    public static get FINDALL_USER(): string { return 'Attempting to find all live users'; }
+    public static get ADD_USER(): string { return 'Attempting to add new user'; }
+    public static get DELETE_USER(): string { return 'Attempting to mark user for deletion'; }
+    public static get UPDATE_USER(): string { return 'Attempting to update user'; }
 
 }

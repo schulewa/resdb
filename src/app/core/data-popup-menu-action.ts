@@ -1,4 +1,4 @@
-export enum RefdataPopupMenuAction {
+export enum DataPopupMenuAction {
   AddEmptyRow = 1,
   RemoveRow,
   MarkForDeletion,

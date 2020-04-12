@@ -1,0 +1,21 @@
+databaseChangeLog:
+  # The changesets will be run in the order listed below.
+  # Documentation can be found at http://www.liquibase.org/documentation
+  - include:
+      file: db/changelog/20190406_01_create_tables.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_01_insert_config_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_02_insert_data_maintenance_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_03_insert_research_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_04_insert_admin_user_and_user_templates.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_05_setup_default_user_menu.sql
+      context: ALL

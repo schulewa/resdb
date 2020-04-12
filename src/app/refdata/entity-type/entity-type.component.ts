@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EntityTypeService } from './entity-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { EntityType } from '../../model/entity/entity-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 @Component({
   selector: 'app-entity-type',
   templateUrl: './entity-type.component.html',
   styleUrls: ['./entity-type.component.scss']
 })
-export class EntityTypeComponent extends BaseNameComponent<EntityType> implements OnInit {
+export class EntityTypeComponent extends AuditedNamedEntityGridComponent<EntityType> implements OnInit {
 
   constructor(private entityTypeService: EntityTypeService) {
     super(EntityType);

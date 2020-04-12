@@ -3,8 +3,8 @@ import {PersonService} from './person.service';
 import {Person} from '../../model/entity/person';
 import {PopupMenuComponent} from '../../core/popup-menu/popup-menu.component';
 import {ColDef, GridApi, GridOptions} from 'ag-grid-community';
-import {DataStatus} from '../../refdata/data-status';
-import {DataAction} from '../../refdata/data-action';
+import {DataStatus} from '../../core/model/data-status';
+import {DataAction} from '../../core/model/data-action';
 import {Router} from '@angular/router';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -140,6 +140,7 @@ export class PersonComponent implements OnInit {
   addPerson() {
     console.log('TODO: redirect to /person but with null Person as Input');
     this.showGrid = false;
+    this.router.navigate(['addperson']);
   }
 
   editPerson() {

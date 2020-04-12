@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { AddressType } from '../../model/entity/address-type';
 import { AddressTypeService } from './address-type.service';
-import { BaseNameComponent } from '../base-name.component';
-import { DataAction } from '../data-action';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
+import { DataAction } from '../../core/model/data-action';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 
 
@@ -13,7 +13,7 @@ import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name
   templateUrl: './address-type.component.html',
   styleUrls: ['./address-type.component.scss']
 })
-export class AddressTypeComponent extends BaseNameComponent<AddressType> implements OnInit {
+export class AddressTypeComponent extends AuditedNamedEntityGridComponent<AddressType> implements OnInit {
 
   constructor(private addressTypeService: AddressTypeService) {
     super(AddressType);

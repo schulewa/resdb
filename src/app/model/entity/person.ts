@@ -1,10 +1,12 @@
 import { HistoricalDate } from './historical-date';
 import { Title } from './title';
 import { Place} from './place';
-import { DataAction } from '../../refdata/data-action';
-import { DataStatus } from '../../refdata/data-status';
+import { DataAction } from '../../core/model/data-action';
+import { DataStatus } from '../../core/model/data-status';
 import { PersonTitle } from './person-title';
 import {IAuditedDataType} from './interfaces/audited-data-type';
+import {CodeLabel} from './code-label';
+import {IAuditedNameDataType} from './interfaces/audited-name-data-type';
 
 export class Person implements IAuditedDataType {
 
@@ -12,6 +14,7 @@ export class Person implements IAuditedDataType {
   firstName: string;
   middleName: string;
   familyName: string;
+  gender: CodeLabel;
   dateOfBirth: HistoricalDate;
   dateOfDeath: HistoricalDate;
   prefixTitle: Title;

@@ -4,6 +4,9 @@
  */
 package com.apschulewitz.resdb.security.model.entity;
 
+import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.converter.AccountStatusPersistenceConverter;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -35,8 +38,13 @@ public class UserGroup {
     @Column(nullable = false, name = "display_name", length = 30)
     private String displayName;
 
+    @Column(name = "status", nullable = false, length = 1)
+    @Convert(converter = AccountStatusPersistenceConverter.class)
+    private AccountStatus status;
+
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private Collection<UserGroupPermission> groupPermissions;
 
     @Tolerate

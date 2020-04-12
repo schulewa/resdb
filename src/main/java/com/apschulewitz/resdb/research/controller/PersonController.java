@@ -33,7 +33,7 @@ public class PersonController extends AbstractController<Person, Long> {
   public ResponseEntity<List<Person>> findAll() {
 
     List<Person> persons = new ArrayList<>();
-    Iterable<Person> iter = personDao.findAll();
+    Iterable<Person> iter = personDao.findByStatusIn(VersionStatus.getLiveStatuses());
     StreamSupport.stream(iter.spliterator(), false)
       .forEach(at -> persons.add(at));
 

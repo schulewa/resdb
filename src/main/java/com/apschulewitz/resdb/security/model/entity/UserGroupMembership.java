@@ -4,6 +4,8 @@
  */
 package com.apschulewitz.resdb.security.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -28,10 +30,12 @@ public class UserGroupMembership {
 
 	@ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", referencedColumnName= "id")
+    @JsonManagedReference
     private UserAccount user;
 
 	@ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @JsonBackReference // resolve 'Unable to parse JSON errors'
     private UserGroup group;
 
 	@Column

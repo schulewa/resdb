@@ -5,7 +5,6 @@
 
 package com.apschulewitz.resdb.refdata.model.entity;
 
-
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.EqualsAll;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;

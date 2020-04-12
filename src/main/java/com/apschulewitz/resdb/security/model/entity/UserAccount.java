@@ -6,11 +6,12 @@ import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.entity.Language;
 import com.apschulewitz.resdb.security.model.AuthenticationResult;
 import com.apschulewitz.resdb.security.model.converter.AccountStatusPersistenceConverter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Tolerate;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -24,12 +25,12 @@ import java.util.Optional;
  *
  * @author adrian
  */
-@Slf4j
 @Data
 @ToString(exclude = {"groupMemberships", "passwords"})
 @Builder
 @Entity
 @Table(name = "resdb_user_account", uniqueConstraints = @UniqueConstraint(columnNames = {"logon_name"}))
+@JsonIgnoreProperties(value = { "groupMemberships", "passwords" })
 public class UserAccount implements DataEntityId {
 
 	private static final long serialVersionUID = -6474631338029541228L;
@@ -50,7 +51,6 @@ public class UserAccount implements DataEntityId {
     private String familyName;
 
     @Column(name = "status", nullable = false, length = 1)
-//    @Enumerated(EnumType.STRING)
     @Convert(converter = AccountStatusPersistenceConverter.class)
     private AccountStatus status;
 
@@ -67,15 +67,20 @@ public class UserAccount implements DataEntityId {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference // resolve 'Unable to parse JSON errors'
     private Collection<UserGroupMembership> groupMemberships;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference // resolve 'Unable to parse JSON errors'
     private Collection<UserPassword> passwords;
 
     @ManyToOne
     @JoinColumn(name = "language_id", referencedColumnName = "id")
     private Language preferredLanguage;
+
+    @Column(name = "is_template", nullable = false)
+    private boolean templateUser; // if true then the user cannot log in, is used purely for basing new accounts on
 
     public Optional<UserPassword> getCurrentPassword() {
         LocalDate today = LocalDate.now();

@@ -65,8 +65,9 @@ public class UserAuthenticationService {
                     log.info("User account {} is active", userAccount.getLogonName());
                     if (userAccount.getCurrentPassword().isPresent() && userAccount.getCurrentPassword().get().getPassword().equals(password)) {
                         CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
+                        PermissionMapper permissionMapper = new PermissionMapper();
                         userDto = UserDto.builder().logonName(userName)
-                                .permissions(PermissionMapper.toDto(userAccount.getGroupMemberships()))
+                                .permissions(permissionMapper.toDto(userAccount.getGroupMemberships()))
                                 .familyName(userAccount.getFamilyName())
                                 .firstName(userAccount.getFirstName())
                                 .id(userAccount.getId())

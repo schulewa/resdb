@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 import { ArtefactTypeService } from './artefact-type.service';
 import { ArtefactType } from '../../model/entity/artefact-type';
 
@@ -13,7 +13,7 @@ import { ArtefactType } from '../../model/entity/artefact-type';
   templateUrl: './artefact-type.component.html',
   styleUrls: ['./artefact-type.component.scss']
 })
-export class ArtefactTypeComponent extends BaseNameComponent<ArtefactType> implements OnInit {
+export class ArtefactTypeComponent extends AuditedNamedEntityGridComponent<ArtefactType> implements OnInit {
 
   constructor(private artefactTypeService: ArtefactTypeService) {
     super(ArtefactType);

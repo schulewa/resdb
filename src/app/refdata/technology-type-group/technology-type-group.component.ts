@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { TechnologyTypeGroupService } from './technology-type-group.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { TechnologyTypeGroup } from '../../model/entity/technology-type-group';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-technology-type-group',
   templateUrl: './technology-type-group.component.html',
   styleUrls: ['./technology-type-group.component.scss']
 })
-export class TechnologyTypeGroupComponent extends BaseNameComponent<TechnologyTypeGroup> implements OnInit {
+export class TechnologyTypeGroupComponent extends AuditedNamedEntityGridComponent<TechnologyTypeGroup> implements OnInit {
 
   constructor(private technologyTypeGroupService: TechnologyTypeGroupService) {
     super(TechnologyTypeGroup);

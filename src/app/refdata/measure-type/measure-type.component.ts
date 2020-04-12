@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MeasureTypeService } from './measure-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { MeasureType } from '../../model/entity/measure-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-measure-type',
   templateUrl: './measure-type.component.html',
   styleUrls: ['./measure-type.component.scss']
 })
-export class MeasureTypeComponent extends BaseNameComponent<MeasureType> implements OnInit {
+export class MeasureTypeComponent extends AuditedNamedEntityGridComponent<MeasureType> implements OnInit {
 
   constructor(private measureTypeService: MeasureTypeService) {
     super(MeasureType);

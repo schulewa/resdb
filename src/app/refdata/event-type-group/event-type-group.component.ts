@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EventTypeGroupService } from './event-type-group.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { EventTypeGroup } from '../../model/entity/event-type-group';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 @Component({
   selector: 'app-event-type-group',
   templateUrl: './event-type-group.component.html',
   styleUrls: ['./event-type-group.component.scss']
 })
-export class EventTypeGroupComponent extends BaseNameComponent<EventTypeGroup> implements OnInit {
+export class EventTypeGroupComponent extends AuditedNamedEntityGridComponent<EventTypeGroup> implements OnInit {
 
   constructor(private eventTypeGroupService: EventTypeGroupService) {
     super(EventTypeGroup);

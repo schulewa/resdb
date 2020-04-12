@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageGroupService } from './language-group.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { LanguageGroup } from '../../model/entity/language-group';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-language-group',
   templateUrl: './language-group.component.html',
   styleUrls: ['./language-group.component.scss']
 })
-export class LanguageGroupComponent extends BaseNameComponent<LanguageGroup> implements OnInit {
+export class LanguageGroupComponent extends AuditedNamedEntityGridComponent<LanguageGroup> implements OnInit {
 
   constructor(private languageGroupService: LanguageGroupService) {
     super(LanguageGroup);

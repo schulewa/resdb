@@ -15,8 +15,9 @@ import java.util.Collection;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 /**
- * The purpose of <CODE>UserDto</CODE> is to hold user details for sending to the server
- * and returning data. This is not intended for use in authentication. For that use UserLogonDto.
+ * The purpose of <CODE>UserDto</CODE> is to hold details for an authenticated user along with their permissions. and is
+ * It is sent back to the server.
+ * UserLogonDto holds the details of a user who needs to be authenticated.
  */
 public class UserDto {
 

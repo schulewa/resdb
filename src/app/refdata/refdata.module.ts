@@ -21,6 +21,8 @@ import { PublicationTypeComponent } from './publication-type/publication-type.co
 import { RaceTypeComponent } from './race-type/race-type.component';
 import { TaleTypeComponent } from './tale-type/tale-type.component';
 import { TechnologyTypeGroupComponent } from './technology-type-group/technology-type-group.component';
+import { CountryComponent } from './countries/country.component';
+import { PlaceComponent } from './place/place.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { TechnologyTypeGroupComponent } from './technology-type-group/technology
     RaceTypeComponent,
     TaleTypeComponent,
     TechnologyTypeGroupComponent,
+    CountryComponent,
+    PlaceComponent,
   ],
   imports: [
     AgGridModule.withComponents([

@@ -4,10 +4,7 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
-import com.apschulewitz.resdb.common.model.entity.DataOperation;
-import com.apschulewitz.resdb.common.model.entity.HistoricalDate;
-import com.apschulewitz.resdb.common.model.entity.Title;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.entity.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -44,6 +41,9 @@ public class Person {
 	@Column(name = "family_name", nullable = false)
     private String familyName;
 
+	@Column
+  private Gender gender;
+
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "day", column = @Column(name = "birth_day")),
@@ -61,10 +61,12 @@ public class Person {
 	})
     private HistoricalDate dateOfDeath;
 
+	// default prefix title used when listing person
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prefix_title_id")
     private Title prefixTitle;
 
+  // default suffix title used when listing person
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "suffix_title_id")
     private Title suffixTitle;

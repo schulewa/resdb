@@ -1,6 +1,6 @@
 import { TitleType } from './title-type';
-import {DataStatus} from '../../refdata/data-status';
-import {DataAction} from '../../refdata/data-action';
+import {DataStatus} from '../../core/model/data-status';
+import {DataAction} from '../../core/model/data-action';
 import {Gender} from './gender';
 import {IAuditedDataType} from './interfaces/audited-data-type';
 import {CodeLabel} from './code-label';

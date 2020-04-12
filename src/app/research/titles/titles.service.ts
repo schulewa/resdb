@@ -3,8 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResdbUrlEndpoints } from '../../resdb-url-endpoints';
 import { Title } from '../../model/entity/title';
-import {TitleDto} from '../../model/dto/TitleDto';
-
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +11,9 @@ export class TitlesService {
 
   constructor(private http: HttpClient) { }
 
-  findAll(): Observable<TitleDto[]> {
+  findAll(): Observable<Title[]> {
     const url = ResdbUrlEndpoints.TITLE_URL;
-    return this.http.get<TitleDto[]>(url);
+    return this.http.get<Title[]>(url);
   }
 
   add(toBeSaved: Title): Observable<Title> {

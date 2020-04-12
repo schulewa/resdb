@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HierarchyTypeService } from './hierarchy-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { HierarchyType } from '../../model/entity/hierarchy-type';
-import {BaseNameComponent} from '../base-name.component';
+import {AuditedNamedEntityGridComponent} from '../../core/audited-named-entity-grid.component';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-hierarchy-type',
   templateUrl: './hierarchy-type.component.html',
   styleUrls: ['./hierarchy-type.component.scss']
 })
-export class HierarchyTypeComponent extends BaseNameComponent<HierarchyType> implements OnInit {
+export class HierarchyTypeComponent extends AuditedNamedEntityGridComponent<HierarchyType> implements OnInit {
 
   constructor(private hierarchyTypeService: HierarchyTypeService) {
     super(HierarchyType);

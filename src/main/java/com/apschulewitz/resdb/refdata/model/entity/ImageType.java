@@ -23,16 +23,16 @@ public class ImageType {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 30)
   private String name;
 
   @Column
   private VersionStatus status;
 
-  @Column
+  @Column(length = 30)
   private String createdBy;
 
-  @Column
+  @Column(length = 30)
   private String updatedBy;
 
   @Version

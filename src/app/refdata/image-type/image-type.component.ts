@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ImageTypeService } from './image-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { ImageType } from '../../model/entity/image-type';
-import {BaseNameComponent} from '../base-name.component';
+import {AuditedNamedEntityGridComponent} from '../../core/audited-named-entity-grid.component';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-image-type',
   templateUrl: './image-type.component.html',
   styleUrls: ['./image-type.component.scss']
 })
-export class ImageTypeComponent extends BaseNameComponent<ImageType> implements OnInit {
+export class ImageTypeComponent extends AuditedNamedEntityGridComponent<ImageType> implements OnInit {
 
   constructor(private imageTypeService: ImageTypeService) {
     super(ImageType);

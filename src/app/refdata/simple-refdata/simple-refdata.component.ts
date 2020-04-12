@@ -63,6 +63,7 @@ export class SimpleRefdataComponent implements OnInit, OnChanges {
         this.selectedArtefactGroup = true;
     }
   }
+
   disableRefDataTypeSubmit(): boolean {
     if (this.refDataTypeForm.controls['refDataType'].value) {
       if (this.refDataTypeForm.controls['refDataType'].value === 'Please select') {

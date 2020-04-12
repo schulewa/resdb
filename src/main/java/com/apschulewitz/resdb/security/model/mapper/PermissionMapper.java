@@ -4,13 +4,16 @@ import com.apschulewitz.resdb.security.model.dto.PermissionDto;
 import com.apschulewitz.resdb.security.model.entity.Permission;
 import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
 import com.apschulewitz.resdb.security.model.filter.UserPredicates;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class PermissionMapper {
+@Component
+public class PermissionMapper implements EntityMapper<Permission, PermissionDto> {
 
-    public static PermissionDto toDto(boolean onlyActive, Permission permission) {
+    @Override
+    public PermissionDto toDto(Permission permission, boolean onlyActive) {
         PermissionDto.PermissionDtoBuilder builder = PermissionDto.builder();
 
         if (onlyActive && !Permission.PermissionStatus.Active.equals(permission.getStatus())) {
@@ -24,7 +27,12 @@ public class PermissionMapper {
                 .build();
     }
 
-    public static Collection<PermissionDto> toDto(Collection<UserGroupMembership> memberships) {
+    @Override
+    public PermissionDto toDto(Permission permission) {
+        return toDto(permission, false);
+    }
+
+    public Collection<PermissionDto> toDto(Collection<UserGroupMembership> memberships) {
         PermissionDto.PermissionDtoBuilder builder = PermissionDto.builder();
 
         return memberships.stream()
@@ -34,10 +42,11 @@ public class PermissionMapper {
 //                        .filter(p -> Permission.PermissionStatus.Active.equals(p.getPermission().getStatus()))
                         .filter(UserPredicates.isActiveGroupPermission())
                         .map(p -> builder.name(p.getPermission().getName())
-                                        .operationType(p.getPermission().getOperationType())
-                                        .description(p.getPermission().getDescription())
-                                        .id(p.getId())
-                                        .build()))
+                                .operationType(p.getPermission().getOperationType())
+                                .description(p.getPermission().getDescription())
+                                .id(p.getId())
+                                .build()))
                 .collect(Collectors.toList());
     }
+
 }

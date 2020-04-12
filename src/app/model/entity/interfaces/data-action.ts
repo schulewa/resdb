@@ -1,4 +1,4 @@
-import { DataAction } from '../../../refdata/data-action';
+import { DataAction } from '../../../core/model/data-action';
 
 export interface IDataAction {
   action: DataAction;

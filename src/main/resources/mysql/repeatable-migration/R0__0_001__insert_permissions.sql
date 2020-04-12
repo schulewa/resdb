@@ -4,8 +4,8 @@
 ********************************************************************************************************************************************/
 -- CONFIGURATION PERMISSIONS
 DELETE FROM resdb_permission;
-INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (1, 'DATA_CLASS_ASSOCIATION-CRUD', 'Data class association maintenance (Create/Read/Update/Delete)', 'A', 'CRUD');
 INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (2, 'DATA_CLASS_ASSOCIATION-CRU', 'Data class association maintenance (Create/Read/Update)', 'A', 'CRU');
+INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (1, 'DATA_CLASS_ASSOCIATION-CRUD', 'Data class association maintenance (Create/Read/Update/Delete)', 'A', 'CRUD');
 INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (3, 'DATA_CLASS_ASSOCIATION-R', 'Data class association query', 'A', 'R');
 INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (4, 'MENU_CONFIGURATION-CRUD', 'Menu configuration maintenance (Create/Read/Update/Delete)', 'A', 'CRUD');
 INSERT INTO resdb_permission (id, name, description, status, operation_type) VALUES (5, 'MENU_CONFIGURATION-CRU', 'Menu configuration maintenance (Create/Read/Update)', 'A', 'CRU');

@@ -43,7 +43,7 @@ public class MenuItem {
 //    @JoinColumn(name = "menu_id")
 //    private Menu  parentMenu;
 
-	@Column(name = "item_text", nullable = false, length = 20)
+	@Column(name = "item_text", nullable = false, length = 30)
     private String text;            // the text that appears on the menu
 
 	@Column(nullable = true, length = 50)

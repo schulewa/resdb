@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.security.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -30,6 +31,7 @@ public class UserPassword {
 
     @ManyToOne
     @JoinColumn(name = "account_id", referencedColumnName= "id")
+    @JsonManagedReference
     private UserAccount user;
 
     @Tolerate

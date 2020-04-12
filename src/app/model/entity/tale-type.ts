@@ -1,6 +1,6 @@
-import { DataStatus } from '../../refdata/data-status';
+import { DataStatus } from '../../core/model/data-status';
 import { IAuditedNameDataType } from './interfaces/audited-name-data-type';
-import { DataAction } from '../../refdata/data-action';
+import { DataAction } from '../../core/model/data-action';
 
 export class TaleType implements IAuditedNameDataType {
 

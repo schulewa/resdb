@@ -1,4 +1,4 @@
-import { DataStatus } from '../../../refdata/data-status';
+import { DataStatus } from '../../../core/model/data-status';
 
 export interface IDataAudited {
   status: DataStatus;

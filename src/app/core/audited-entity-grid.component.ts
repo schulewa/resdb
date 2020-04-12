@@ -1,15 +1,15 @@
-import {OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {ColDef, GridApi, GridOptions} from 'ag-grid-community';
-import {IAuditedNameDataType} from '../model/entity/interfaces/audited-name-data-type';
-import {PopupMenuComponent} from '../core/popup-menu/popup-menu.component';
-import {DataStatus} from './data-status';
-import {DataAction} from './data-action';
-import {RefdataPopupMenuAction} from './refdata-popup-menu-action';
-import {HttpErrorResponse} from '@angular/common/http';
-import {DateFormatters} from '../core/formatters/date-formatters';
+import { OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
+import { PopupMenuComponent } from './popup-menu/popup-menu.component';
+import { DataStatus } from './model/data-status';
+import { DataAction } from './model/data-action';
+import { DataPopupMenuAction } from './data-popup-menu-action';
+import { HttpErrorResponse } from '@angular/common/http';
+import { DateFormatters } from './formatters/date-formatters';
+import { IAuditedDataType } from '../model/entity/interfaces/audited-data-type';
 
 
-export abstract class BaseNameComponent<T extends IAuditedNameDataType> implements OnInit {
+export abstract class AuditedEntityGridComponent<T extends IAuditedDataType> implements OnInit {
 
   @ViewChild(PopupMenuComponent) menu: PopupMenuComponent;
 
@@ -19,9 +19,9 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   protected gridApi: GridApi;
   protected gridOptions: GridOptions;
   protected haveEmptyRow: boolean;
-  protected rowData: IAuditedNameDataType[];
-  protected rowSelection: IAuditedNameDataType;
-  protected selectedRow: IAuditedNameDataType;
+  protected rowData: T[];
+  protected rowSelection: T;
+  protected selectedRow: T;
 
   protected httpError: HttpErrorResponse;
   protected operationMessage: string;
@@ -33,7 +33,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   ngOnInit() {
     this.initRowData();
     this.haveEmptyRow = false;
-    console.log('BaseNameComponent: user language=' + navigator.language);
+    console.log('AuditedNamedEntityGridComponent: user language=' + navigator.language);
     this.liveStatuses.push(DataStatus.New);
     this.liveStatuses.push(DataStatus.Amend);
   }
@@ -48,7 +48,6 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
     return [
       { headerName: '', field: 'selected', width: 30, headerCheckboxSelection: true, checkboxSelection: true, editable: true },
       { headerName: 'ID', field: 'id', width: 60, editable: false, filter: true },
-      { headerName: 'Name', field: 'name', width: 200, editable: true, filter: true },
       { headerName: 'Status', field: 'status', width: 100, editable: false, filter: true },
       { headerName: 'Created by', field: 'createdBy', width: 110, editable: false, filter: true },
       { headerName: 'Last updated by', field: 'updatedBy', width: 150, editable: false, filter: true },
@@ -84,7 +83,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
     };
   }
 
-  protected enrichAuditData(auditData: IAuditedNameDataType) {
+  protected enrichAuditData(auditData: T) {
     if (!auditData.createdBy) {
       auditData.createdBy = localStorage.getItem('currentUser');
     }
@@ -121,12 +120,12 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
   }
 
   protected  markRowForDeletion() {
-    console.log('BaseNameComponent.markRowForDeletion');
+    console.log('AuditedNamedEntityGridComponent.markRowForDeletion');
     let nameOfAction;
     this.rowData.filter(this.isSelected).forEach(function (value) {
       value.action = DataAction.Delete;
       nameOfAction = DataAction[value.action];
-      console.log('BaseNameComponent.delete: mark for deletion - ' + value.name + '     name of action=' + nameOfAction);
+      console.log('AuditedNamedEntityGridComponent.delete: mark for deletion - ' + value + '     name of action=' + nameOfAction);
     } );
     this.gridApi.setRowData(this.rowData);
     this.gridApi.refreshCells();
@@ -138,7 +137,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
     //
     console.log('removeEmptyRow: Removing empty row');
     if (this.isUnsavedRow(this.selectedRow)) {
-      const otherRows: IAuditedNameDataType[] = [];
+      const otherRows: IAuditedDataType[] = [];
       this.rowData.filter(entry => entry.selected === false).forEach(entry => otherRows.push(entry));
       console.log('removeEmptyRow: otherRows size = ' + otherRows.length);
       this.gridApi.setRowData(otherRows);
@@ -158,39 +157,39 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
     return this.rowData;
   }
 
-  isUnsavedRow(row: IAuditedNameDataType) {
+  isUnsavedRow(row: IAuditedDataType) {
     return row && row.id === 0;
   }
 
   protected actionSelected(popupMenuAction: any) {
-    console.log('BaseNameComponent.actionSelected: popupMenuAction=' + popupMenuAction);
+    console.log('AuditedEntityGridComponent.actionSelected: popupMenuAction=' + popupMenuAction);
     switch (popupMenuAction) {
-      case RefdataPopupMenuAction.AddEmptyRow:
+      case DataPopupMenuAction.AddEmptyRow:
         this.addEmptyRow();
         break;
-      case RefdataPopupMenuAction.MarkForDeletion:
+      case DataPopupMenuAction.MarkForDeletion:
         this.markRowForDeletion();
         break;
-      case RefdataPopupMenuAction.RemoveRow:
+      case DataPopupMenuAction.RemoveRow:
         this.removeEmptyRow();
         break;
-      case RefdataPopupMenuAction.UnmarkForDeletion:
+      case DataPopupMenuAction.UnmarkForDeletion:
         this.unmarkForDeletion();
         break;
       default:
-        console.error('BaseNameComponent.actionSelected: popup menu action not recognized');
+        console.error('AuditedEntityGridComponent.actionSelected: popup menu action not recognized');
     }
   }
 
   protected  unmarkForDeletion() {
-    console.log('TODO: Unmarking row for deletion');
+    console.log('TODO: AuditedEntityGridComponent. Unmarking row for deletion');
   }
 
-  protected   updateGrid(saved: IAuditedNameDataType) {
-    if (saved && saved.name) {
-      const newRowData: IAuditedNameDataType[] = [];
+  protected   updateGrid(saved: T) {
+    if (saved) {
+      const newRowData: T[] = [];
       this.rowData.forEach( (entry) => {
-        if (saved.name === entry.name) {
+        if (saved.isDataChanged) {
           newRowData.push(saved);
         } else {
           newRowData.push(entry);
@@ -200,12 +199,12 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
       this.gridApi.refreshView();
     }
 
-    console.log('Data updated');
+    console.log('AuditedEntityGridComponent.updateGrid: Data updated');
   }
 
   protected onCellValueChanged(event ) {
     // handle updated 'name' value
-    console.log('onCellValueChanged - entry: event=' + event + ' haveEmptyRow=' + this.haveEmptyRow);
+    console.log('AuditedEntityGridComponent.onCellValueChanged - entry: event=' + event + ' haveEmptyRow=' + this.haveEmptyRow);
     if (event.data && event.data.id && event.data.id > 0) {
       event.data.action = DataAction.Update;
       this.gridApi.refreshCells();
@@ -213,11 +212,11 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
 
     const nameColDef = this.gridApi.getColumnDef('name');
     if (nameColDef === event.colDef) {
-      console.log('onCellValueChanged: event.colDef == name column - set haveEmptyRow to false');
+      console.log('AuditedEntityGridComponent.onCellValueChanged: event.colDef == name column - set haveEmptyRow to false');
       this.haveEmptyRow = false;
     }
 
-    console.log('onCellValueChanged - exit: haveEmptyRow=' + this.haveEmptyRow);
+    console.log('AuditedEntityGridComponent.onCellValueChanged - exit: haveEmptyRow=' + this.haveEmptyRow);
   }
 
   protected onRowSelected(event) {
@@ -233,7 +232,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
 
   protected onSelectionChanged(event) {
     const rowCount = event.api.getSelectedNodes().length;
-    console.log('BaseNameComponent.onSelectionChanged: ' + rowCount + ' rows selected');
+    console.log('AuditedEntityGridComponent.onSelectionChanged: ' + rowCount + ' rows selected');
   }
 
   protected deselectAllRows() {
@@ -242,7 +241,7 @@ export abstract class BaseNameComponent<T extends IAuditedNameDataType> implemen
 
   onContextPopupMenu(event) {
     event.preventDefault(); // Suppress the browser's context menu
-    console.log('BaseNameComponent: onContextPopupMenu - event=' + event);
+    console.log('AuditedEntityGridComponent: onContextPopupMenu - event=' + event);
     this.menu.open(event);
   }
 

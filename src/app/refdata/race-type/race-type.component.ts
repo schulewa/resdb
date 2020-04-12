@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { RaceTypeService } from './race-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { RaceType } from '../../model/entity/race-type';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
-import { BaseNameComponent } from '../base-name.component';
+import { DataStatus } from '../../core/model/data-status';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 
 @Component({
   selector: 'app-race-type',
   templateUrl: './race-type.component.html',
   styleUrls: ['./race-type.component.scss']
 })
-export class RaceTypeComponent extends BaseNameComponent<RaceType> implements OnInit {
+export class RaceTypeComponent extends AuditedNamedEntityGridComponent<RaceType> implements OnInit {
 
   constructor(private raceTypeService: RaceTypeService) {
     super(RaceType);

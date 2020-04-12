@@ -4,15 +4,14 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
-import com.apschulewitz.resdb.common.model.entity.Altitude;
-import com.apschulewitz.resdb.common.model.entity.Latitude;
-import com.apschulewitz.resdb.common.model.entity.Longitude;
+import com.apschulewitz.resdb.common.model.entity.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -62,6 +61,21 @@ public class Place {
 
 	@ManyToOne(fetch = FetchType.LAZY)
     private River river;
+
+    @Column(nullable = false)
+    private VersionStatus status;
+
+    @Column(nullable = false, length = 30)
+    private String createdBy;
+
+    @Column(length = 30)
+    private String updatedBy;
+
+    @Version
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
+
+    private transient DataOperation operation;
 
     @Tolerate
     public Place() {

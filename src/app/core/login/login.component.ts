@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   authenticate(user: User) {
-    console.log('login.authenticate: user.userName=' + user.loginName + ' user.userPassword=' + user.loginPassword);
+    console.log('login.authenticate: user.userName=' + user.logonName + ' user.userPassword=' + user.loginPassword);
     console.log('authenticate: userName=' + this.loginForm.controls['userName'].value +
       '   password=' + this.loginForm.controls['userPassword'].value);
     this.securityService.login(this.loginForm.controls['userName'].value, this.loginForm.controls['userPassword'].value)

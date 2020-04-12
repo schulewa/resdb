@@ -6,7 +6,10 @@ import { CoreModule } from './core/core.module';
 import { ReferenceDataModule } from './refdata/refdata.module';
 import { PersonComponent } from './research/person/person.component';
 import { PersonDetailComponent } from './research/person-detail/person-detail.component';
-import {ResearchModule} from './research/research.module';
+import { ResearchModule } from './research/research.module';
+import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
+import {ConfigModule} from './config/config.module';
+// import {MatDatepickerModule, MatExpansionModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,8 +20,12 @@ import {ResearchModule} from './research/research.module';
   imports: [
     BrowserModule,
     CoreModule,
+    ConfigModule,
     ReferenceDataModule,
-    ResearchModule
+    ResearchModule,
+    NgbDatepickerModule,
+    // MatExpansionModule,
+    // MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

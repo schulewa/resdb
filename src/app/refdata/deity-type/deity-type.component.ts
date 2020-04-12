@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { DeityTypeService } from './deity-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { DeityType } from '../../model/entity/deity-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 @Component({
   selector: 'app-deity-type',
   templateUrl: './deity-type.component.html',
   styleUrls: ['./deity-type.component.scss']
 })
-export class DeityTypeComponent extends BaseNameComponent<DeityType> implements OnInit {
+export class DeityTypeComponent extends AuditedNamedEntityGridComponent<DeityType> implements OnInit {
 
   constructor(private deityTypeService: DeityTypeService) {
     super(DeityType);

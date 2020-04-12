@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { TaleTypeService } from './tale-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { TaleType } from '../../model/entity/tale-type';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 @Component({
   selector: 'app-tale-type',
   templateUrl: './tale-type.component.html',
   styleUrls: ['./tale-type.component.scss']
 })
-export class TaleTypeComponent extends BaseNameComponent<TaleType> implements OnInit {
+export class TaleTypeComponent extends AuditedNamedEntityGridComponent<TaleType> implements OnInit {
 
   constructor(private taleTypeService: TaleTypeService) {
     super(TaleType);

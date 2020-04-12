@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicationTypeService } from './publication-type.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
 import { PublicationType } from '../../model/entity/publication-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import {CoreOperationsMessages} from '../../core/core-operations-messages';
-import {DataStatus} from '../data-status';
+import {DataStatus} from '../../core/model/data-status';
 
 @Component({
   selector: 'app-publication-type',
   templateUrl: './publication-type.component.html',
   styleUrls: ['./publication-type.component.scss']
 })
-export class PublicationTypeComponent extends BaseNameComponent<PublicationType> implements OnInit {
+export class PublicationTypeComponent extends AuditedNamedEntityGridComponent<PublicationType> implements OnInit {
 
   constructor(private publicationTypeService: PublicationTypeService) {
     super(PublicationType);

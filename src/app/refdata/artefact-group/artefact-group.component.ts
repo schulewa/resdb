@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtefactGroupService } from './artefact-group.service';
-import { DataAction } from '../data-action';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from '../../model/entity/interfaces/audited-name-data-type';
-import { BaseNameComponent } from '../base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { ArtefactGroup } from '../../model/entity/artefact-group';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
-import { DataStatus } from '../data-status';
+import { DataStatus } from '../../core/model/data-status';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { DataStatus } from '../data-status';
   templateUrl: './artefact-group.component.html',
   styleUrls: ['./artefact-group.component.scss']
 })
-export class ArtefactGroupComponent extends BaseNameComponent<ArtefactGroup> implements OnInit {
+export class ArtefactGroupComponent extends AuditedNamedEntityGridComponent<ArtefactGroup> implements OnInit {
 
   constructor(private artefactGroupService: ArtefactGroupService) {
     super(ArtefactGroup);

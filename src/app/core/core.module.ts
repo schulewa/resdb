@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatDatepickerModule, MatExpansionModule } from '@angular/material';
 import { CoreRoutingModule } from './core-routing.module';
 import { RouterModule } from '@angular/router';
 import { AgGridModule } from 'ag-grid-angular';
@@ -18,6 +18,9 @@ import { MenuComponent } from './menu/menu.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PopupMenuComponent } from './popup-menu/popup-menu.component';
+import { HistoricalDateComponent } from './historical-date/historical-date.component';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     MenuComponent,
     HeaderComponent,
     FooterComponent,
-    PopupMenuComponent
+    PopupMenuComponent,
+    HistoricalDateComponent
   ],
   imports: [
     AgGridModule,
@@ -36,8 +40,12 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatExpansionModule,
     MatMenuModule,
+    MatMomentDateModule,
     NgbModule,
+    NgxMyDatePickerModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     ReactiveFormsModule,
     CoreRoutingModule
@@ -46,6 +54,10 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     AgGridModule,
     FormsModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatExpansionModule,
+    MatMomentDateModule,
+    NgxMyDatePickerModule,
     NgxPermissionsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -55,7 +67,9 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
     HomeComponent,
     LoginComponent,
     MenuComponent,
-    PopupMenuComponent
+    NgbModule,
+    PopupMenuComponent,
+    HistoricalDateComponent
   ]
 })
 export class CoreModule { }

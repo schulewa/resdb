@@ -20,13 +20,13 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@Column(name = "file_path", nullable = false)
+	@Column(name = "file_path", nullable = false, length = 255)
 	private String filePath;
 
-	@Column(name = "file_name", nullable = false)
+	@Column(name = "file_name", nullable = false, length = 100)
 	private String fileName;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
     @JoinColumn(name = "image_type_id")
 	private ImageType imageType;
 

@@ -1,7 +1,3 @@
-flyway:
-#  locations: db/migration/mysql
-#  enabled: false
-#  locations: database/schema/mysql
 
 logging:
   level:
@@ -28,9 +24,9 @@ logging:
 spring:
   datasource:
     driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/resdb_dev?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
-    username: resdb_dev
-    password: resdb_dev
+    url: ${RESDB_DB_JDBC_URL}
+    username: ${RESDB_DB_USER}
+    password: ${RESDB_DB_PASSWORD}
   data:
     rest:
       base-path: /resdb/api
@@ -43,7 +39,14 @@ spring:
   session:
     store-type: none
 
-# Enable zipkin support, sample all requests
+# Database migration tool (see src/main/resources/db/changelog)
+  liquibase:
+    enabled: true
+    user: ${RESDB_DB_USER}
+    password: ${RESDB_DB_PASSWORD}
+    contexts: ALL, MYSQL
+
+  # Enable zipkin support, sample all requests
   zipkin:
     baseUrl: http://zipkin:9411
   sleuth:

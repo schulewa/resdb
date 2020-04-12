@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ColDef, GridApi, GridOptions } from 'ag-grid-community';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DataStatus } from '../../refdata/data-status';
+import { DataStatus } from '../../core/model/data-status';
 import { CoreOperationsMessages } from '../../core/core-operations-messages';
 import { TitlesService } from './titles.service';
 import { DateFormatters } from '../../core/formatters/date-formatters';
-import { DataAction } from '../../refdata/data-action';
+import { DataAction } from '../../core/model/data-action';
 import { Title } from '../../model/entity/title';
-import { BaseNameComponent } from '../../refdata/base-name.component';
+import { AuditedNamedEntityGridComponent } from '../../core/audited-named-entity-grid.component';
 import { PopupMenuComponent } from '../../core/popup-menu/popup-menu.component';
 import { IAuditedDataType } from '../../model/entity/interfaces/audited-data-type';
 import { DataPopupMenuAction } from '../../core/data-popup-menu-action';
@@ -136,7 +136,7 @@ export class TitlesComponent implements OnInit {
 
   onContextPopupMenu(event) {
     event.preventDefault(); // Suppress the browser's context menu
-    console.log('BaseNameComponent: onContextPopupMenu - event=' + event);
+    console.log('AuditedNamedEntityGridComponent: onContextPopupMenu - event=' + event);
     this.menu.open(event);
   }
 
@@ -157,7 +157,7 @@ export class TitlesComponent implements OnInit {
 
   onSelectionChanged(event) {
     const rowCount = event.api.getSelectedNodes().length;
-    console.log('BaseNameComponent.onSelectionChanged: ' + rowCount + ' rows selected');
+    console.log('AuditedNamedEntityGridComponent.onSelectionChanged: ' + rowCount + ' rows selected');
   }
 
   deselectAllRows() {
@@ -216,7 +216,7 @@ export class TitlesComponent implements OnInit {
             }
           );
         } else if (DataAction.Delete === title.action) {
-          this.operationMessage = CoreOperationsMessages.DELETE_TALE_TYPE;
+          this.operationMessage = CoreOperationsMessages.DELETE_TITLE;
           title.status = DataStatus.Delete;
           this.titlesService.delete(title).subscribe(
             data => {

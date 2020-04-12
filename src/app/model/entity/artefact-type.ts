@@ -1,5 +1,5 @@
-import { DataStatus } from '../../refdata/data-status';
-import { DataAction } from '../../refdata/data-action';
+import { DataStatus } from '../../core/model/data-status';
+import { DataAction } from '../../core/model/data-action';
 import { IAuditedNameDataType } from './interfaces/audited-name-data-type';
 
 export class ArtefactType implements IAuditedNameDataType {

@@ -168,6 +168,13 @@
             <version>2.9.2</version>
         </dependency>
 
+        <!-- geo-spatial libraries -->
+
+        <dependency>
+            <groupId>org.apache.sis.core</groupId>
+            <artifactId>sis-referencing</artifactId>
+            <version>1.0</version>
+        </dependency>
 
 
         <!-- testing dependencies -->

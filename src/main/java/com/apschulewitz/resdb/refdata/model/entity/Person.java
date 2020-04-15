@@ -32,13 +32,13 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "first_name", nullable = false, length = 30)
     private String firstName;
 
-	@Column(name = "middle_name")
+	@Column(name = "middle_name", length = 30)
     private String middleName;
 
-	@Column(name = "family_name", nullable = false)
+	@Column(name = "family_name", nullable = false, length = 50)
     private String familyName;
 
 	@Column

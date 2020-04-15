@@ -30,7 +30,7 @@ public class Title {
   @Column(length = 250)
   private String description;
 
-  @Column(nullable = false, length = 1, name = "applies_to")
+  @Column(nullable = false, length = 1) //, name = "applies_to"
   private Gender appliesTo;
 
   @Column(nullable = false, length = 1)
@@ -39,14 +39,14 @@ public class Title {
   @Column
   private VersionStatus status;
 
-  @Column
+  @Column(nullable = false, length = 20)
   private String createdBy;
 
   @Column
   private String updatedBy;
 
   @Version
-  @Column(name = "last_updated")
+  @Column(name = "last_updated", length = 20)
   private LocalDateTime lastUpdated;
 
   private transient DataOperation operation;

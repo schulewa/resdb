@@ -1,6 +1,7 @@
 --liquibase formatted sql
 
 --changeset author:schulewa
+
 CREATE TABLE resdb_address_type
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
@@ -790,7 +791,7 @@ CREATE TABLE resdb_person_title
     id         BIGINT     NOT NULL AUTO_INCREMENT,
     person_id  BIGINT     NOT NULL,
     title_id   BIGINT     NOT NULL,
-    title_type VARCHAR(1) NOT NULL, -- P=prefix, S=suffix
+--     title_type VARCHAR(1) NOT NULL, -- P=prefix, S=suffix
     position   INTEGER    NOT NULL,
     CONSTRAINT resdb_person_title_pk PRIMARY KEY (id)
 );
@@ -1094,18 +1095,21 @@ create table resdb_title
 (
     id           BIGINT       NOT NULL AUTO_INCREMENT,
     title        VARCHAR(30)  NOT NULL,
-    description  VARCHAR(250) NOT NULL,
-    applies_to   VARCHAR(1)   NOT NULL, -- P=prefix, S=suffix
-    title_type   VARCHAR(1)   NOT NULL, -- M=Male, F=Female
+    description  VARCHAR(250) NULL,
+    applies_to   VARCHAR(1)   NOT NULL, -- M=Male, F=Female
+    title_type   VARCHAR(1)   NOT NULL, -- P=prefix, S=suffix
     status       VARCHAR(1)   NOT NULL,
     created_by   VARCHAR(20)  NOT NULL,
-    last_updated TIMESTAMP    NOT NULL,
-    updated_by   VARCHAR(20)  NOT NULL,
+    last_updated TIMESTAMP    NULL,
+    updated_by   VARCHAR(20)  NULL,
     CONSTRAINT resdb_title_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_title_title_idx ON resdb_title (title, applies_to);
-CREATE UNIQUE INDEX resdb_title_desc_idx ON resdb_title (description, applies_to);
+CREATE UNIQUE INDEX resdb_title_title_mf_idx ON resdb_title (title, applies_to);
+CREATE UNIQUE INDEX resdb_title_desc_mf_idx ON resdb_title (description, applies_to);
+CREATE UNIQUE INDEX resdb_title_title_ps_idx ON resdb_title (title, title_type);
+CREATE UNIQUE INDEX resdb_title_desc_ps_idx ON resdb_title (description, title_type);
 CREATE INDEX resdb_title_applies_idx ON resdb_title (applies_to);
+CREATE INDEX resdb_title_title_type_idx ON resdb_title (title_type);
 
 
 CREATE TABLE resdb_user_account

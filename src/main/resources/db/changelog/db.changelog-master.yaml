@@ -14,10 +14,19 @@ databaseChangeLog:
       file: db/changelog/20200314_03_insert_research_permissions.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_04_insert_admin_user_and_user_templates.sql
+      file: db/changelog/20200314_04_insert_languages.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_05_setup_default_user_menu.sql
+      file: db/changelog/20200314_05_insert_admin_user_and_user_templates.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_06_insert_menu_options.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_07_insert_user_group_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_08_setup_default_user_menu.sql
       context: ALL
   - include:
       file: db/changelog/20200412_01_insert_address_types.sql
@@ -37,3 +46,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200412_06_insert_countries.sql
       context: ALL
+  - include:
+      file: db/changelog/20200415_01_insert_titles.sql
+      context: ALL
+

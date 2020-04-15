@@ -2,10 +2,6 @@
 
 --changeset author:schulewa
 
-INSERT INTO resdb_language (id, iso_6391_code, iso_6392_code_alpha_3b, iso_6392_code_alpha_3t, iso_6392_code_alpha_2, name, language_group_id) VALUES (1, 'en-GB', 'eng', 'eng', 'uk', 'English (UK)', 1);
-
-INSERT INTO resdb_language_group (id, name, status, created_by, last_updated, updated_by) VALUES (1, 'Indo-European', 'A', 'admin', CURRENT_TIMESTAMP, 'adrian');
-
 -- comment CREATE ADMIN USER
 
 INSERT INTO resdb_user_account (logon_name, first_name, family_name, language_id, is_template, status, last_logon, invalid_logon_count, pwd_last_updated)

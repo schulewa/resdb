@@ -3,7 +3,6 @@ package com.apschulewitz.resdb.refdata.model.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -11,7 +10,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "resdb_person_role")
-//@Audited
 public class PersonRole {
 
 	private static final long serialVersionUID = -4967178407353108249L;

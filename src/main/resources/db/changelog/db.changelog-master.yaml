@@ -36,7 +36,7 @@ databaseChangeLog:
       context: ALL
   - include:
       file: db/changelog/20200412_03_insert_calendar_groups.sql
-      context: ALL
+      context: MYSQL
   - include:
       file: db/changelog/20200412_04_insert_calendars.sql
       context: ALL
@@ -49,4 +49,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200415_01_insert_titles.sql
       context: ALL
-
+  - include:
+      file: db/changelog/20200418_01_insert_places.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200418_02_insert_person.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200418_03_insert_person_titles.sql
+      context: ALL

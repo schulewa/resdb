@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "resdb_publication")
-//@Audited
 public class Publication {
 
 	private static final long serialVersionUID = -3453453187746150787L;

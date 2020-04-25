@@ -30,7 +30,6 @@ public class UserAccountMapper implements EntityMapper<UserAccount, UserAccountD
             throw new IllegalArgumentException("Null user account cannot be mapped to dto");
         }
 
-
         Collection<UserGroupMembershipDto> userGroupMemberships = null;
         if (userAccount.getGroupMemberships() != null) {
             userGroupMemberships = userAccount.getGroupMemberships().stream()

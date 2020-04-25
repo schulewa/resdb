@@ -7,6 +7,18 @@ import static org.junit.Assert.assertTrue;
 
 public class GenderTest {
 
+    @Test
+    public void given_A_code_when_getTypeFor_is_executed_then_return_Gender() {
+        // Given
+        String code = "A";
+
+        // When
+        Gender type = Gender.getGenderFor(code);
+
+        // Then
+        assertEquals("A code", Gender.Any, type);
+    }
+
   @Test
   public void given_M_code_when_getTypeFor_is_executed_then_return_Gender() {
     // Given

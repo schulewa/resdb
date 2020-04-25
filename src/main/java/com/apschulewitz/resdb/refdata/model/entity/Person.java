@@ -41,7 +41,7 @@ public class Person {
     private String familyName;
 
     @Column
-    private Gender gender;
+    private Gender appliesTo;
 
     @Embedded
     @AttributeOverrides({
@@ -61,20 +61,18 @@ public class Person {
     private HistoricalDate dateOfDeath;
 
     // default prefix title used when listing person
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prefix_title_id")
+    @ManyToOne
     private Title prefixTitle;
 
     // default suffix title used when listing person
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "suffix_title_id")
+    @ManyToOne
     private Title suffixTitle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "birth_place_id")
     private Place birthPlace;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "death_place_id")
     private Place deathPlace;
 

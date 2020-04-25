@@ -136,31 +136,6 @@ CREATE TABLE resdb_artefact_type
 );
 CREATE UNIQUE INDEX resdb_artfct_typ_nam_idx on resdb_artefact_type (name);
 
-
-# CREATE TABLE resdb_audit_header
-# (
-# 	id              BIGINT NOT NULL AUTO_INCREMENT,
-#   logon_name      VARCHAR(20)		NOT NULL,
-#   audit_date      DATETIME    	NOT NULL,
-# 	CONSTRAINT resdb_audit_header_pk PRIMARY KEY (id)
-# );
-# CREATE UNIQUE INDEX resdb_audit_header_idx ON resdb_audit_header (audit_date, logon_name);
-#
-#
-# CREATE TABLE resdb_audit_detail
-# (
-# 	id              BIGINT NOT NULL AUTO_INCREMENT,
-#   table_name      varchar(30)     NOT NULL,
-#   column_name     varchar(30)     NOT NULL,
-#   action          char(1)         NOT NULL,
-#   audit_date      datetime        NOT NULL,
-#   old_value       varchar(250)    NULL,
-#   new_value       varchar(250)    NULL,
-# 	CONSTRAINT resdb_audit_detail_pk PRIMARY KEY (id)
-# );
-# CREATE UNIQUE INDEX resdb_audit_detail_idx ON resdb_audit_detail (table_name, column_name, action, audit_date);
-
-
 CREATE TABLE resdb_bibliography
 (
     id   BIGINT      NOT NULL AUTO_INCREMENT,
@@ -188,9 +163,13 @@ CREATE TABLE resdb_calendar
     calendar_group_id BIGINT       NOT NULL,
     notes             VARCHAR(500) NULL,
     owned_by          VARCHAR(30)  NOT NULL,
-    CONSTRAINT resdb_calendar_pk PRIMARY KEY (id)
+    status            VARCHAR(1)   NOT NULL,
+    created_by        VARCHAR(20)  NOT NULL,
+    last_updated      TIMESTAMP    NULL,
+    updated_by        VARCHAR(20)  NULL,
+        CONSTRAINT resdb_calendar_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_calendar_name_idx ON resdb_calendar (name);
+CREATE INDEX resdb_calendar_name_idx ON resdb_calendar (name);
 
 CREATE TABLE resdb_calendar_group
 (
@@ -556,8 +535,8 @@ CREATE TABLE resdb_language_group
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_language_group_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX language_group_name_idx ON resdb_language_group (name);
@@ -682,8 +661,8 @@ CREATE TABLE resdb_other_address
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_other_address_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_other_address_name_idx ON resdb_other_address (name);
@@ -750,8 +729,8 @@ CREATE TABLE resdb_person
     death_place_id    BIGINT      NULL,
     status            VARCHAR(1)  NOT NULL,
     created_by        VARCHAR(20) NOT NULL,
-    last_updated      TIMESTAMP   NOT NULL,
-    updated_by        VARCHAR(20) NOT NULL,
+    last_updated      TIMESTAMP   NULL,
+    updated_by        VARCHAR(20) NULL,
     CONSTRAINT resdb_person_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_person_name_idx ON resdb_person (family_name, middle_name, first_name);
@@ -775,7 +754,6 @@ CREATE TABLE resdb_person_definition
 );
 CREATE UNIQUE INDEX resdb_person_definition_idx ON resdb_person_definition (person_id, person_type_id);
 
-SELECT 'Creating table resdb_person_role' AS '';
 CREATE TABLE resdb_person_role
 (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
@@ -978,8 +956,8 @@ CREATE TABLE resdb_region
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_region_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_region_name_idx ON resdb_region (name);
@@ -1073,8 +1051,8 @@ CREATE TABLE resdb_technology_type_group
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_technolgy_typ_grp_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_technlgy_typ_grp_nam_idx ON resdb_technology_type_group (name);
@@ -1106,8 +1084,8 @@ create table resdb_title
 );
 CREATE UNIQUE INDEX resdb_title_title_mf_idx ON resdb_title (title, applies_to);
 CREATE UNIQUE INDEX resdb_title_desc_mf_idx ON resdb_title (description, applies_to);
-CREATE UNIQUE INDEX resdb_title_title_ps_idx ON resdb_title (title, title_type);
-CREATE UNIQUE INDEX resdb_title_desc_ps_idx ON resdb_title (description, title_type);
+CREATE UNIQUE INDEX resdb_title_title_ps_idx ON resdb_title (title, title_type, applies_to);
+CREATE UNIQUE INDEX resdb_title_desc_ps_idx ON resdb_title (description, title_type, applies_to);
 CREATE INDEX resdb_title_applies_idx ON resdb_title (applies_to);
 CREATE INDEX resdb_title_title_type_idx ON resdb_title (title_type);
 

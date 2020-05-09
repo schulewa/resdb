@@ -136,6 +136,18 @@ CREATE TABLE resdb_artefact_type
 );
 CREATE UNIQUE INDEX resdb_artfct_typ_nam_idx on resdb_artefact_type (name);
 
+CREATE TABLE resdb_attribute_type
+(
+    id           BIGINT NOT NULL AUTO_INCREMENT,
+    name         VARCHAR(50) NOT NULL,
+    status       VARCHAR(1)  NOT NULL,
+    created_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
+    CONSTRAINT resdb_attribute_type_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_attribute_type_idx ON resdb_attribute_type (name);
+
 CREATE TABLE resdb_bibliography
 (
     id   BIGINT      NOT NULL AUTO_INCREMENT,
@@ -411,6 +423,10 @@ CREATE TABLE resdb_event_type
     id                  BIGINT      NOT NULL AUTO_INCREMENT,
     name                VARCHAR(30) NOT NULL,
     event_type_group_id BIGINT      NOT NULL,
+    status              VARCHAR(1)  NOT NULL,
+    created_by          VARCHAR(20) NOT NULL,
+    last_updated        TIMESTAMP   NULL,
+    updated_by          VARCHAR(20) NULL,
     CONSTRAINT resdb_event_type_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_event_type_name_idx ON resdb_entity_type (name);
@@ -516,14 +532,23 @@ CREATE UNIQUE INDEX resdb_image_typ_nam_idx on resdb_image_type (name);
 
 CREATE TABLE resdb_language
 (
-    id                     BIGINT      NOT NULL AUTO_INCREMENT,
-    iso_6391_code          VARCHAR(5)  NOT NULL,
-    iso_6392_code_alpha_3b VARCHAR(3)  NOT NULL,
-    iso_6392_code_alpha_3t VARCHAR(3)  NULL,
-    iso_6392_code_alpha_2  VARCHAR(2)  NULL,
-    name                   VARCHAR(30) NOT NULL,
-    territory              VARCHAR(2)  NULL,
-    language_group_id      BIGINT      NOT NULL,
+    id                     BIGINT        NOT NULL AUTO_INCREMENT,
+    name                   VARCHAR(30)   NOT NULL,
+    native_name            VARCHAR(1000) NOT NULL,
+    iso_6391_code_1        VARCHAR(2)    NOT NULL,
+    iso_6392_code_alpha_2t VARCHAR(3)    NOT NULL,
+    iso_6392_code_alpha_2b VARCHAR(3)    NOT NULL,
+    iso_6392_code_alpha_3  VARCHAR(8)    NOT NULL,
+    deciphered             VARCHAR(1)    NOT NULL,
+    living                 VARCHAR(1)    NOT NULL,
+    constructed            VARCHAR(1)    NOT NULL,
+    macroLanguage          VARCHAR(1)    NOT NULL,
+    language_group_id      BIGINT        NULL,
+    notes                  VARCHAR(500)  NULL,
+    status                 VARCHAR(1)    NOT NULL,
+    created_by             VARCHAR(20)   NOT NULL,
+    last_updated           TIMESTAMP     NULL,
+    updated_by             VARCHAR(20)   NULL,
     CONSTRAINT resdb_language_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_language_name_idx ON resdb_language (name);
@@ -533,6 +558,7 @@ CREATE TABLE resdb_language_group
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
+    region_id    BIGINT      NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
     last_updated TIMESTAMP   NULL,
@@ -753,6 +779,15 @@ CREATE TABLE resdb_person_definition
     CONSTRAINT resdb_person_definition_pk PRIMARY KEY (person_id)
 );
 CREATE UNIQUE INDEX resdb_person_definition_idx ON resdb_person_definition (person_id, person_type_id);
+
+CREATE TABLE resdb_person_attribute
+(
+    id                       BIGINT NOT NULL AUTO_INCREMENT,
+    person_id                BIGINT NOT NULL,
+    person_attribute_type_id BIGINT NOT NULL,
+    CONSTRAINT resdb_person_attribute_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_person_attribute_idx ON resdb_person_attribute (person_id, person_attribute_type_id);
 
 CREATE TABLE resdb_person_role
 (

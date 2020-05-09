@@ -19,7 +19,7 @@ public class PersonRole {
     private Long id;
 
 	@Column(nullable = false, length = 30, name = "role_name")
-	private String name;
+	private String roleName;
 
     @Column(nullable = false, name = "user_modifiable")
     private boolean userModifiable;

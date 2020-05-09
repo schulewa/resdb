@@ -5,6 +5,7 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
 import com.apschulewitz.resdb.common.model.entity.DataEntityId;
+import com.apschulewitz.resdb.common.model.entity.YesNoChoice;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -44,10 +45,19 @@ public class Language implements DataEntityId {
 	@Column(nullable = false, length = 30)
     private String name;
 
-    @Column(nullable = true, length = 2)
-    private String territory;
+	@Column(nullable = false, length = 1)
+    private YesNoChoice deciphered;
 
-	@ManyToOne //(fetch = FetchType.EAGER)
+    @Column(nullable = false, length = 1)
+    private YesNoChoice living;
+
+    @Column(nullable = false, length = 1)
+    private YesNoChoice constructed;
+
+    @Column(nullable = false, length = 1)
+    private YesNoChoice macroLanguage;
+
+    @ManyToOne
 	@JoinColumn(name = "language_group_id", referencedColumnName = "id")
     private LanguageGroup languageGroup;
 

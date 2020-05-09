@@ -14,19 +14,25 @@ databaseChangeLog:
       file: db/changelog/20200314_03_insert_research_permissions.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_04_insert_languages.sql
+      file: db/changelog/20200314_04_insert_regions.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_05_insert_admin_user_and_user_templates.sql
+      file: db/changelog/20200314_05_insert_language_groups.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_06_insert_menu_options.sql
+      file: db/changelog/20200314_06_insert_languages.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_07_insert_user_group_permissions.sql
+      file: db/changelog/20200315_01_insert_admin_user_and_user_templates.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_08_setup_default_user_menu.sql
+      file: db/changelog/20200315_02_insert_menu_options.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_03_insert_user_group_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_04_setup_default_user_menu.sql
       context: ALL
   - include:
       file: db/changelog/20200412_01_insert_address_types.sql
@@ -58,3 +64,16 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200418_03_insert_person_titles.sql
       context: ALL
+  - include:
+      file: db/changelog/20200425_01_insert_event_type_groups.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_02_insert_event_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_03_insert_hierarchy_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_04_insert_measure_types.sql
+      context: ALL
+

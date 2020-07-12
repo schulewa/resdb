@@ -617,6 +617,7 @@ create table resdb_measure_converter
     to_measure_id   BIGINT      NOT NULL,
     to_quantity     FLOAT       NOT NULL,
     math_operator   CHAR(10)    NOT NULL,
+    approximation   CHAR(1)     NOT NULL,
     status          CHAR(1)     NOT NULL,
     CONSTRAINT resdb_measure_cnvrtr_pk PRIMARY KEY (id)
 );
@@ -625,16 +626,28 @@ CREATE UNIQUE INDEX resdb_measure_cnvrtr_from_to_idx ON resdb_measure_converter 
 
 create table resdb_measure_type
 (
+    id                BIGINT      NOT NULL AUTO_INCREMENT,
+    name              VARCHAR(30) NOT NULL,
+    measure_system_id BIGINT      NULL,
+    status            VARCHAR(1)  NOT NULL,
+    created_by        VARCHAR(20) NOT NULL,
+    last_updated      TIMESTAMP   NULL,
+    updated_by        VARCHAR(20) NULL,
+    CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_measure_type_name_idx ON resdb_measure_type (name);
+
+CREATE TABLE resdb_measure_system
+(
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
+    for_race_id  BIGINT      NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
     last_updated TIMESTAMP   NULL,
     updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_measure_type_name_idx ON resdb_measure_type (name);
-
 
 CREATE TABLE resdb_menu
 (

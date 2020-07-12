@@ -23,9 +23,11 @@ import java.time.LocalDateTime;
  * Class <CODE>MeasureType</CODE> indicates the type of Measure.
  * This will be one of:
  * <UL>
+ *     <LI>AREA</LI>
  *     <LI>DISTANCE</LI>
  *     <LI>TIME</LI>
  *     <LI>VOLUME</LI>
+ *     <LI>WEIGHT</LI>
  * </UL>
  * so is intended to ensure that measure converters only attempt to convert measures from/to the same type
  * of measure.

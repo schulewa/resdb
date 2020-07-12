@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.entity.YesNoChoice;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
@@ -45,6 +46,12 @@ public class MeasureConverter {
 
 	@Column(name = "to_quantity", nullable = false)
 	private Double toQuantity;
+
+	@Column(nullable = false)
+    private MathOperator mathOperator;
+
+	@Column(nullable = false)
+    private YesNoChoice approximation;
 
     @Tolerate
     public MeasureConverter() {

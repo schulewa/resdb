@@ -542,7 +542,7 @@ CREATE TABLE resdb_language
     deciphered             VARCHAR(1)    NOT NULL,
     living                 VARCHAR(1)    NOT NULL,
     constructed            VARCHAR(1)    NOT NULL,
-    macroLanguage          VARCHAR(1)    NOT NULL,
+    macro_Language         VARCHAR(1)    NOT NULL,
     language_group_id      BIGINT        NULL,
     notes                  VARCHAR(500)  NULL,
     status                 VARCHAR(1)    NOT NULL,

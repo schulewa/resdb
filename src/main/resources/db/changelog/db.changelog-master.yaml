@@ -74,6 +74,17 @@ databaseChangeLog:
       file: db/changelog/20200425_03_insert_hierarchy_types.sql
       context: ALL
   - include:
-      file: db/changelog/20200425_04_insert_measure_types.sql
+      file: db/changelog/20200725_01_insert_races.sql
       context: ALL
-
+  - include:
+      file: db/changelog/20200726_01_insert_measure_systems.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_02_insert_measure_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_03_insert_measures.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_04_insert_measure_converters.sql
+      context: ALL

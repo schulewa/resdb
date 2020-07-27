@@ -601,12 +601,18 @@ CREATE UNIQUE INDEX resdb_material_name_idx ON resdb_material (name);
 
 create table resdb_measure
 (
-    id              BIGINT      NOT NULL AUTO_INCREMENT,
-    name            VARCHAR(30) NOT NULL,
-    measure_type_id BIGINT      NOT NULL,
+    id                      BIGINT       NOT NULL AUTO_INCREMENT,
+    name                    VARCHAR(30)  NOT NULL,
+    measure_type_id         BIGINT       NOT NULL,
+    associated_with_race_id BIGINT       NULL,
+    description             VARCHAR(500) NULL,
+    status                  VARCHAR(1)   NOT NULL,
+    created_by              VARCHAR(20)  NOT NULL,
+    last_updated            TIMESTAMP    NULL,
+    updated_by              VARCHAR(20)  NULL,
     CONSTRAINT resdb_measure_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_measure_name_idx ON resdb_measure (name);
+CREATE UNIQUE INDEX resdb_measure_name_idx ON resdb_measure (name, measure_type_id);
 
 create table resdb_measure_converter
 (
@@ -624,6 +630,19 @@ create table resdb_measure_converter
 CREATE UNIQUE INDEX resdb_measure_cnvrtr_name_idx ON resdb_measure_converter (name);
 CREATE UNIQUE INDEX resdb_measure_cnvrtr_from_to_idx ON resdb_measure_converter (from_measure_id, to_measure_id);
 
+CREATE TABLE resdb_measure_system
+(
+    id           BIGINT      NOT NULL AUTO_INCREMENT,
+    name         VARCHAR(30) NOT NULL,
+    for_race_id  BIGINT      NULL,
+    status       VARCHAR(1)  NOT NULL,
+    created_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
+    CONSTRAINT resdb_measure_system_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_measure_system_name_race_idx ON resdb_measure_system (name, for_race_id);
+
 create table resdb_measure_type
 (
     id                BIGINT      NOT NULL AUTO_INCREMENT,
@@ -636,18 +655,6 @@ create table resdb_measure_type
     CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_measure_type_name_idx ON resdb_measure_type (name);
-
-CREATE TABLE resdb_measure_system
-(
-    id           BIGINT      NOT NULL AUTO_INCREMENT,
-    name         VARCHAR(30) NOT NULL,
-    for_race_id  BIGINT      NULL,
-    status       VARCHAR(1)  NOT NULL,
-    created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NULL,
-    updated_by   VARCHAR(20) NULL,
-    CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id)
-);
 
 CREATE TABLE resdb_menu
 (
@@ -925,7 +932,7 @@ CREATE TABLE resdb_race
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
-    race_type_id BIGINT      NOT NULL,
+    race_type_id BIGINT      NULL,
     CONSTRAINT resdb_race_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_race_name_idx ON resdb_race (name);

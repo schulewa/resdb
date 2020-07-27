@@ -34,29 +34,29 @@ import java.time.LocalDateTime;
  */
 public class MeasureType {
 
-	private static final long serialVersionUID = -3137782301296245542L;
+    private static final long serialVersionUID = -3137782301296245542L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @Column
-  private VersionStatus status;
+    @Column
+    private VersionStatus status;
 
-  @Column
-  private String createdBy;
+    @Column
+    private String createdBy;
 
-  @Column
-  private String updatedBy;
+    @Column
+    private String updatedBy;
 
-  @Version
-  @Column(name = "last_updated")
-  private LocalDateTime lastUpdated;
+    @Version
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
 
-  private transient DataOperation operation;
+    private transient DataOperation operation;
 
     @Tolerate
     public MeasureType() {

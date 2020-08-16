@@ -88,3 +88,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200726_04_insert_measure_converters.sql
       context: ALL
+  - include:
+      file: db/changelog/20200727_01_insert_periods.sql
+      context: ALL
+

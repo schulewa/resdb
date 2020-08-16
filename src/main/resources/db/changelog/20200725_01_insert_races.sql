@@ -10,6 +10,7 @@ insert into resdb_race (name) values ('Anglo-Saxon');
 insert into resdb_race (name) values ('Egyptian');
 insert into resdb_race (name) values ('English');
 insert into resdb_race (name) values ('Etruscan');
+insert into resdb_race (name) values ('Hittite');
 insert into resdb_race (name) values ('North American');
 insert into resdb_race (name) values ('Rasenna');
 

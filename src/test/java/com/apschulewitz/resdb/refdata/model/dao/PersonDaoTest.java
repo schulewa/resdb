@@ -197,7 +197,7 @@ public class PersonDaoTest {
                 .deathPlace(deathPlace)
                 .familyName(familyName)
                 .firstName(firstName)
-                .appliesTo(gender)
+                .gender(gender)
                 .middleName(middleName)
                 .prefixTitle(sir)
                 .status(VersionStatus.New)

@@ -731,15 +731,27 @@ CREATE TABLE resdb_period
 (
     id                 BIGINT      NOT NULL AUTO_INCREMENT,
     name               VARCHAR(30) NOT NULL,
-    period_start_year  INTEGER     NOT NULL,
+    start_approximated CHAR(1)     NULL,
+    period_start_year  INTEGER     NULL,
     period_start_month INTEGER     NULL,
     period_start_day   INTEGER     NULL,
-    period_end_year    INTEGER     NOT NULL,
+    end_approximated   CHAR(1)     NULL,
+    period_end_year    INTEGER     NULL,
     period_end_month   INTEGER     NULL,
     period_end_day     INTEGER     NULL,
     CONSTRAINT resdb_period_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_period_name_idx ON resdb_period (name);
+
+CREATE TABLE resdb_period_alias
+(
+    id             BIGINT NOT NULL AUTO_INCREMENT,
+    from_period_id BIGINT NOT NULL,
+    to_period_id   BIGINT NOT NULL,
+    CONSTRAINT resdb_period_alias_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_period_alias_idx ON resdb_period_alias (from_period_id, to_period_id);
+
 
 CREATE TABLE resdb_permission
 (
@@ -946,6 +958,32 @@ CREATE TABLE resdb_race_alias
     CONSTRAINT resdb_race_alias_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_race_alias_idx ON resdb_race_alias (from_race_id, to_race_id);
+
+CREATE TABLE resdb_race_period
+(
+    id                 BIGINT  NOT NULL AUTO_INCREMENT,
+    race_id            BIGINT  NOT NULL,
+    period_id          BIGINT  NOT NULL,
+    start_approximated CHAR(1) NOT NULL,
+    period_start_year  INTEGER NOT NULL,
+    period_start_month INTEGER NULL,
+    period_start_day   INTEGER NULL,
+    end_approximated   CHAR(1) NOT NULL,
+    period_end_year    INTEGER NOT NULL,
+    period_end_month   INTEGER NULL,
+    period_end_day     INTEGER NULL,
+    CONSTRAINT resdb_race_period_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_race_period_idx ON resdb_race_period (race_id, period_id);
+
+CREATE TABLE resdb_race_period_alias
+(
+    id                  BIGINT NOT NULL AUTO_INCREMENT,
+    from_race_period_id BIGINT NOT NULL,
+    to_race_period_id   BIGINT NOT NULL,
+    CONSTRAINT resdb_race_period_alias_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_race_period_alias_idx ON resdb_race_period_alias (from_race_period_id, to_race_period_id);
 
 
 CREATE TABLE resdb_race_place

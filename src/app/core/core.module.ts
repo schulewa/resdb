@@ -21,6 +21,7 @@ import { PopupMenuComponent } from './popup-menu/popup-menu.component';
 import { HistoricalDateComponent } from './historical-date/historical-date.component';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { MultiColumnChoiceSelectorModalComponent } from './multi-column-choice-selector-modal/multi-column-choice-selector-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
     HeaderComponent,
     FooterComponent,
     PopupMenuComponent,
-    HistoricalDateComponent
+    HistoricalDateComponent,
+    MultiColumnChoiceSelectorModalComponent
   ],
   imports: [
     AgGridModule,

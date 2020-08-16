@@ -40,8 +40,8 @@ public class Person {
     @Column(name = "family_name", nullable = false, length = 50)
     private String familyName;
 
-    @Column
-    private Gender appliesTo;
+    @Column(name = "gender")
+    private Gender gender;
 
     @Embedded
     @AttributeOverrides({

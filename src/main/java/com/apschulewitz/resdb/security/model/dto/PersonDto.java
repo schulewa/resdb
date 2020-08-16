@@ -15,7 +15,7 @@ public class PersonDto {
     private String firstName;
     private String middleName;
     private String familyName;
-    private String appliesTo;
+    private String gender;
 
     private HistoricalDateDto dateOfBirth;
     private HistoricalDateDto dateOfDeath;

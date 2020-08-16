@@ -23,7 +23,7 @@ export class PersonDetailComponent implements OnInit {
 
     @Input() person: Person;
 
-    // @Output() personChange = new EventEmitter();
+    @Output() personChange = new EventEmitter();
 
     private httpError: HttpErrorResponse;
     private operationMessage: string;
@@ -31,6 +31,7 @@ export class PersonDetailComponent implements OnInit {
     private isExistingPerson: boolean;
 
     private gender: Gender;
+    // private gender: CodeLabel;
     private allGenders: CodeLabel[];
     private filteredGenders: CodeLabel[];
     private selectedGenderCodeLabel: CodeLabel;
@@ -54,7 +55,7 @@ export class PersonDetailComponent implements OnInit {
     private titlesColumnDefs: ColDef[];
     private titlesGridOptions: GridOptions;
 
-    private addPersonForm: FormGroup;
+    private personDetailForm: FormGroup;
 
     // datePickerOptions: INgxMyDpOptions = {
     //     // other options...
@@ -62,7 +63,6 @@ export class PersonDetailComponent implements OnInit {
     // };
 
     constructor(private router: Router, private fb: FormBuilder, private titlesService: TitlesService) {
-        console.log('Start of person-detail constructor');
         this.titlesColumnDefs = this.createTitlesColumnDefs();
         this.titlesGridOptions = this.createTitlesGridOptions();
         //
@@ -75,18 +75,9 @@ export class PersonDetailComponent implements OnInit {
 
         this.initAllDatesCodeLabels();
 
-        if (!this.person) {
-            this.person = new Person();
-            this.isExistingPerson = false;
-        } else {
-            this.isExistingPerson = true;
-            // TODO add person.titles to assignedPersonTitles
-        }
-
         // set default values for dropdowns on form
-        // this.addPersonForm.controls['gender'].setValue(this.allGenders[0], {onlySelf: true});
+        // this.personDetailForm.controls['gender'].setValue(this.allGenders[0], {onlySelf: true});
 
-        console.log('End of person-detail constructor');
     }
 
     onGridReady(params) {
@@ -95,16 +86,39 @@ export class PersonDetailComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('Start of ngInit');
-        this.createAddPersonForm();
-        this.addPersonForm.controls['gender'].setValue(this.allGenders[0], {onlySelf: true});
-        this.addPersonForm.controls['titleType'].setValue(this.allTitleTypes[0], {onlySelf: true});
-        // this.addPersonForm.controls['title'].setValue(this.filteredTitlesLabels[0], {onlySelf: true}); // TODO
-        console.log('End of ngInit');
+        this.createPersonDetailForm();
+
+        if (this.person) {
+            this.initForUpdate();
+        } else {
+            this.initForAdd();
+        }
+
     }
 
-    createAddPersonForm() {
-        this.addPersonForm = this.fb.group({
+    initForAdd() {
+        console.log('person-detail.initForAdd: start');
+        this.person = new Person();
+        this.isExistingPerson = false;
+
+        this.personDetailForm.controls['gender'].setValue(this.allGenders[0], {onlySelf: true});
+        this.personDetailForm.controls['titleType'].setValue(this.allTitleTypes[0], {onlySelf: true});
+        // this.personDetailForm.controls['title'].setValue(this.filteredTitlesLabels[0], {onlySelf: true}); // TODO
+
+        console.log('person-detail.initForAdd: end');
+    }
+
+    initForUpdate() {
+        console.log('person-detail.initForUpdate: start');
+        this.isExistingPerson = true;
+        const genders = new Gender();
+        // this.gender = genders.genderAsCodeLabel(this.person.gender.label);
+        this.gender = genders;
+        console.log('person-detail.initForUpdate: end');
+    }
+
+    createPersonDetailForm() {
+        this.personDetailForm = this.fb.group({
             firstName: [null, [Validators.max(30), Validators.required]],
             middleName: [null, Validators.max(30)],
             familyName: [null, [Validators.max(50), Validators.required]],
@@ -231,7 +245,7 @@ export class PersonDetailComponent implements OnInit {
             thisRef.allGenders.push(codeLabel);
         });
         this.selectedGenderCodeLabel = pleaseSelect;
-        this.gender.current = this.gender.UNKNOWN;
+        this.gender = Gender.fromCodeLabel(this.gender.UNKNOWN);
     }
 
     getGenders(): CodeLabel[] {
@@ -239,15 +253,16 @@ export class PersonDetailComponent implements OnInit {
     }
 
     onChangeGender() {
-        console.log('onChangeGender: form control gender=' + this.addPersonForm.controls['gender'].value);
-        const selected: CodeLabel = this.addPersonForm.controls['gender'].value;
+        console.log('onChangeGender: form control gender=' + this.personDetailForm.controls['gender'].value);
+        const selected: CodeLabel = this.personDetailForm.controls['gender'].value; // results in 'selected' of string NOT CodeLabel
         const thisRef = this;
         this.gender.current = selected;
 
         if (selected) {
             if (this.gender.isMale(selected) || this.gender.isFemale(selected)) {
                 this.filteredGenders = this.allGenders.filter(gender => gender === selected);
-                this.filteredTitles = this.allTitles.filter(title => title.appliesTo === this.gender);
+                // this.filteredTitles = this.allTitles.filter(title => title.appliesTo === this.gender);
+                this.filteredTitles = this.filterTitles();
                 console.log('onChangeGender: filteredGenders size = ', this.filteredGenders.length);
             }
             console.log('onChangeGender 1: TRUE selected=', selected, ' selected=', selected);
@@ -277,7 +292,7 @@ export class PersonDetailComponent implements OnInit {
     }
 
     onChangeTitleType() {
-        this.selectedTitleTypeLabel = this.addPersonForm.controls['titleType'].value;
+        this.selectedTitleTypeLabel = this.personDetailForm.controls['titleType'].value;
     }
 
     initTitles() {
@@ -295,7 +310,7 @@ export class PersonDetailComponent implements OnInit {
 
     // clearDate(): void {
     //   // Clear the date using the patchValue function
-    //   this.addPersonForm.patchValue({dateOfBirth: null});
+    //   this.personDetailForm.patchValue({dateOfBirth: null});
     // }
 
     onRowSelectedDateLabelValue(event) {
@@ -321,7 +336,7 @@ export class PersonDetailComponent implements OnInit {
     }
 
     onChangeTitle() {
-        const selected: Title = this.addPersonForm.controls['title'].value;
+        const selected: Title = this.personDetailForm.controls['title'].value;
         console.log('onChangeTitle: new title=' + selected);
         this.selectedTitle = selected;
     }
@@ -347,10 +362,18 @@ export class PersonDetailComponent implements OnInit {
     }
 
     disableAddTitleButton(): boolean {
-        if (this.addPersonForm.get('title').value === 'Please select') {
+        if (this.personDetailForm.get('title').value === 'Please select') {
             return true;
         }
         return false;
+    }
+
+    filterTitles(): Title[] {
+        return this.allTitles.filter(title =>
+            // this.gender.current !== this.gender.UNKNOWN && title.appliesTo === this.gender
+            this.gender !== undefined && title.appliesTo === this.gender &&
+            this.selectedTitleTypeLabel !== undefined && title.titleType === this.selectedTitleTypeLabel.getLabel()
+        );
     }
 
     protected actionValueGetter(params) {

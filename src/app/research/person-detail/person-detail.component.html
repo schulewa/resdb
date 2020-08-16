@@ -1,13 +1,13 @@
 <!--existing person-->
 <div *ngIf="person && person.id">
-    <label>Existing person: {{person.firstName}} {{person.familyName}}</label>
+    <label>person-detail - Existing person: {{person.firstName}} {{person.familyName}}</label>
 </div>
 
 <div *ngIf="!isExistingPerson">
 
     <h3>New Person</h3>
 
-    <form class="form-horizontal login-form col-md-12" [formGroup]="addPersonForm">
+    <form class="form-horizontal login-form col-md-12" [formGroup]="personDetailForm">
 
         <div class="form-row">
 
@@ -17,7 +17,7 @@
                    class="form-control col-md-2"/>
 
             <div
-                    *ngIf="addPersonForm.get('firstName').invalid && (addPersonForm.get('firstName').dirty || addPersonForm.get('firstName').touched)"
+                    *ngIf="personDetailForm.get('firstName').invalid && (personDetailForm.get('firstName').dirty || personDetailForm.get('firstName').touched)"
                     class="alert alert-danger">
                 First name must be provided
             </div>
@@ -32,7 +32,7 @@
                    maxlength="50"
                    class="form-control col-md-2"/>
             <div
-                    *ngIf="addPersonForm.get('firstName').invalid && (addPersonForm.get('firstName').dirty || addPersonForm.get('firstName').touched)"
+                    *ngIf="personDetailForm.get('firstName').invalid && (personDetailForm.get('firstName').dirty || personDetailForm.get('firstName').touched)"
                     class="alert alert-danger">
                 First name must be provided
             </div>

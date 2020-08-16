@@ -23,11 +23,13 @@
 hs_err_pid*
 
 # compiled output
+/target
 /dist
 /tmp
 /out-tsc
 
 # dependencies
+node/node_modules
 /node_modules
 
 # profiling files

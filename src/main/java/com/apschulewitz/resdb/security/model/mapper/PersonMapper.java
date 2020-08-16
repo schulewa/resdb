@@ -55,8 +55,8 @@ public class PersonMapper implements EntityMapper<Person, PersonDto> {
         }
 
         String gender = null;
-        if (person.getAppliesTo() != null) {
-            gender = person.getAppliesTo().name();
+        if (person.getGender() != null) {
+            gender = person.getGender().name();
         }
 
         String prefixTitleAppliesTo = null;
@@ -91,7 +91,7 @@ public class PersonMapper implements EntityMapper<Person, PersonDto> {
                 .deathPlace(deathPlace)
                 .familyName(person.getFamilyName())
                 .firstName(person.getFirstName())
-                .appliesTo(gender)
+                .gender(gender)
                 .id(person.getId())
                 .middleName(person.getMiddleName())
                 .prefixTitle(prefixTitle)

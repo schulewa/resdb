@@ -9,7 +9,7 @@
 
   <div class="btn-group">
     <button type="button" class="btn btn-info float-right" (click)="addPerson()">Add</button>
-    <button type="button" class="btn btn-success float-right" (click)="editPerson()">Edit</button>
+    <button type="button" class="btn btn-success float-right" [disabled]="this.selectedRow == null" (click)="editPerson()">Edit</button>
   </div>
 
 </div>
@@ -20,8 +20,6 @@
     <ag-grid-angular style="width: 100%; height: 250px;"
                      class="ag-theme-balham"
                      [rowData]="getRowData()"
-                     [rowSelection]="rowSelection"
-                     (rowSelected)="onRowSelected($event)"
                      (selectionChanged)="onSelectionChanged($event)"
                      (cellValueChanged)="onCellValueChanged($event)"
                      [columnDefs]="getColumnDefs()"
@@ -29,8 +27,8 @@
     </ag-grid-angular>
 
     <div class="btn-group">
-      <button type="button" class="btn btn-info float-right" (click)="revertChanges()">Revert changes</button>
-      <button type="button" class="btn btn-success float-right" (click)="saveChanges()">Commit changes</button>
+      <button type="button" class="btn btn-info float-right" [disabled]="!haveDataChanges()" (click)="revertChanges()">Revert changes</button>
+      <button type="button" class="btn btn-success float-right" [disabled]="!haveDataChanges()" (click)="saveChanges()">Commit changes</button>
     </div>
 
   </div>
@@ -41,5 +39,10 @@
 </div>
 
 <div *ngIf="!showGrid">
-  <app-person-detail></app-person-detail>
+    <div *ngIf="isAddMode()">
+        <app-person-detail></app-person-detail>
+    </div>
+    <div *ngIf="isEditMode()">
+        <app-edit-person [person]="selectedRow"></app-edit-person>
+    </div>
 </div>

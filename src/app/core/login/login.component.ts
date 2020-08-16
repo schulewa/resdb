@@ -25,12 +25,10 @@ export class LoginComponent implements OnInit, OnChanges {
               private router: Router,
               private securityService: SecurityService,
               private ngxPermissionsService: NgxPermissionsService) {
-    console.log('login constructor');
     this.createForm();
   }
 
   ngOnInit() {
-    console.log('login.ngOnit');
     this.httpError = null;
     this.operationMessage = null;
   }
@@ -40,7 +38,6 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   createForm() {
-    console.log('login.createForm');
     this.loginForm = this.fb.group({
       userName : [null, [Validators.max(20), Validators.required]],
       userPassword : [null, [Validators.max(30), Validators.required]],
@@ -48,9 +45,6 @@ export class LoginComponent implements OnInit, OnChanges {
   }
 
   authenticate(user: User) {
-    console.log('login.authenticate: user.userName=' + user.logonName + ' user.userPassword=' + user.loginPassword);
-    console.log('authenticate: userName=' + this.loginForm.controls['userName'].value +
-      '   password=' + this.loginForm.controls['userPassword'].value);
     this.securityService.login(this.loginForm.controls['userName'].value, this.loginForm.controls['userPassword'].value)
       .subscribe(
         data => {

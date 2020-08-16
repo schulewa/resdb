@@ -39,14 +39,10 @@ public class PersonController extends AbstractController<Person, Long> {
 
   @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<PersonDto>> findAll() {
-
-//    List<PersonDto> persons = new ArrayList<>();
     Iterable<Person> iter = personDao.findByStatusIn(VersionStatus.getLiveStatuses());
       List<PersonDto> persons = StreamSupport.stream(iter.spliterator(), false)
             .map(p -> personMapper.toDto(p))
             .collect(Collectors.toList());
-//      .forEach(at -> persons.add(at));
-
     return new ResponseEntity<>(persons, HttpStatus.OK);
   }
 

@@ -5,52 +5,58 @@ import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @Entity
 @Table(name = "resdb_measure_type")
-//@Audited
 /**
  * Class <CODE>MeasureType</CODE> indicates the type of Measure.
  * This will be one of:
  * <UL>
+ *     <LI>AREA</LI>
  *     <LI>DISTANCE</LI>
  *     <LI>TIME</LI>
  *     <LI>VOLUME</LI>
+ *     <LI>WEIGHT</LI>
  * </UL>
- * so is intended to ensure that measure converters only attempt to convert measures for the from/to the same type
+ * so is intended to ensure that measure converters only attempt to convert measures from/to the same type
  * of measure.
  */
 public class MeasureType {
 
-	private static final long serialVersionUID = -3137782301296245542L;
+    private static final long serialVersionUID = -3137782301296245542L;
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@Column(nullable = false)
-	private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @Column
-  private VersionStatus status;
+    @Column
+    private VersionStatus status;
 
-  @Column
-  private String createdBy;
+    @Column
+    private String createdBy;
 
-  @Column
-  private String updatedBy;
+    @Column
+    private String updatedBy;
 
-  @Version
-  @Column(name = "last_updated")
-  private LocalDateTime lastUpdated;
+    @Version
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
 
-  private transient DataOperation operation;
+    private transient DataOperation operation;
 
     @Tolerate
     public MeasureType() {

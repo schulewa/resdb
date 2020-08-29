@@ -1,6 +1,7 @@
 --liquibase formatted sql
 
 --changeset author:schulewa
+
 CREATE TABLE resdb_address_type
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
@@ -135,30 +136,17 @@ CREATE TABLE resdb_artefact_type
 );
 CREATE UNIQUE INDEX resdb_artfct_typ_nam_idx on resdb_artefact_type (name);
 
-
-# CREATE TABLE resdb_audit_header
-# (
-# 	id              BIGINT NOT NULL AUTO_INCREMENT,
-#   logon_name      VARCHAR(20)		NOT NULL,
-#   audit_date      DATETIME    	NOT NULL,
-# 	CONSTRAINT resdb_audit_header_pk PRIMARY KEY (id)
-# );
-# CREATE UNIQUE INDEX resdb_audit_header_idx ON resdb_audit_header (audit_date, logon_name);
-#
-#
-# CREATE TABLE resdb_audit_detail
-# (
-# 	id              BIGINT NOT NULL AUTO_INCREMENT,
-#   table_name      varchar(30)     NOT NULL,
-#   column_name     varchar(30)     NOT NULL,
-#   action          char(1)         NOT NULL,
-#   audit_date      datetime        NOT NULL,
-#   old_value       varchar(250)    NULL,
-#   new_value       varchar(250)    NULL,
-# 	CONSTRAINT resdb_audit_detail_pk PRIMARY KEY (id)
-# );
-# CREATE UNIQUE INDEX resdb_audit_detail_idx ON resdb_audit_detail (table_name, column_name, action, audit_date);
-
+CREATE TABLE resdb_attribute_type
+(
+    id           BIGINT NOT NULL AUTO_INCREMENT,
+    name         VARCHAR(50) NOT NULL,
+    status       VARCHAR(1)  NOT NULL,
+    created_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
+    CONSTRAINT resdb_attribute_type_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_attribute_type_idx ON resdb_attribute_type (name);
 
 CREATE TABLE resdb_bibliography
 (
@@ -187,9 +175,13 @@ CREATE TABLE resdb_calendar
     calendar_group_id BIGINT       NOT NULL,
     notes             VARCHAR(500) NULL,
     owned_by          VARCHAR(30)  NOT NULL,
-    CONSTRAINT resdb_calendar_pk PRIMARY KEY (id)
+    status            VARCHAR(1)   NOT NULL,
+    created_by        VARCHAR(20)  NOT NULL,
+    last_updated      TIMESTAMP    NULL,
+    updated_by        VARCHAR(20)  NULL,
+        CONSTRAINT resdb_calendar_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_calendar_name_idx ON resdb_calendar (name);
+CREATE INDEX resdb_calendar_name_idx ON resdb_calendar (name);
 
 CREATE TABLE resdb_calendar_group
 (
@@ -431,6 +423,10 @@ CREATE TABLE resdb_event_type
     id                  BIGINT      NOT NULL AUTO_INCREMENT,
     name                VARCHAR(30) NOT NULL,
     event_type_group_id BIGINT      NOT NULL,
+    status              VARCHAR(1)  NOT NULL,
+    created_by          VARCHAR(20) NOT NULL,
+    last_updated        TIMESTAMP   NULL,
+    updated_by          VARCHAR(20) NULL,
     CONSTRAINT resdb_event_type_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_event_type_name_idx ON resdb_entity_type (name);
@@ -536,14 +532,23 @@ CREATE UNIQUE INDEX resdb_image_typ_nam_idx on resdb_image_type (name);
 
 CREATE TABLE resdb_language
 (
-    id                     BIGINT      NOT NULL AUTO_INCREMENT,
-    iso_6391_code          VARCHAR(5)  NOT NULL,
-    iso_6392_code_alpha_3b VARCHAR(3)  NOT NULL,
-    iso_6392_code_alpha_3t VARCHAR(3)  NULL,
-    iso_6392_code_alpha_2  VARCHAR(2)  NULL,
-    name                   VARCHAR(30) NOT NULL,
-    territory              VARCHAR(2)  NULL,
-    language_group_id      BIGINT      NOT NULL,
+    id                     BIGINT        NOT NULL AUTO_INCREMENT,
+    name                   VARCHAR(30)   NOT NULL,
+    native_name            VARCHAR(1000) NOT NULL,
+    iso_6391_code_1        VARCHAR(2)    NOT NULL,
+    iso_6392_code_alpha_2t VARCHAR(3)    NOT NULL,
+    iso_6392_code_alpha_2b VARCHAR(3)    NOT NULL,
+    iso_6392_code_alpha_3  VARCHAR(8)    NOT NULL,
+    deciphered             VARCHAR(1)    NOT NULL,
+    living                 VARCHAR(1)    NOT NULL,
+    constructed            VARCHAR(1)    NOT NULL,
+    macro_Language         VARCHAR(1)    NOT NULL,
+    language_group_id      BIGINT        NULL,
+    notes                  VARCHAR(500)  NULL,
+    status                 VARCHAR(1)    NOT NULL,
+    created_by             VARCHAR(20)   NOT NULL,
+    last_updated           TIMESTAMP     NULL,
+    updated_by             VARCHAR(20)   NULL,
     CONSTRAINT resdb_language_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_language_name_idx ON resdb_language (name);
@@ -553,10 +558,11 @@ CREATE TABLE resdb_language_group
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
+    region_id    BIGINT      NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_language_group_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX language_group_name_idx ON resdb_language_group (name);
@@ -595,12 +601,18 @@ CREATE UNIQUE INDEX resdb_material_name_idx ON resdb_material (name);
 
 create table resdb_measure
 (
-    id              BIGINT      NOT NULL AUTO_INCREMENT,
-    name            VARCHAR(30) NOT NULL,
-    measure_type_id BIGINT      NOT NULL,
+    id                      BIGINT       NOT NULL AUTO_INCREMENT,
+    name                    VARCHAR(30)  NOT NULL,
+    measure_type_id         BIGINT       NOT NULL,
+    associated_with_race_id BIGINT       NULL,
+    description             VARCHAR(500) NULL,
+    status                  VARCHAR(1)   NOT NULL,
+    created_by              VARCHAR(20)  NOT NULL,
+    last_updated            TIMESTAMP    NULL,
+    updated_by              VARCHAR(20)  NULL,
     CONSTRAINT resdb_measure_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_measure_name_idx ON resdb_measure (name);
+CREATE UNIQUE INDEX resdb_measure_name_idx ON resdb_measure (name, measure_type_id);
 
 create table resdb_measure_converter
 (
@@ -611,24 +623,38 @@ create table resdb_measure_converter
     to_measure_id   BIGINT      NOT NULL,
     to_quantity     FLOAT       NOT NULL,
     math_operator   CHAR(10)    NOT NULL,
+    approximation   CHAR(1)     NOT NULL,
     status          CHAR(1)     NOT NULL,
     CONSTRAINT resdb_measure_cnvrtr_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_measure_cnvrtr_name_idx ON resdb_measure_converter (name);
 CREATE UNIQUE INDEX resdb_measure_cnvrtr_from_to_idx ON resdb_measure_converter (from_measure_id, to_measure_id);
 
-create table resdb_measure_type
+CREATE TABLE resdb_measure_system
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
+    for_race_id  BIGINT      NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
     last_updated TIMESTAMP   NULL,
     updated_by   VARCHAR(20) NULL,
+    CONSTRAINT resdb_measure_system_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_measure_system_name_race_idx ON resdb_measure_system (name, for_race_id);
+
+create table resdb_measure_type
+(
+    id                BIGINT      NOT NULL AUTO_INCREMENT,
+    name              VARCHAR(30) NOT NULL,
+    measure_system_id BIGINT      NULL,
+    status            VARCHAR(1)  NOT NULL,
+    created_by        VARCHAR(20) NOT NULL,
+    last_updated      TIMESTAMP   NULL,
+    updated_by        VARCHAR(20) NULL,
     CONSTRAINT resdb_measure_type_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_measure_type_name_idx ON resdb_measure_type (name);
-
 
 CREATE TABLE resdb_menu
 (
@@ -681,8 +707,8 @@ CREATE TABLE resdb_other_address
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_other_address_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_other_address_name_idx ON resdb_other_address (name);
@@ -705,15 +731,27 @@ CREATE TABLE resdb_period
 (
     id                 BIGINT      NOT NULL AUTO_INCREMENT,
     name               VARCHAR(30) NOT NULL,
-    period_start_year  INTEGER     NOT NULL,
+    start_approximated CHAR(1)     NULL,
+    period_start_year  INTEGER     NULL,
     period_start_month INTEGER     NULL,
     period_start_day   INTEGER     NULL,
-    period_end_year    INTEGER     NOT NULL,
+    end_approximated   CHAR(1)     NULL,
+    period_end_year    INTEGER     NULL,
     period_end_month   INTEGER     NULL,
     period_end_day     INTEGER     NULL,
     CONSTRAINT resdb_period_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_period_name_idx ON resdb_period (name);
+
+CREATE TABLE resdb_period_alias
+(
+    id             BIGINT NOT NULL AUTO_INCREMENT,
+    from_period_id BIGINT NOT NULL,
+    to_period_id   BIGINT NOT NULL,
+    CONSTRAINT resdb_period_alias_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_period_alias_idx ON resdb_period_alias (from_period_id, to_period_id);
+
 
 CREATE TABLE resdb_permission
 (
@@ -749,8 +787,8 @@ CREATE TABLE resdb_person
     death_place_id    BIGINT      NULL,
     status            VARCHAR(1)  NOT NULL,
     created_by        VARCHAR(20) NOT NULL,
-    last_updated      TIMESTAMP   NOT NULL,
-    updated_by        VARCHAR(20) NOT NULL,
+    last_updated      TIMESTAMP   NULL,
+    updated_by        VARCHAR(20) NULL,
     CONSTRAINT resdb_person_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_person_name_idx ON resdb_person (family_name, middle_name, first_name);
@@ -774,7 +812,15 @@ CREATE TABLE resdb_person_definition
 );
 CREATE UNIQUE INDEX resdb_person_definition_idx ON resdb_person_definition (person_id, person_type_id);
 
-SELECT 'Creating table resdb_person_role' AS '';
+CREATE TABLE resdb_person_attribute
+(
+    id                       BIGINT NOT NULL AUTO_INCREMENT,
+    person_id                BIGINT NOT NULL,
+    person_attribute_type_id BIGINT NOT NULL,
+    CONSTRAINT resdb_person_attribute_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_person_attribute_idx ON resdb_person_attribute (person_id, person_attribute_type_id);
+
 CREATE TABLE resdb_person_role
 (
     id              INTEGER     NOT NULL AUTO_INCREMENT,
@@ -790,7 +836,7 @@ CREATE TABLE resdb_person_title
     id         BIGINT     NOT NULL AUTO_INCREMENT,
     person_id  BIGINT     NOT NULL,
     title_id   BIGINT     NOT NULL,
-    title_type VARCHAR(1) NOT NULL, -- P=prefix, S=suffix
+--     title_type VARCHAR(1) NOT NULL, -- P=prefix, S=suffix
     position   INTEGER    NOT NULL,
     CONSTRAINT resdb_person_title_pk PRIMARY KEY (id)
 );
@@ -898,7 +944,7 @@ CREATE TABLE resdb_race
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
-    race_type_id BIGINT      NOT NULL,
+    race_type_id BIGINT      NULL,
     CONSTRAINT resdb_race_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_race_name_idx ON resdb_race (name);
@@ -912,6 +958,32 @@ CREATE TABLE resdb_race_alias
     CONSTRAINT resdb_race_alias_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_race_alias_idx ON resdb_race_alias (from_race_id, to_race_id);
+
+CREATE TABLE resdb_race_period
+(
+    id                 BIGINT  NOT NULL AUTO_INCREMENT,
+    race_id            BIGINT  NOT NULL,
+    period_id          BIGINT  NOT NULL,
+    start_approximated CHAR(1) NOT NULL,
+    period_start_year  INTEGER NOT NULL,
+    period_start_month INTEGER NULL,
+    period_start_day   INTEGER NULL,
+    end_approximated   CHAR(1) NOT NULL,
+    period_end_year    INTEGER NOT NULL,
+    period_end_month   INTEGER NULL,
+    period_end_day     INTEGER NULL,
+    CONSTRAINT resdb_race_period_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_race_period_idx ON resdb_race_period (race_id, period_id);
+
+CREATE TABLE resdb_race_period_alias
+(
+    id                  BIGINT NOT NULL AUTO_INCREMENT,
+    from_race_period_id BIGINT NOT NULL,
+    to_race_period_id   BIGINT NOT NULL,
+    CONSTRAINT resdb_race_period_alias_pk PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX resdb_race_period_alias_idx ON resdb_race_period_alias (from_race_period_id, to_race_period_id);
 
 
 CREATE TABLE resdb_race_place
@@ -977,8 +1049,8 @@ CREATE TABLE resdb_region
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_region_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_region_name_idx ON resdb_region (name);
@@ -1072,8 +1144,8 @@ CREATE TABLE resdb_technology_type_group
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NOT NULL,
-    updated_by   VARCHAR(20) NOT NULL,
+    last_updated TIMESTAMP   NULL,
+    updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_technolgy_typ_grp_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_technlgy_typ_grp_nam_idx ON resdb_technology_type_group (name);
@@ -1094,18 +1166,21 @@ create table resdb_title
 (
     id           BIGINT       NOT NULL AUTO_INCREMENT,
     title        VARCHAR(30)  NOT NULL,
-    description  VARCHAR(250) NOT NULL,
-    applies_to   VARCHAR(1)   NOT NULL, -- P=prefix, S=suffix
-    title_type   VARCHAR(1)   NOT NULL, -- M=Male, F=Female
+    description  VARCHAR(250) NULL,
+    applies_to   VARCHAR(1)   NOT NULL, -- M=Male, F=Female
+    title_type   VARCHAR(1)   NOT NULL, -- P=prefix, S=suffix
     status       VARCHAR(1)   NOT NULL,
     created_by   VARCHAR(20)  NOT NULL,
-    last_updated TIMESTAMP    NOT NULL,
-    updated_by   VARCHAR(20)  NOT NULL,
+    last_updated TIMESTAMP    NULL,
+    updated_by   VARCHAR(20)  NULL,
     CONSTRAINT resdb_title_pk PRIMARY KEY (id)
 );
-CREATE UNIQUE INDEX resdb_title_title_idx ON resdb_title (title, applies_to);
-CREATE UNIQUE INDEX resdb_title_desc_idx ON resdb_title (description, applies_to);
+CREATE UNIQUE INDEX resdb_title_title_mf_idx ON resdb_title (title, applies_to);
+CREATE UNIQUE INDEX resdb_title_desc_mf_idx ON resdb_title (description, applies_to);
+CREATE UNIQUE INDEX resdb_title_title_ps_idx ON resdb_title (title, title_type, applies_to);
+CREATE UNIQUE INDEX resdb_title_desc_ps_idx ON resdb_title (description, title_type, applies_to);
 CREATE INDEX resdb_title_applies_idx ON resdb_title (applies_to);
+CREATE INDEX resdb_title_title_type_idx ON resdb_title (title_type);
 
 
 CREATE TABLE resdb_user_account

@@ -6,6 +6,8 @@ import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.PersonDao;
 import com.apschulewitz.resdb.refdata.model.entity.AddressType;
 import com.apschulewitz.resdb.refdata.model.entity.Person;
+import com.apschulewitz.resdb.security.model.dto.PersonDto;
+import com.apschulewitz.resdb.security.model.mapper.PersonMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
@@ -26,17 +29,20 @@ import java.util.stream.StreamSupport;
 @Slf4j
 public class PersonController extends AbstractController<Person, Long> {
 
-  @Autowired
   private PersonDao personDao;
+  private PersonMapper personMapper;
+
+  public PersonController(PersonDao personDao, PersonMapper personMapper) {
+      this.personDao = personDao;
+      this.personMapper = personMapper;
+  }
 
   @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Person>> findAll() {
-
-    List<Person> persons = new ArrayList<>();
+  public ResponseEntity<List<PersonDto>> findAll() {
     Iterable<Person> iter = personDao.findByStatusIn(VersionStatus.getLiveStatuses());
-    StreamSupport.stream(iter.spliterator(), false)
-      .forEach(at -> persons.add(at));
-
+      List<PersonDto> persons = StreamSupport.stream(iter.spliterator(), false)
+            .map(p -> personMapper.toDto(p))
+            .collect(Collectors.toList());
     return new ResponseEntity<>(persons, HttpStatus.OK);
   }
 

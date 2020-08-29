@@ -14,10 +14,25 @@ databaseChangeLog:
       file: db/changelog/20200314_03_insert_research_permissions.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_04_insert_admin_user_and_user_templates.sql
+      file: db/changelog/20200314_04_insert_regions.sql
       context: ALL
   - include:
-      file: db/changelog/20200314_05_setup_default_user_menu.sql
+      file: db/changelog/20200314_05_insert_language_groups.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200314_06_insert_languages.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_01_insert_admin_user_and_user_templates.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_02_insert_menu_options.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_03_insert_user_group_permissions.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200315_04_setup_default_user_menu.sql
       context: ALL
   - include:
       file: db/changelog/20200412_01_insert_address_types.sql
@@ -27,7 +42,7 @@ databaseChangeLog:
       context: ALL
   - include:
       file: db/changelog/20200412_03_insert_calendar_groups.sql
-      context: ALL
+      context: MYSQL
   - include:
       file: db/changelog/20200412_04_insert_calendars.sql
       context: ALL
@@ -37,3 +52,43 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200412_06_insert_countries.sql
       context: ALL
+  - include:
+      file: db/changelog/20200415_01_insert_titles.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200418_01_insert_places.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200418_02_insert_person.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200418_03_insert_person_titles.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_01_insert_event_type_groups.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_02_insert_event_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200425_03_insert_hierarchy_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200725_01_insert_races.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_01_insert_measure_systems.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_02_insert_measure_types.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_03_insert_measures.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200726_04_insert_measure_converters.sql
+      context: ALL
+  - include:
+      file: db/changelog/20200727_01_insert_periods.sql
+      context: ALL
+

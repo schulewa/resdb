@@ -24,7 +24,6 @@ export class SecurityService {
 
   login(userName: string, password: string): Observable<User> {
     const body = JSON.stringify({userName, password});
-    console.log('securityservice.login: post request to url ' + ResdbUrlEndpoints.LOGIN_URL + ' body=' + body);
     const headers = new HttpHeaders({'Content-Type': 'application/json; charset=utf-8'});
     return this.http.post<User>(ResdbUrlEndpoints.LOGIN_URL, body, {headers});
   }

@@ -2,6 +2,8 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
+    sqlScriptEncoding: UTF-8
+    sql-script-encoding: UTF-8
     driver: org.h2.Driver
     url: jdbc:h2:mem:TEST;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
@@ -14,13 +16,15 @@ spring:
         format_sql: true
   session:
     store-type: none
+  liquibase:
+    enabled: false
 
 hibernate:
   dialect: org.hibernate.dialect.H2Dialect
   hbm2ddl:
     auto: create
 
-flyway:
+#flyway:
 #  locations: db/migration/mysql
 #  enabled: false
 #  locations: database/schema/mysql
@@ -28,17 +32,17 @@ flyway:
 logging:
   level:
     org:
-      hibernate: trace
+      hibernate: ERROR
       #        sql: debug
       #        type:
       #          descriptor:
       #            sql:
       #              BasicBinder: trace
       springframework:
-        jdbc: debug
+        jdbc: ERROR
         web:
           filter:
-            CommonsRequestLoggingFilter: debug
+            CommonsRequestLoggingFilter: ERROR
     com.apschulewitz.resdb: DEBUG
     #    org.hibernate.type.descriptor.sql.BasicBinder: trace
 

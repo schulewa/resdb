@@ -3,9 +3,15 @@ package com.apschulewitz.resdb.refdata.model.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 
 /**
  * Entity implementation class for Entity: Role
@@ -15,7 +21,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name="resdb_role", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-//@Audited
 public class Role {
 
 	private static final long serialVersionUID = 4046841340399553632L;

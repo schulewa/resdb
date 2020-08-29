@@ -1,9 +1,7 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.model.dao.MeasureTypeDao;
 import com.apschulewitz.resdb.refdata.model.dao.PersonTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.MeasureType;
 import com.apschulewitz.resdb.refdata.model.entity.PersonType;
 import org.junit.Before;
 import org.junit.Test;

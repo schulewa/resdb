@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.Embeddable;
 
 @Data
-@Builder
+//@Builder
 @Embeddable
 public class Altitude {
 

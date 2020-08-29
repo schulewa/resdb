@@ -8,7 +8,7 @@ INSERT INTO resdb_permission (name, description, status, operation_type) VALUES 
 INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ADDRESS_TYPE-CRU', 'Address types maintenance (Create/Read/Update)', 'A', 'CRU');
 INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ADDRESS_TYPE-R', 'Address types maintenance (Read)', 'A', 'R');
 
-INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ARTEFACT-CRUD', 'Artefact maintenance (Create/Read/Update/Delete)', 'A', 'CRUD');
+INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ARTEFACT-CRUD', 'Artefact maintenance (Create/Read/Upda te/Delete)', 'A', 'CRUD');
 INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ARTEFACT-CRU', 'Artefact maintenance (Create/Read/Update)', 'A', 'CRU');
 INSERT INTO resdb_permission (name, description, status, operation_type) VALUES ('ARTEFACT-R', 'Artefact maintenance (Read)', 'A', 'R');
 

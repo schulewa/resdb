@@ -9,6 +9,12 @@ export class Gender {
 
   current: CodeLabel;
 
+  static fromCodeLabel(codeLabel: CodeLabel): Gender {
+      const g = new Gender();
+      g.current = g.genderAsCodeLabel(codeLabel.getLabel());
+      return g;
+  }
+
   constructor() {
     this.genders = [];
     this.MALE = new CodeLabel('M', 'Male');
@@ -20,23 +26,23 @@ export class Gender {
     this.current = this.UNKNOWN;
   }
 
+  genderAsCodeLabel(label: string): CodeLabel {
+      if (label) {
+          if (this.MALE.label === label) {
+              return this.MALE;
+          } else if (this.FEMALE.label === label) {
+              return this.FEMALE;
+          }
+      }
+      return this.UNKNOWN;
+  }
+
   getGenders(): CodeLabel[] {
     return this.genders;
   }
 
-  getGenderByLabel(label: string): CodeLabel {
-    if (label) {
-      if (this.MALE.label === label) {
-        return this.MALE;
-      } else if (this.FEMALE.label === label) {
-        return this.FEMALE;
-      }
-    }
-    return this.UNKNOWN;
-  }
-
   isMale(gender: CodeLabel): boolean {
-    if (gender) {
+    if (gender !== undefined) {
       if (this.MALE.equals(gender)) {
         return true;
       }
@@ -45,7 +51,7 @@ export class Gender {
   }
 
   isFemale(gender: CodeLabel): boolean {
-    if (gender) {
+    if (gender !== undefined) {
       if (this.FEMALE.equals(gender)) {
         return true;
       }

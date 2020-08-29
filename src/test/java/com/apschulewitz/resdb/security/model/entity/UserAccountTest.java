@@ -128,12 +128,13 @@ public class UserAccountTest {
 
         Language preferredLanguage = Language.builder()
                 .id(2L)
-                .iso6391Code("GB")
-                .iso6392CodeAlpha2("GB")
-                .iso6392CodeAlpha3B("GB")
-                .iso6392CodeAlpha3t("GB")
+                .iso6391Code1("en")
+                .iso6392CodeAlpha2t("eng")
+                .iso6392CodeAlpha2b("eng")
+                .iso6392CodeAlpha3("eng")
                 .languageGroup(languageGroup)
-                .name("GB (English)")
+                .name("English")
+                .nativeName("English")
                 .build();
 
         Permission readPermission = Permission.builder()

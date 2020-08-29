@@ -12,7 +12,10 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "resdb_period", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-@Audited
+/**
+ * <CODE>Period</CODE> holds the details for a period in history.
+ * The dates are optional but, if set, form the accepted time range for the period.
+ */
 public class Period {
 
 	private static final long serialVersionUID = -2824975574490912087L;
@@ -21,24 +24,30 @@ public class Period {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-	@Column(nullable = false)
+	@Column(length = 50, nullable = false)
 	private String name;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name="year", column = @Column(name="period_start_year")),
-			@AttributeOverride(name="month", column = @Column(name="period_start_month")),
-			@AttributeOverride(name="day", column = @Column(name="period_start_day"))
-	})
+    @Column(length = 1, nullable = false)
+    private Boolean startAppromixated;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="year", column = @Column(name="period_start_year")),
+            @AttributeOverride(name="month", column = @Column(name="period_start_month")),
+            @AttributeOverride(name="day", column = @Column(name="period_start_day"))
+    })
     private HistoricalDate fromDate;
 
-	@Embedded
-	@AttributeOverrides({
-			@AttributeOverride(name="year", column = @Column(name="period_end_year")),
-			@AttributeOverride(name="month", column = @Column(name="period_end_month")),
-			@AttributeOverride(name="day", column = @Column(name="period_end_day"))
-	})
-	private HistoricalDate toDate;
+    @Column(nullable = false, length = 1)
+    private Boolean endAppromixated;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="year", column = @Column(name="period_end_year")),
+            @AttributeOverride(name="month", column = @Column(name="period_end_month")),
+            @AttributeOverride(name="day", column = @Column(name="period_end_day"))
+    })
+    private HistoricalDate toDate;
 
     @Tolerate
     public Period() {

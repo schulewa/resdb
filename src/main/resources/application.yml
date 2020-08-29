@@ -23,6 +23,8 @@ logging:
 
 spring:
   datasource:
+    sqlScriptEncoding: UTF-8
+    sql-script-encoding: UTF-8
     driver: com.mysql.cj.jdbc.Driver
     url: ${RESDB_DB_JDBC_URL}
     username: ${RESDB_DB_USER}
@@ -44,7 +46,7 @@ spring:
     enabled: true
     user: ${RESDB_DB_USER}
     password: ${RESDB_DB_PASSWORD}
-    contexts: ALL, MYSQL
+    contexts: ALL, MYSQL, H2
 
   # Enable zipkin support, sample all requests
   zipkin:

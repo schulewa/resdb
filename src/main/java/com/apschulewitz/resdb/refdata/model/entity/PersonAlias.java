@@ -7,7 +7,6 @@ package com.apschulewitz.resdb.refdata.model.entity;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -20,7 +19,6 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "resdb_person_alias")
-//@Audited
 public class PersonAlias {
 
 	private static final long serialVersionUID = -5799377971329722483L;
@@ -28,6 +26,12 @@ public class PersonAlias {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+	@OneToOne
+	private Person fromPerson;
+
+	@OneToOne
+	private Person toPerson;
 
     @Tolerate
     public PersonAlias() {

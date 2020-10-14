@@ -91,4 +91,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200727_01_insert_periods.sql
       context: ALL
-
+  - include:
+      file: db/changelog/20200829_01_add_classification_to_model.sql
+      context: ALL

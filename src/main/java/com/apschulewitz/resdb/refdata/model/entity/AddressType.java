@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "resdb_address_type", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 @EqualsAndHashCode
-//@Audited
 public class AddressType implements EqualsAll {
   private static final long serialVersionUID = -4217533971787415501L;
 

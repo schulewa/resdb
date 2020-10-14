@@ -6,13 +6,13 @@ package com.apschulewitz.resdb.refdata.model.entity;
         import org.hibernate.envers.Audited;
 
         import javax.persistence.*;
+        import java.io.Serializable;
 
 @Data
 @Builder
 @Entity
 @Table(name = "resdb_calendar", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-//@Audited
-public class Calendar {
+public class Calendar implements Serializable {
 
     private static final long serialVersionUID = 592832984708975080L;
 

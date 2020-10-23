@@ -1,9 +1,7 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.model.dao.PublicationTypeDao;
 import com.apschulewitz.resdb.refdata.model.dao.RaceTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.PublicationType;
 import com.apschulewitz.resdb.refdata.model.entity.RaceType;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

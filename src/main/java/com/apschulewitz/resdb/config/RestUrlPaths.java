@@ -18,6 +18,7 @@ public final class RestUrlPaths {
     public static final String ARTEFACT_GROUP_CONTROLLER_BASE_URL = REFDATA_URL + "/artefactgroups";
     public static final String ARTEFACT_TYPE_CONTROLLER_BASE_URL = REFDATA_URL + "/artefacttypes";
     public static final String CALENDAR_TYPE_CONTROLLER_BASE_URL = REFDATA_URL + "/calendartypes";
+    public static final String CLASSIFICATION_CONTROLLER_BASE_URL = REFDATA_URL + "/classifications";
     public static final String COUNTRY_CONTROLLER_BASE_URL = REFDATA_URL + "/countries";
     public static final String DEITY_TYPE_CONTROLLER_BASE_URL = REFDATA_URL + "/deitytypes";
     public static final String ENTITY_TYPE_CONTROLLER_BASE_URL = REFDATA_URL + "/entitytypes";

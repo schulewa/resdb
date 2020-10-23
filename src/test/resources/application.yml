@@ -33,18 +33,18 @@ logging:
   level:
     org:
       hibernate: ERROR
-      #        sql: debug
-      #        type:
-      #          descriptor:
-      #            sql:
-      #              BasicBinder: trace
+#        sql: debug
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: trace
       springframework:
         jdbc: ERROR
         web:
           filter:
             CommonsRequestLoggingFilter: ERROR
     com.apschulewitz.resdb: DEBUG
-    #    org.hibernate.type.descriptor.sql.BasicBinder: trace
+#        org.hibernate.type.descriptor.sql.BasicBinder: trace
 
 
 server:

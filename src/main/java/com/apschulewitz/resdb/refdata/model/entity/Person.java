@@ -11,6 +11,7 @@ import lombok.experimental.Tolerate;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,8 +23,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "resdb_person")
-//@Audited
-public class Person {
+public class Person implements Serializable {
 
     private static final long serialVersionUID = -2639006949864237790L;
 

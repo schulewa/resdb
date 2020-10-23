@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.refdata.model.entity;
+package com.apschulewitz.resdb.research.model.entity;
 
 import com.apschulewitz.resdb.common.InvalidValueException;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
@@ -6,7 +6,6 @@ import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +45,9 @@ public class ClassificationEntry implements Serializable {
     @NotBlank
     private String name;
 
-    @ManyToOne@JoinColumn(name = "collection_id")
+    @ManyToOne
+    @JoinColumn(name = "collection_id")
+    @JsonManagedReference
     private ClassificationCollection owningCollection;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -67,12 +68,10 @@ public class ClassificationEntry implements Serializable {
     private String createdBy;
 
     @Column
-    @NotBlank
     private String updatedBy;
 
     @Version
     @Column(name = "last_updated")
-    @NotNull
     private LocalDateTime lastUpdated;
 
     private transient DataOperation operation;

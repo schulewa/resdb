@@ -1,17 +1,12 @@
-package com.apschulewitz.resdb.refdata.model.entity;
+package com.apschulewitz.resdb.research.model.entity;
 
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Tolerate;
-import com.apschulewitz.resdb.refdata.model.entity.ClassificationEntry;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,8 +41,8 @@ public class ClassificationCollection implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "owningCollection", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<ClassificationEntry> entries = new ArrayList<>();
+    @JsonBackReference
+    private List<ClassificationEntry> entries;
 
     @Column
     @NotNull
@@ -58,17 +53,15 @@ public class ClassificationCollection implements Serializable {
     private String createdBy;
 
     @Column
-    @NotBlank
     private String updatedBy;
 
     @Version
     @Column(name = "last_updated")
-    @NotNull
     private LocalDateTime lastUpdated;
 
     private transient DataOperation operation;
 
     public ClassificationCollection() {
-//        entries = new ArrayList<>();
+        entries = new ArrayList<>();
     }
 }

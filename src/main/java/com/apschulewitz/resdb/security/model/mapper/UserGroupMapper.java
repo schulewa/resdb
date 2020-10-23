@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroup;
@@ -9,7 +10,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class UserGroupMapper implements EntityMapper<UserGroup, UserGroupDto> {
+public class UserGroupMapper implements VersionableEntityMapper<UserGroup, UserGroupDto> {
 
     private final UserGroupPermissionMapper userGroupPermissionMapper;
 
@@ -39,6 +40,9 @@ public class UserGroupMapper implements EntityMapper<UserGroup, UserGroupDto> {
 
     @Override
     public UserGroupDto toDto(UserGroup userGroup, boolean onlyActive) {
-        return null;
+      if (VersionStatus.getLiveStatuses().contains(userGroup.getStatus()) || !onlyActive) {
+        return toDto(userGroup);
+      }
+      return null;
     }
 }

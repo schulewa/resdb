@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class PermissionMapper implements EntityMapper<Permission, PermissionDto> {
+public class PermissionMapper implements VersionableEntityMapper<Permission, PermissionDto> {
 
     @Override
     public PermissionDto toDto(Permission permission, boolean onlyActive) {

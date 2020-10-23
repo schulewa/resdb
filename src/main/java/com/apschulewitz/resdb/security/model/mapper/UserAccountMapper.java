@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class UserAccountMapper implements EntityMapper<UserAccount, UserAccountDto> {
+public class UserAccountMapper implements VersionableEntityMapper<UserAccount, UserAccountDto> {
 
     private final UserGroupMembershipMapper userGroupMembershipMapper;
 
@@ -33,7 +33,7 @@ public class UserAccountMapper implements EntityMapper<UserAccount, UserAccountD
         Collection<UserGroupMembershipDto> userGroupMemberships = null;
         if (userAccount.getGroupMemberships() != null) {
             userGroupMemberships = userAccount.getGroupMemberships().stream()
-                    .map(ugm -> userGroupMembershipMapper.toDto(ugm, true))
+                    .map(ugm -> userGroupMembershipMapper.toDto(ugm))
                     .collect(Collectors.toList());
         }
 

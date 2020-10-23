@@ -16,18 +16,15 @@ public class UserGroupPermissionMapper implements EntityMapper<UserGroupPermissi
 
     @Override
     public UserGroupPermissionDto toDto(UserGroupPermission userGroupPermission) {
-        return toDto(userGroupPermission, false);
-    }
-
-    @Override
-    public UserGroupPermissionDto toDto(UserGroupPermission userGroupPermission, boolean onlyActive) {
         PermissionDto permission = null;
         if (userGroupPermission != null && userGroupPermission.getPermission() != null) {
             permission = permissionMapper.toDto(userGroupPermission.getPermission());
         }
+
         // do not map the group else risk circular mapping
+      Long userGroupPermissionId = userGroupPermission != null ? userGroupPermission.getId() : null;
         return UserGroupPermissionDto.builder()
-                .id(userGroupPermission.getId())
+                .id(userGroupPermissionId)
                 .permission(permission)
                 .build();
     }

@@ -6,11 +6,12 @@ import com.apschulewitz.resdb.refdata.model.entity.Language;
 import com.apschulewitz.resdb.security.model.dto.LanguageDto;
 import com.apschulewitz.resdb.security.model.dto.LanguageGroupDto;
 import com.apschulewitz.resdb.security.model.mapper.EntityMapper;
+import com.apschulewitz.resdb.security.model.mapper.VersionableEntityMapper;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LanguageMapper implements EntityMapper<Language, LanguageDto> {
+public class LanguageMapper implements VersionableEntityMapper<Language, LanguageDto> {
 
     @Override
     public LanguageDto toDto(Language language) {

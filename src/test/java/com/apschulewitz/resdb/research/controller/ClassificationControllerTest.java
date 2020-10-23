@@ -1,9 +1,7 @@
 package com.apschulewitz.resdb.research.controller;
 
-import com.apschulewitz.resdb.common.utils.StringUtils;
 import com.apschulewitz.resdb.refdata.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
-import com.apschulewitz.resdb.research.model.dto.ClassificationEntryDto;
 import com.apschulewitz.resdb.research.service.ClassificationService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,14 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ADORNMENT_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ANKLET_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ARMLET_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.JEWELLERY_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.TATTOO_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;

@@ -1,7 +1,3 @@
-/**
- * Alipay.com Inc.
- * Copyright (c) 2004-2020 All Rights Reserved.
- */
 package com.apschulewitz.resdb.research.service;
 
 import com.apschulewitz.resdb.common.model.converter.ClassificationCollectionConverter;

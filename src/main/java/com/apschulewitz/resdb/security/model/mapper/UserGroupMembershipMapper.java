@@ -5,10 +5,8 @@ import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupMembershipDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
-import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -17,12 +15,7 @@ public class UserGroupMembershipMapper implements EntityMapper<UserGroupMembersh
 
     @Override
     public UserGroupMembershipDto toDto(UserGroupMembership userGroupMembership) {
-        return toDto(userGroupMembership, false);
-    }
-
-    @Override
-    public UserGroupMembershipDto toDto(UserGroupMembership userGroupMembership, boolean onlyActive) {
-        Collection<UserGroupPermissionDto> userGroupPermissions = null; //new ArrayList<>();
+        Collection<UserGroupPermissionDto> userGroupPermissions = null;
         if (userGroupMembership != null && userGroupMembership.getGroup() != null && userGroupMembership.getGroup().getGroupPermissions() != null) {
             UserGroupPermissionDto.UserGroupPermissionDtoBuilder userGroupBuilder = UserGroupPermissionDto.builder();
             PermissionMapper permissionMapper = new PermissionMapper();

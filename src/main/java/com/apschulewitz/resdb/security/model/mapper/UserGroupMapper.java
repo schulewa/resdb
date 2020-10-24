@@ -1,6 +1,7 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroup;
@@ -40,7 +41,7 @@ public class UserGroupMapper implements VersionableEntityMapper<UserGroup, UserG
 
     @Override
     public UserGroupDto toDto(UserGroup userGroup, boolean onlyActive) {
-      if (VersionStatus.getLiveStatuses().contains(userGroup.getStatus()) || !onlyActive) {
+      if (AccountStatus.isActiveStatus(userGroup.getStatus()) || !onlyActive) {
         return toDto(userGroup);
       }
       return null;

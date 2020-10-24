@@ -21,6 +21,14 @@ public enum AccountStatus {
         return code;
     }
 
+    public static boolean isActiveStatus(@NotBlank AccountStatus accountStatus) {
+      switch (accountStatus) {
+        case Inactive:
+          return false;
+      }
+      return true;
+    }
+
     public static AccountStatus getStatusFor(@NotBlank String code) {
         switch (code) {
             case "A":

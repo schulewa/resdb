@@ -1,16 +1,11 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.SecurityTestHelper;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
-import com.apschulewitz.resdb.security.model.entity.Permission;
-import com.apschulewitz.resdb.security.model.entity.UserGroup;
 import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -23,7 +18,7 @@ public class UserGroupPermissionMapperTest {
   @Test
   public void given_usergrouppermission_when_toDto_is_executed_then_return_dto() {
     // given
-    UserGroupPermission userGroupPermission = constructUserGroupPermission();
+    UserGroupPermission userGroupPermission = SecurityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
 
     // when
     UserGroupPermissionDto userGroupPermissionDto = userGroupPermissionMapper.toDto(userGroupPermission);
@@ -46,7 +41,7 @@ public class UserGroupPermissionMapperTest {
   @Test
   public void given_usergrouppermission_and_null_permission_when_toDto_is_executed_then_return_dto() {
     // given
-    UserGroupPermission userGroupPermission = constructUserGroupPermission();
+    UserGroupPermission userGroupPermission = SecurityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
     userGroupPermission.setPermission(null);
 
     // when
@@ -56,30 +51,30 @@ public class UserGroupPermissionMapperTest {
     assertNotNull(userGroupPermissionDto);
   }
 
-  private UserGroupPermission constructUserGroupPermission() {
-    Permission permission1 = Permission.builder()
-      .name("Permission1")
-      .status(Permission.PermissionStatus.Active)
-      .id(1L)
-      .operationType(Permission.OperationType.Create)
-      .description("Permission description 1")
-      .build();
-
-    UserGroup userGroup = UserGroup.builder()
-      .displayName("User group display name")
-      .id(3L)
-      .name("User group name")
-      .status(AccountStatus.Active)
-      .build();
-
-    UserGroupPermission userGroupPermission1 = UserGroupPermission.builder()
-      .permission(permission1)
-      .id(12L)
-      .group(userGroup)
-      .build();
-
-    userGroup.setGroupPermissions(Collections.singletonList(userGroupPermission1));
-
-    return userGroupPermission1;
-  }
+//  private UserGroupPermission constructUserGroupPermission() {
+//    Permission permission1 = Permission.builder()
+//      .name("Permission1")
+//      .status(Permission.PermissionStatus.Active)
+//      .id(1L)
+//      .operationType(Permission.OperationType.Create)
+//      .description("Permission description 1")
+//      .build();
+//
+//    UserGroup userGroup = UserGroup.builder()
+//      .displayName("User group display name")
+//      .id(3L)
+//      .name("User group name")
+//      .status(AccountStatus.Active)
+//      .build();
+//
+//    UserGroupPermission userGroupPermission1 = UserGroupPermission.builder()
+//      .permission(permission1)
+//      .id(12L)
+//      .group(userGroup)
+//      .build();
+//
+//    userGroup.setGroupPermissions(Collections.singletonList(userGroupPermission1));
+//
+//    return userGroupPermission1;
+//  }
 }

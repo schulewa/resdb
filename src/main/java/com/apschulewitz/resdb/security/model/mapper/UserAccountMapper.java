@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.mapper.LanguageMapper;
 import com.apschulewitz.resdb.security.model.dto.LanguageDto;
 import com.apschulewitz.resdb.security.model.dto.UserAccountDto;
@@ -59,7 +60,10 @@ public class UserAccountMapper implements VersionableEntityMapper<UserAccount, U
 
     @Override
     public UserAccountDto toDto(UserAccount entity, boolean onlyActive) {
-        return null;
+      if (AccountStatus.isActiveStatus(entity.getStatus()) || !onlyActive) {
+        return toDto(entity);
+      }
+      return null;
     }
 
 }

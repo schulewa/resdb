@@ -1,5 +1,7 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.common.model.mapper.EntityMapper;
+import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
 import com.apschulewitz.resdb.security.model.dto.PermissionDto;
 import com.apschulewitz.resdb.security.model.entity.Permission;
 import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
@@ -10,9 +12,9 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class PermissionMapper implements VersionableEntityMapper<Permission, PermissionDto> {
+public class PermissionMapper { //implements EntityMapper<Permission, PermissionDto> {
 
-    @Override
+//    @Override
     public PermissionDto toDto(Permission permission, boolean onlyActive) {
         PermissionDto.PermissionDtoBuilder builder = PermissionDto.builder();
 
@@ -27,12 +29,12 @@ public class PermissionMapper implements VersionableEntityMapper<Permission, Per
                 .build();
     }
 
-    @Override
+//    @Override
     public PermissionDto toDto(Permission permission) {
         return toDto(permission, false);
     }
 
-    public Collection<PermissionDto> toDto(Collection<UserGroupMembership> memberships) {
+  public Collection<PermissionDto> toDto(Collection<UserGroupMembership> memberships) {
         PermissionDto.PermissionDtoBuilder builder = PermissionDto.builder();
 
         return memberships.stream()

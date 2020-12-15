@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.EqualsAll;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
@@ -12,20 +8,25 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
 @Entity
 @Table(name = "resdb_address_type", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 @EqualsAndHashCode
-public class AddressType implements EqualsAll {
+public class AddressType implements EqualsAll, VersionableDataEntity<Long> {
   private static final long serialVersionUID = -4217533971787415501L;
 
   @Id
@@ -45,13 +46,14 @@ public class AddressType implements EqualsAll {
   private String createdBy;
 
   @Column
-  @NotBlank
   private String updatedBy;
 
   @Version
+  @Column(name = "version_no")
+  private Long versionNumber;
+
   @Column(name = "last_updated")
-  @NotNull
-  private LocalDateTime lastUpdated;
+  private ZonedDateTime lastUpdated;
 
   private transient DataOperation operation;
 

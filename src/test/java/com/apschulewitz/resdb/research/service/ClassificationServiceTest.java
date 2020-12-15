@@ -1,8 +1,8 @@
 package com.apschulewitz.resdb.research.service;
 
-import com.apschulewitz.resdb.common.model.converter.ClassificationCollectionConverter;
+import com.apschulewitz.resdb.common.model.mapper.ClassificationCollectionMapper;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.ClassificationTestHelper;
+import com.apschulewitz.resdb.research.model.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.dao.ClassificationDao;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
 import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
@@ -15,7 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,20 +48,20 @@ public class ClassificationServiceTest {
   private ClassificationDao mockedClassificationDao;
 
   @Autowired
-  private ClassificationCollectionConverter classificationCollectionConverter;
+  private ClassificationCollectionMapper classificationCollectionMapper;
 
   private ClassificationService classificationService;
 
   @Before
   public void beforeEachTest() {
-    classificationService = new ClassificationService(mockedClassificationDao, classificationCollectionConverter);
+    classificationService = new ClassificationService(mockedClassificationDao, classificationCollectionMapper);
   }
 
   @Test
   public void given_valid_classification_with_no_entries_when_save_is_executed_then_return_saved_entity() {
     // given
     ClassificationCollectionDto classificationCollectionDto = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Test Collection", Collections.emptyList());
-    ClassificationCollection expected = classificationCollectionConverter.toEntity(classificationCollectionDto);
+    ClassificationCollection expected = classificationCollectionMapper.toEntity(classificationCollectionDto);
     expected.setId(1L);
 
     when(mockedClassificationDao.save(any())).thenReturn(expected);
@@ -78,7 +77,7 @@ public class ClassificationServiceTest {
   public void given_valid_classification_when_delete_is_executed_then_no_error_is_returned() {
     // given
     ClassificationCollectionDto classificationCollectionDto = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Test Collection", Collections.emptyList());
-    ClassificationCollection expected = classificationCollectionConverter.toEntity(classificationCollectionDto);
+    ClassificationCollection expected = classificationCollectionMapper.toEntity(classificationCollectionDto);
     expected.setId(1L);
 
     when(mockedClassificationDao.save(any())).thenReturn(expected);
@@ -86,28 +85,29 @@ public class ClassificationServiceTest {
 
     // when
     ClassificationCollectionDto dtoToBeDeleted = saved.clone();
-    ClassificationCollection entityToBeDeleted = classificationCollectionConverter.toEntity(dtoToBeDeleted);
-    ClassificationCollection deletedEntity = classificationCollectionConverter.toEntity(dtoToBeDeleted);
+    ClassificationCollection entityToBeDeleted = classificationCollectionMapper.toEntity(dtoToBeDeleted);
+    ClassificationCollection deletedEntity = classificationCollectionMapper.toEntity(dtoToBeDeleted);
     deletedEntity.setStatus(VersionStatus.Cancel);
     when(mockedClassificationDao.findById(entityToBeDeleted.getId())).thenReturn(Optional.of(entityToBeDeleted));
     when(mockedClassificationDao.save(entityToBeDeleted)).thenReturn(deletedEntity);
-    Boolean isDeleted = classificationService.delete(saved.getId());
+    ClassificationCollectionDto deleted = classificationService.delete(saved.getId());
 
     // then
-    assertTrue(isDeleted);
+    assertNotNull(deleted);
+    assertEquals(VersionStatus.Cancel, deleted.getStatus());
   }
 
   @Test
-  public void given_null_classification_when_delete_is_executed_then_return_false() {
-    Boolean isDeleted = classificationService.delete(null);
-    assertFalse(isDeleted);
+  public void given_null_classification_when_delete_is_executed_then_return_null() {
+    ClassificationCollectionDto deleted = classificationService.delete(null);
+    assertNull(deleted);
   }
 
   @Test
   public void given_nonlive_classification_when_delete_is_executed_then_return_false() {
     // given
     ClassificationCollectionDto classificationCollectionDto = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Test Collection", Collections.emptyList());
-    ClassificationCollection expected = classificationCollectionConverter.toEntity(classificationCollectionDto);
+    ClassificationCollection expected = classificationCollectionMapper.toEntity(classificationCollectionDto);
     expected.setId(1L);
     expected.setStatus(VersionStatus.Cancel);
 
@@ -116,27 +116,27 @@ public class ClassificationServiceTest {
 
     // when
     ClassificationCollectionDto dtoToBeDeleted = nonLiveClassificationDto.clone();
-    ClassificationCollection entityToBeDeleted = classificationCollectionConverter.toEntity(dtoToBeDeleted);
-    ClassificationCollection deletedEntity = classificationCollectionConverter.toEntity(dtoToBeDeleted);
+    ClassificationCollection entityToBeDeleted = classificationCollectionMapper.toEntity(dtoToBeDeleted);
+    ClassificationCollection deletedEntity = classificationCollectionMapper.toEntity(dtoToBeDeleted);
 
     when(mockedClassificationDao.findById(entityToBeDeleted.getId())).thenReturn(Optional.of(entityToBeDeleted));
     when(mockedClassificationDao.save(entityToBeDeleted)).thenReturn(deletedEntity);
-    Boolean isDeleted = classificationService.delete(nonLiveClassificationDto.getId());
+    ClassificationCollectionDto deleted = classificationService.delete(nonLiveClassificationDto.getId());
 
     // then
-    assertFalse(isDeleted);
+    assertNull(deleted);
   }
 
   @Test
-  public void given_invalid_classification_when_delete_is_executed_then_return_false() {
+  public void given_invalid_classification_when_delete_is_executed_then_return_null() {
     // given
 
     // when
     when(mockedClassificationDao.findById(999L)).thenReturn(Optional.empty());
-    Boolean isDeleted = classificationService.delete(999L);
+    ClassificationCollectionDto deleted = classificationService.delete(999L);
 
     // then
-    assertFalse(isDeleted);
+    assertNull(deleted);
   }
 
   @Test
@@ -148,10 +148,10 @@ public class ClassificationServiceTest {
     ClassificationCollection wariCollection = ClassificationTestHelper.constructNewClassificationCollection("Wari Collection");
     wariCollection.setId(2L);
 
-    ClassificationCollectionDto savedAztecDto = classificationCollectionConverter.toDto(aztecCollection);
+    ClassificationCollectionDto savedAztecDto = classificationCollectionMapper.toDto(aztecCollection);
     savedAztecDto.setId(1L);
 
-    ClassificationCollectionDto savedWariDto = classificationCollectionConverter.toDto(wariCollection);
+    ClassificationCollectionDto savedWariDto = classificationCollectionMapper.toDto(wariCollection);
     savedWariDto.setId(2L);
 
     List<ClassificationCollection> allCollections = new ArrayList<>();
@@ -161,7 +161,7 @@ public class ClassificationServiceTest {
     when(mockedClassificationDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(allCollections);
 
     // when
-    List<ClassificationCollectionDto> collections = classificationService.findAllLiveCollections();
+    List<ClassificationCollectionDto> collections = classificationService.findAllActive();
 
     // then
     assertNotNull(collections);
@@ -185,7 +185,7 @@ public class ClassificationServiceTest {
   public void given_valid_classification_id_when_findById_is_executed_then_return_data() {
     // given
     ClassificationCollectionDto classificationCollectionDto = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Aztec Collection", Collections.emptyList());
-    ClassificationCollection classificationCollection = classificationCollectionConverter.toEntity(classificationCollectionDto);
+    ClassificationCollection classificationCollection = classificationCollectionMapper.toEntity(classificationCollectionDto);
     Optional<ClassificationCollection> optionalClassificationCollection = Optional.ofNullable(classificationCollection);
 
     // when
@@ -214,14 +214,14 @@ public class ClassificationServiceTest {
     ClassificationCollectionDto classificationCollectionDto = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Aztec Collection", Collections.emptyList());
     ClassificationCollectionDto classificationCollectionDto2 = ClassificationTestHelper.constructNewClassificationCollectionDto(null, "Wari Collection", Collections.emptyList());
 
-    ClassificationCollection savedAztec = classificationCollectionConverter.toEntity(classificationCollectionDto);
+    ClassificationCollection savedAztec = classificationCollectionMapper.toEntity(classificationCollectionDto);
     savedAztec.setId(1L);
 
     when(mockedClassificationDao.save(any())).thenReturn(savedAztec);
 
     classificationService.save(classificationCollectionDto);
 
-    ClassificationCollection savedWari = classificationCollectionConverter.toEntity(classificationCollectionDto2);
+    ClassificationCollection savedWari = classificationCollectionMapper.toEntity(classificationCollectionDto2);
     savedWari.setId(2L);
 
     when(mockedClassificationDao.save(any())).thenReturn(savedWari);

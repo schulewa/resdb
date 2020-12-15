@@ -2,10 +2,13 @@ package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dao.ArtefactTypeDao;
+import com.apschulewitz.resdb.refdata.model.dto.ArtefactTypeDto;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
+import com.apschulewitz.resdb.refdata.service.ArtefactTypeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -13,15 +16,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -31,42 +38,43 @@ public class ArtefactTypeControllerTest {
 
   private ArtefactTypeController controller;
 
-  @MockBean
-  private ArtefactTypeDao mockedDao;
+  @Autowired
+  private ArtefactTypeDao artefactTypeDao;
 
-  private HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+  @MockBean
+  private ArtefactTypeService mockedService;
 
   @Before
   public void beforeEachTest() {
-    mockedDao.deleteAll();
-    controller = new ArtefactTypeController(mockedDao);
+    artefactTypeDao.deleteAll();
+    controller = new ArtefactTypeController(mockedService);
   }
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_none_when_findAll_is_executed_then_return_list() {
+  public void when_findAll_is_executed_then_return_list() {
     // Given
 
-    ArtefactType unsaved1 = ArtefactType.builder()
+    ArtefactTypeDto unsaved1 = ArtefactTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.New)
+      .status(VersionStatus.New.name())
       .updatedBy("system")
       .build();
 
-    ArtefactType unsaved2 = ArtefactType.builder()
+    ArtefactTypeDto unsaved2 = ArtefactTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Weapons")
-      .status(VersionStatus.New)
+      .status(VersionStatus.Cancel.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(unsaved1, unsaved2));
+    when(mockedService.findAll(false)).thenReturn(Arrays.asList(unsaved1, unsaved2));
 
     // When
-    ResponseEntity<List<ArtefactType>> responseEntityList = controller.findAll();
+    ResponseEntity<List<ArtefactTypeDto>> responseEntityList = controller.findAll(false);
 
     // Then
     assertEquals(HttpStatus.OK, responseEntityList.getStatusCode());
@@ -76,29 +84,27 @@ public class ArtefactTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_entity_when_save_is_executed_then_return_saved_entity() {
+  public void when_add_is_executed_then_return_saved_entity() {
     // Given
-    ArtefactType unsaved = ArtefactType.builder()
+    ArtefactTypeDto unsaved = ArtefactTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
       .build();
 
-    ArtefactType saved = ArtefactType.builder()
+    ArtefactTypeDto saved = ArtefactTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.New)
+      .status(VersionStatus.New.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
+    when(mockedService.add(unsaved)).thenReturn(saved);
 
     // When
-    ResponseEntity<ArtefactType> responseEntity = controller.add(mockedRequest, unsaved);
+    ResponseEntity<ArtefactTypeDto> responseEntity = controller.add(unsaved);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -108,194 +114,68 @@ public class ArtefactTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_existing_entity_when_delete_is_executed_then_return_mark_entity_as_cancelled() {
+  public void when_delete_is_executed_then_return_mark_entity_as_cancelled() {
     // Given
-    ArtefactType unsaved = ArtefactType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType saved = ArtefactType.builder()
+    ArtefactTypeDto saved = ArtefactTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.New)
+      .status(VersionStatus.New.name())
       .updatedBy("system")
       .build();
 
-    ArtefactType deleted = ArtefactType.builder()
+    ArtefactTypeDto deleted = ArtefactTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.Cancel)
+      .status(VersionStatus.Cancel.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(deleted);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+    when(mockedService.deleteById(saved.getId())).thenReturn(deleted);
 
     // When
-    ResponseEntity<ArtefactType> responseEntity = controller.delete(saved.getId());
+    ResponseEntity<ArtefactTypeDto> responseEntity = controller.delete(saved.getId());
 
     // Then
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-    verify(mockedDao, times(1)).save(any(ArtefactType.class));
+    verify(mockedService, times(1)).deleteById(anyLong());
 
     assertEquals(deleted, responseEntity.getBody());
   }
 
-  @WithMockUser(value = "adrian")
-  @Test
-  public void given_nonexisting_entityp_when_delete_is_executed_then_return_not_found() {
-    // Given
-    ArtefactType unsaved = ArtefactType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType saved = ArtefactType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType deleted = ArtefactType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.Cancel)
-      .updatedBy("system")
-      .build();
-
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-    // When
-    ResponseEntity<ArtefactType> responseEntity = controller.delete(saved.getId());
-
-    // Then
-    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-    assertNull(responseEntity.getBody());
-  }
-
   @Test
   @WithMockUser(value = "adrian")
-  public void given_new_entity_when_update_is_executed_then_return_updated_entity() {
+  public void when_update_is_executed_then_return_updated_entity() {
     // Given
-    ArtefactType unsaved = ArtefactType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType saved = ArtefactType.builder()
+    ArtefactTypeDto saved = ArtefactTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
+      .status(VersionStatus.New.name())
       .build();
 
-    ArtefactType updated = ArtefactType.builder()
+    ArtefactTypeDto updated = ArtefactTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Ceramics")
-      .status(VersionStatus.Amend)
+      .status(VersionStatus.Amend.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(updated);
-
-    when(mockedDao.save(updated)).thenReturn(updated);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+    when(mockedService.update(saved)).thenReturn(saved);
 
     // When
-    ResponseEntity<ArtefactType> responseEntity = controller.add(mockedRequest, unsaved);
-
-    ResponseEntity<ArtefactType> responseUpdatedEntity = controller.update(updated);
+    ResponseEntity<ArtefactTypeDto> responseUpdatedEntity = controller.update(updated);
 
     // Then
-    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    assertNotNull(responseEntity.getBody());
-    assertNotNull(responseEntity.getBody().getId());
-
     assertNotNull(responseUpdatedEntity);
     assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
   }
 
-  @Test
-  @WithMockUser(value = "adrian")
-  public void given_unknown_entity_when_update_is_executed_then_return_notfound() {
-    // Given
-    ArtefactType unsaved = ArtefactType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType saved = ArtefactType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    ArtefactType updated = ArtefactType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.Amend)
-      .updatedBy("system")
-      .build();
-
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(updated);
-
-    when(mockedDao.save(updated)).thenReturn(updated);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-    // When
-    ResponseEntity<ArtefactType> responseEntity = controller.add(mockedRequest, unsaved);
-
-    ResponseEntity<ArtefactType> responseUpdatedEntity = controller.update(updated);
-
-    // Then
-    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    assertNotNull(responseEntity.getBody());
-    assertNotNull(responseEntity.getBody().getId());
-
-    assertNotNull(responseUpdatedEntity);
-    assertEquals(HttpStatus.NOT_FOUND, responseUpdatedEntity.getStatusCode());
-  }
 }

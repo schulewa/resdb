@@ -2,10 +2,14 @@ package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dao.CountryDao;
+import com.apschulewitz.resdb.refdata.model.dto.CountryDto;
 import com.apschulewitz.resdb.refdata.model.entity.Country;
+import com.apschulewitz.resdb.refdata.service.CountryService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -31,44 +35,45 @@ public class CountryControllerTest {
 
     private CountryController controller;
 
-    @MockBean
-    private CountryDao mockedDao;
+    @Autowired
+    private CountryDao countryDao;
 
-    private HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+    @MockBean
+    private CountryService mockedService;
 
     @Before
     public void beforeEachTest() {
-        mockedDao.deleteAll();
-        controller = new CountryController(mockedDao);
+      countryDao.deleteAll();
+        controller = new CountryController(mockedService);
     }
 
     @WithMockUser(value = "adrian")
     @Test
-    public void given_none_when_findAll_is_executed_then_return_list() {
+    public void when_findAll_is_executed_and_onlyactive_is_false_then_return_list() {
         // Given
 
-        Country unsaved1 = Country.builder()
+        CountryDto unsaved1 = CountryDto.builder()
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
                 .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.New.name())
                 .build();
 
-        Country unsaved2 = Country.builder()
+        CountryDto unsaved2 = CountryDto.builder()
                 .code("AX")
                 .name("Aland Islands")
                 .stateName("Aland")
                 .sovereignty("Finland")
                 .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.Cancel.name())
                 .build();
 
-        when(mockedDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(unsaved1, unsaved2));
+        when(mockedService.findAll(false)).thenReturn(Arrays.asList(unsaved1, unsaved2));
 
         // When
-        ResponseEntity<List<Country>> responseEntityList = controller.findAll();
+        ResponseEntity<List<CountryDto>> responseEntityList = controller.findAll(false);
 
         // Then
         assertEquals(HttpStatus.OK, responseEntityList.getStatusCode());
@@ -78,31 +83,30 @@ public class CountryControllerTest {
 
     @WithMockUser(value = "adrian")
     @Test
-    public void given_entity_when_save_is_executed_then_return_saved_entity() {
+    public void when_add_is_executed_then_return_saved_entity() {
         // Given
-        Country unsaved = Country.builder()
+        CountryDto unsaved = CountryDto.builder()
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.New.name())
                 .build();
 
-        Country saved = Country.builder()
+        CountryDto saved = CountryDto.builder()
                 .id(1L)
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
                 .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.New.name())
                 .build();
 
-        when(mockedDao.save(unsaved)).thenReturn(saved);
+        when(mockedService.add(unsaved)).thenReturn(saved);
 
         // When
-        ResponseEntity<Country> responseEntity = controller.add(mockedRequest, unsaved);
+        ResponseEntity<CountryDto> responseEntity = controller.add(unsaved);
 
         // Then
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -112,17 +116,8 @@ public class CountryControllerTest {
 
     @WithMockUser(value = "adrian")
     @Test
-    public void given_existing_entity_when_delete_is_executed_then_return_mark_entity_as_cancelled() {
+    public void when_delete_is_executed_then_return_mark_entity_as_cancelled() {
         // Given
-        Country unsaved = Country.builder()
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
         Country saved = Country.builder()
                 .id(1L)
                 .code("AF")
@@ -133,185 +128,62 @@ public class CountryControllerTest {
                 .status(VersionStatus.New)
                 .build();
 
-        Country deleted = Country.builder()
+        CountryDto deleted = CountryDto.builder()
                 .id(1L)
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
                 .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.Cancel.name())
                 .build();
 
-        when(mockedDao.save(unsaved)).thenReturn(saved);
-
-        when(mockedDao.save(saved)).thenReturn(deleted);
-
-        when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+        when(mockedService.deleteById(saved.getId())).thenReturn(deleted);
 
         // When
-        ResponseEntity<Country> responseEntity = controller.delete(saved.getId());
+        ResponseEntity<CountryDto> responseEntity = controller.delete(saved.getId());
 
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-        verify(mockedDao, times(1)).save(any(Country.class));
+        verify(mockedService, times(1)).deleteById(anyLong());
 
         assertEquals(deleted, responseEntity.getBody());
     }
 
-    @WithMockUser(value = "adrian")
-    @Test
-    public void given_nonexisting_entity_when_delete_is_executed_then_return_not_found() {
-        // Given
-        Country unsaved = Country.builder()
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        Country saved = Country.builder()
-                .id(1L)
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        Country deleted = Country.builder()
-                .id(1L)
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        when(mockedDao.save(unsaved)).thenReturn(saved);
-
-        when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-        // When
-        ResponseEntity<Country> responseEntity = controller.delete(saved.getId());
-
-        // Then
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertNull(responseEntity.getBody());
-    }
-
     @Test
     @WithMockUser(value = "adrian")
-    public void given_new_entity_when_update_is_executed_then_return_updated_entity() {
+    public void when_update_is_executed_then_return_updated_entity() {
         // Given
-        Country unsaved = Country.builder()
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        Country saved = Country.builder()
+        CountryDto saved = CountryDto.builder()
                 .id(1L)
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
                 .createdBy("system")
-                .status(VersionStatus.New)
+                .status(VersionStatus.New.name())
                 .build();
 
-        Country updated = Country.builder()
+        CountryDto updated = CountryDto.builder()
                 .id(1L)
                 .code("AF")
                 .name("Afghanistan")
                 .stateName("The Islamic Republic of Afghanistan")
                 .sovereignty("UN Member State")
                 .createdBy("system")
-                .status(VersionStatus.Amend)
+                .status(VersionStatus.Amend.name())
+                .updatedBy("testuser")
                 .build();
 
-        when(mockedDao.save(unsaved)).thenReturn(saved);
-
-        when(mockedDao.save(saved)).thenReturn(updated);
-
-        when(mockedDao.save(updated)).thenReturn(updated);
-
-        when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+        when(mockedService.update(saved)).thenReturn(updated);
 
         // When
-        ResponseEntity<Country> responseEntity = controller.add(mockedRequest, unsaved);
-
-        ResponseEntity<Country> responseUpdatedEntity = controller.update(updated);
+        ResponseEntity<CountryDto> responseUpdatedEntity = controller.update(updated);
 
         // Then
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-        assertNotNull(responseEntity.getBody().getId());
-
         assertNotNull(responseUpdatedEntity);
         assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
     }
 
-    @Test
-    @WithMockUser(value = "adrian")
-    public void given_unknown_entity_when_update_is_executed_then_return_notfound() {
-        // Given
-        Country unsaved = Country.builder()
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        Country saved = Country.builder()
-                .id(1L)
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.New)
-                .build();
-
-        Country updated = Country.builder()
-                .id(1L)
-                .code("AF")
-                .name("Afghanistan")
-                .stateName("The Islamic Republic of Afghanistan")
-                .sovereignty("UN Member State")
-                .createdBy("system")
-                .status(VersionStatus.Amend)
-                .build();
-
-        when(mockedDao.save(unsaved)).thenReturn(saved);
-
-        when(mockedDao.save(saved)).thenReturn(updated);
-
-        when(mockedDao.save(updated)).thenReturn(updated);
-
-        when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-        // When
-        ResponseEntity<Country> responseEntity = controller.add(mockedRequest, unsaved);
-
-        ResponseEntity<Country> responseUpdatedEntity = controller.update(updated);
-
-        // Then
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-        assertNotNull(responseEntity.getBody().getId());
-
-        assertNotNull(responseUpdatedEntity);
-        assertEquals(HttpStatus.NOT_FOUND, responseUpdatedEntity.getStatusCode());
-    }
 }

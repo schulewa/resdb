@@ -6,6 +6,7 @@ CREATE TABLE resdb_address_type
 (
     id           BIGINT      NOT NULL AUTO_INCREMENT,
     name         VARCHAR(30) NOT NULL,
+    version_no   BIGINT      NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
     last_updated TIMESTAMP   NULL,
@@ -27,18 +28,23 @@ CREATE UNIQUE INDEX resdb_application_version_idx ON resdb_application_version (
 
 CREATE TABLE resdb_artefact
 (
-    id                 BIGINT       NOT NULL AUTO_INCREMENT,
-    name               VARCHAR(30)  NOT NULL,
-    description        VARCHAR(250) NULL,
-    date_found_year    INTEGER      NULL,
-    date_found_month   INTEGER      NULL,
-    date_found_day     INTEGER      NULL,
-    artefact_type_id   BIGINT       NOT NULL,
-    found_by_person_id BIGINT       NULL,
-    artefact_group_id  BIGINT       NULL,
-    owner_identifier   VARCHAR(10)  NULL,
-    technology_id      BIGINT       NULL,
-    composition_id     BIGINT       NULL,
+    id                  BIGINT       NOT NULL AUTO_INCREMENT,
+    name                VARCHAR(30)  NOT NULL,
+    description         VARCHAR(250) NULL,
+    date_found_year     INTEGER      NULL,
+    date_found_month    INTEGER      NULL,
+    date_found_day      INTEGER      NULL,
+    artefact_type_id    BIGINT       NOT NULL,
+    found_by_person_id  BIGINT       NULL,
+    artefact_group_id   BIGINT       NULL,
+    owner_identifier    VARCHAR(10)  NULL,
+    technology_id       BIGINT       NULL,
+    composition_id      BIGINT       NULL,
+    version_no          BIGINT      NOT NULL,
+    status              VARCHAR(1)  NOT NULL,
+    created_by          VARCHAR(20) NOT NULL,
+    last_updated        TIMESTAMP   NULL,
+    updated_by          VARCHAR(20) NULL,
     CONSTRAINT resdb_artefact_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_artefact_name_idx ON resdb_artefact (name);
@@ -126,12 +132,13 @@ CREATE TABLE resdb_artefact_rstrtn_work
 
 CREATE TABLE resdb_artefact_type
 (
-    id           BIGINT      NOT NULL AUTO_INCREMENT,
-    name         VARCHAR(20) NOT NULL,
-    status       VARCHAR(1)  NOT NULL,
-    created_by   VARCHAR(20) NOT NULL,
-    last_updated TIMESTAMP   NULL,
-    updated_by   VARCHAR(20) NULL,
+    id                  BIGINT      NOT NULL AUTO_INCREMENT,
+    name                VARCHAR(20) NOT NULL,
+    version_no          BIGINT      NOT NULL,
+    status              VARCHAR(1)  NOT NULL,
+    created_by          VARCHAR(20) NOT NULL,
+    last_updated        TIMESTAMP   NULL,
+    updated_by          VARCHAR(20) NULL,
     CONSTRAINT resdb_artefact_type_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_artfct_typ_nam_idx on resdb_artefact_type (name);
@@ -211,6 +218,7 @@ CREATE TABLE resdb_calendar_type
     days_per_non_leap_year INTEGER     NULL,
     status                 VARCHAR(1)  NOT NULL,
     created_by             VARCHAR(20) NOT NULL,
+    version_no             INTEGER     NOT NULL,
     last_updated           TIMESTAMP   NULL,
     updated_by             VARCHAR(20) NULL,
     CONSTRAINT resdb_calendar_type_pk PRIMARY KEY (id)
@@ -561,6 +569,7 @@ CREATE TABLE resdb_language_group
     region_id    BIGINT      NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
+    version_no   BIGINT      NOT NULL,
     last_updated TIMESTAMP   NULL,
     updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_language_group_pk PRIMARY KEY (id)
@@ -1049,6 +1058,7 @@ CREATE TABLE resdb_region
     name         VARCHAR(30) NOT NULL,
     status       VARCHAR(1)  NOT NULL,
     created_by   VARCHAR(20) NOT NULL,
+    version_no   BIGINT      NOT NULL,
     last_updated TIMESTAMP   NULL,
     updated_by   VARCHAR(20) NULL,
     CONSTRAINT resdb_region_pk PRIMARY KEY (id)

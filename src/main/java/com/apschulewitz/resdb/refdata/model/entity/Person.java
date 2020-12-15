@@ -61,18 +61,18 @@ public class Person implements Serializable {
     private HistoricalDate dateOfDeath;
 
     // default prefix title used when listing person
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Title prefixTitle;
 
     // default suffix title used when listing person
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Title suffixTitle;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "birth_place_id")
     private Place birthPlace;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "death_place_id")
     private Place deathPlace;
 

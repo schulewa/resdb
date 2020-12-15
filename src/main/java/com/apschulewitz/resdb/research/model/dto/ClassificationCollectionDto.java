@@ -21,6 +21,7 @@ public class ClassificationCollectionDto implements Cloneable {
   private Long id;
   private String name;
   private List<ClassificationEntryDto> entries;
+  private String createdBy;
   private VersionStatus status;
 
   public ClassificationCollectionDto() {
@@ -38,10 +39,11 @@ public class ClassificationCollectionDto implements Cloneable {
 
     if (!CollectionUtils.isEmpty(entries)) {
       buffer.append("entries: ");
-      entries.forEach(e -> buffer.append("id=" + e.getId()).append("name=" + e.getName()));
+      entries.forEach(e -> buffer.append("id=" + e.getId()).append(" name=" + e.getName()));
     }
 
-    buffer.append("status=" + status);
+    buffer.append("status=" + status + " ");
+    buffer.append("createdBy=" + createdBy + " ");
     return buffer.toString();
   }
 
@@ -51,6 +53,7 @@ public class ClassificationCollectionDto implements Cloneable {
     cloned.setId(id);
     cloned.setName(name);
     cloned.setStatus(status);
+    cloned.setCreatedBy(createdBy);
     cloned.setEntries(entries);
     return cloned;
   }

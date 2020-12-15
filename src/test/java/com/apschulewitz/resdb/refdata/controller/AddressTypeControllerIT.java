@@ -3,7 +3,7 @@ package com.apschulewitz.resdb.refdata.controller;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.refdata.model.dao.AddressTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.AddressType;
+import com.apschulewitz.resdb.refdata.model.dto.AddressTypeDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -11,38 +11,30 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureMockMvc
 public class AddressTypeControllerIT {
 
-//  @MockBean
-//  private MockMvc mockMvc;
   TestRestTemplate restTemplate = new TestRestTemplate();
 
   @LocalServerPort
@@ -66,17 +58,15 @@ public class AddressTypeControllerIT {
   @Test
   public void given_valid_address_type_when_save_is_executed_then_save_data() {
     // Given
-    LocalDateTime now = LocalDateTime.now();
-    AddressType toBeSaved = AddressType.builder()
+    ZonedDateTime now = ZonedDateTime.now();
+    AddressTypeDto toBeSaved = AddressTypeDto.builder()
       .name("Home")
-      .status(VersionStatus.New)
       .createdBy("system")
-      .updatedBy("system")
       .lastUpdated(now)
       .build();
 
     // When
-    ResponseEntity<AddressType> responseEntity = restTemplate.postForEntity(constructUri(), constructHttpEntity(toBeSaved), AddressType.class);
+    ResponseEntity<AddressTypeDto> responseEntity = restTemplate.postForEntity(constructUri(), constructHttpEntity(toBeSaved), AddressTypeDto.class);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -90,38 +80,28 @@ public class AddressTypeControllerIT {
   @Test
   public void given_valid_address_types_when_findAll_is_executed_then_return_data() throws Exception {
     // Given
-    LocalDateTime now = LocalDateTime.now();
-
-    AddressType newUnsaved = AddressType.builder()
+    AddressTypeDto newUnsaved = AddressTypeDto.builder()
       .name("Email")
-      .status(VersionStatus.New)
       .createdBy("system")
-      .lastUpdated(now)
-      .updatedBy("system")
       .build();
 
-    AddressType cancelledUnsaved = AddressType.builder()
+    AddressTypeDto cancelledUnsaved = AddressTypeDto.builder()
       .name("Work")
-      .status(VersionStatus.Cancel)
       .createdBy("system")
-      .lastUpdated(now)
-      .updatedBy("system")
       .build();
 
-    AddressType amendedUnsaved2 = AddressType.builder()
+    AddressTypeDto amendedUnsaved2 = AddressTypeDto.builder()
       .name("Alternate office")
-      .status(VersionStatus.Amend)
       .createdBy("system")
-      .lastUpdated(now)
-      .updatedBy("system")
       .build();
 
     // When
-    ResponseEntity<AddressType> responseEntity1 = restTemplate.postForEntity(constructUri(), constructHttpEntity(newUnsaved), AddressType.class);
-    ResponseEntity<AddressType> responseEntity2 = restTemplate.postForEntity(constructUri(), constructHttpEntity(cancelledUnsaved), AddressType.class);
-    ResponseEntity<AddressType> responseEntity3 = restTemplate.postForEntity(constructUri(), constructHttpEntity(amendedUnsaved2), AddressType.class);
+    ResponseEntity<AddressTypeDto> responseEntity1 = restTemplate.postForEntity(constructUri(), constructHttpEntity(newUnsaved), AddressTypeDto.class);
+    ResponseEntity<AddressTypeDto> responseEntity2 = restTemplate.postForEntity(constructUri(), constructHttpEntity(cancelledUnsaved), AddressTypeDto.class);
+    ResponseEntity<AddressTypeDto> responseEntity3 = restTemplate.postForEntity(constructUri(), constructHttpEntity(amendedUnsaved2), AddressTypeDto.class);
 
-    ResponseEntity<List<AddressType>> responseListEntity = restTemplate.exchange(constructUri(), HttpMethod.GET, null, new ParameterizedTypeReference<List<AddressType>>(){});
+    ResponseEntity<List<AddressTypeDto>> responseListEntity = restTemplate.exchange(constructUri(), HttpMethod.GET, null, new ParameterizedTypeReference<>() {
+    });
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity1.getStatusCode());
@@ -156,7 +136,7 @@ public class AddressTypeControllerIT {
       .toUriString();
   }
 
-  private HttpEntity<AddressType> constructHttpEntity(AddressType toBeSaved) {
+  private HttpEntity<AddressTypeDto> constructHttpEntity(AddressTypeDto toBeSaved) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     return new HttpEntity<>(toBeSaved, headers);

@@ -19,6 +19,6 @@ public class TitleTypePersistenceConverter implements AttributeConverter<TitleTy
 
     @Override
     public TitleType convertToEntityAttribute(String databaseValue) {
-        return databaseValue == null ? null : TitleType.getTypeFor(databaseValue);
+        return databaseValue == null ? null : TitleType.getTypeForCode(databaseValue);
     }
 }

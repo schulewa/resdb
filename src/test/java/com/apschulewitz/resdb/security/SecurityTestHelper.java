@@ -15,15 +15,26 @@ import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
 import com.apschulewitz.resdb.security.model.entity.UserPassword;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
 public class SecurityTestHelper {
 
+  public static final String TEST_USER_NAME = "testuser";
+  public static final String TEST_USER_PASSWORD = "testpassword";
+
+  public static final LocalDate VALID_FROM_DATE = LocalDate.of(2019, 1, 1);
+  public static final LocalTime VALID_FROM_TIME = LocalTime.of(9, 1, 1, 0);
+
+  public static final LocalDateTime VALID_FROM_DATE_TIME = LocalDateTime.of(VALID_FROM_DATE, VALID_FROM_TIME);
+
   public static UserAccount constructActiveUserAccount() {
     Region region = Region.builder()
-      .createdBy("testuser")
+      .createdBy(TEST_USER_NAME)
       .name("region")
       .status(VersionStatus.New)
       .id(1L)
@@ -31,7 +42,7 @@ public class SecurityTestHelper {
       .build();
 
     LanguageGroup languageGroup = LanguageGroup.builder()
-      .createdBy("testuser")
+      .createdBy(TEST_USER_NAME)
       .name("Language group")
       .status(VersionStatus.New)
       .id(1L)
@@ -49,37 +60,60 @@ public class SecurityTestHelper {
       .build();
 
     UserPassword userPassword = UserPassword.builder()
-      .password("password")
-      .validFrom(LocalDate.of(2020, Month.OCTOBER, 1))
-      .id(1L)
+      .password(TEST_USER_PASSWORD)
+      .validFrom(VALID_FROM_DATE)
+//      .id(1L)
       .build();
-
-    Permission permission = Permission.builder()
-      .description("Permission description")
-      .id(1L)
-      .status(Permission.PermissionStatus.Active)
-      .operationType(Permission.OperationType.Create)
-      .name("Permission")
-      .build();
-
-    UserGroupPermission userGroupPermission = UserGroupPermission.builder()
-      .id(1L)
-      .permission(permission)
-      .build();
+    Collection<UserPassword> passwords = Collections.singletonList(userPassword);
 
     UserGroup userGroup = UserGroup.builder()
       .displayName("User group display name")
-      .id(1L)
+//      .id(1L)
       .name("User group")
-      .groupPermissions(Arrays.asList(userGroupPermission))
+//      .groupPermissions(Arrays.asList(userGroupPermission))
       .build();
-
-    userGroupPermission.setGroup(userGroup);
 
     UserGroupMembership userGroupMembership = UserGroupMembership.builder()
       .group(userGroup)
-      .id(1L)
+//      .id(1L)
+      .validFrom(VALID_FROM_DATE_TIME)
       .build();
+    Collection<UserGroupMembership> groupMemberships = Collections.singletonList(userGroupMembership);
+
+    Permission theoryMaintenancePermission = Permission.builder()
+      .operationType(Permission.OperationType.CreateReadUpdateDelete)
+      .status(Permission.PermissionStatus.Active)
+      .name("Theory maintenance")
+      .build();
+
+    Permission artefactMaintenancePermission = Permission.builder()
+      .operationType(Permission.OperationType.CreateReadUpdateDelete)
+      .status(Permission.PermissionStatus.Active)
+      .name("Artefact maintenance")
+      .build();
+
+    UserGroupPermission theoryMaintenanceUserGroupPermission = UserGroupPermission.builder()
+      .group(userGroup)
+      .permission(theoryMaintenancePermission)
+      .build();
+
+    UserGroupPermission artefactMaintenanceUserGroupPermission = UserGroupPermission.builder()
+      .group(userGroup)
+      .permission(artefactMaintenancePermission)
+      .build();
+
+    Collection<UserGroupPermission> groupPermissions = Arrays.asList(theoryMaintenanceUserGroupPermission, artefactMaintenanceUserGroupPermission);
+
+//    UserGroupPermission userGroupPermission = UserGroupPermission.builder()
+//      .id(1L)
+//      .permission(permission)
+//      .build();
+//
+
+
+//    userGroupPermission.setGroup(userGroup);
+
+
 
     UserAccount userAccount = UserAccount.builder()
       .status(AccountStatus.Active)
@@ -93,6 +127,13 @@ public class SecurityTestHelper {
       .invalidAccessCount(0)
       .authenticationResult(AuthenticationResult.UnauthenticatedUser)
       .build();
+
+
+    userPassword.setUser(userAccount);
+    userGroupMembership.setUser(userAccount);
+    userGroup.setGroupPermissions(groupPermissions);
+
+//    Collection<UserGroupPermission> groupPermissions = Arrays.asList(theoryMaintenanceUserGroupPermission, artefactMaintenanceUserGroupPermission);
 
     userGroupMembership.setGroup(userGroup);
     userPassword.setUser(userAccount);

@@ -1,9 +1,9 @@
 package com.apschulewitz.resdb.security.model.dto;
 
+import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
 import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 

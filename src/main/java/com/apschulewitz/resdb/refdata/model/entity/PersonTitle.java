@@ -21,5 +21,6 @@ public class PersonTitle {
   @ManyToOne
   private Title title;
 
+  @Column(nullable = false)
   private Integer position;
 }

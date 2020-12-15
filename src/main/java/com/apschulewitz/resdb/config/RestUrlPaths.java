@@ -48,6 +48,6 @@ public final class RestUrlPaths {
     public static final String AUTHENTICATE_URL = AUTH_CONTROLLER_BASE_URL + "/authenticate";
 
     public static final String TEST_PAGE_URL = AUTH_CONTROLLER_BASE_URL + "/hello";
-    public static final String TEST_PAGE__WITH_DATA_URL = AUTH_CONTROLLER_BASE_URL + "/helloWithData";
+    public static final String TEST_PAGE_WITH_DATA_URL = AUTH_CONTROLLER_BASE_URL + "/helloWithData";
 
 }

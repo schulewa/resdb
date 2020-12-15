@@ -34,7 +34,7 @@ public class UserAuthenticationController {
         this.userAuthenticationService = userAuthenticationService;
     }
 
-    @RequestMapping(value = RestUrlPaths.TEST_PAGE_URL)
+    @GetMapping(value = RestUrlPaths.TEST_PAGE_URL)
     public ResponseEntity<String> sayHello() {
         String message = "Hello world at " + LocalDateTime.now();
         log.info("Processing request to say hello: " + message);
@@ -50,7 +50,7 @@ public class UserAuthenticationController {
         return ResponseEntity.ok(message);
     }
 
-    @RequestMapping(value = RestUrlPaths.TEST_PAGE__WITH_DATA_URL, method = {RequestMethod.POST}, consumes = MediaType.ALL_VALUE)
+    @PostMapping(value = RestUrlPaths.TEST_PAGE_WITH_DATA_URL, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<String> sayHelloWithData(@RequestBody String json) {
         String message = "Hello world at " + LocalDateTime.now() + " with json " + json;
         log.info("Processing request to say hello: " + message);
@@ -66,7 +66,7 @@ public class UserAuthenticationController {
         return ResponseEntity.ok(message);
     }
 
-    @RequestMapping(value = RestUrlPaths.LOGIN_PAGE_URL, method = {RequestMethod.POST}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = RestUrlPaths.LOGIN_PAGE_URL, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> logon(@RequestBody UserLogonDto userLogonDto) {
         log.info("Processing logon request at {} with userLogonDto={}", RestUrlPaths.LOGIN_PAGE_URL, userLogonDto);
         ApplicationResponse<UserDto> applicationResponse = new ApplicationResponse<>();

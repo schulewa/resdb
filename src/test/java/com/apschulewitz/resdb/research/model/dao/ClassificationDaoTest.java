@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.research.model.dao;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.ClassificationTestHelper;
+import com.apschulewitz.resdb.research.model.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
 import com.apschulewitz.resdb.research.model.entity.ClassificationEntry;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +13,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ADORNMENT_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ANKLET_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.ARMLET_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.JEWELLERY_NAME;
-import static com.apschulewitz.resdb.refdata.ClassificationTestHelper.TATTOO_NAME;
+import static com.apschulewitz.resdb.research.model.ClassificationTestHelper.ADORNMENT_NAME;
+import static com.apschulewitz.resdb.research.model.ClassificationTestHelper.ANKLET_NAME;
+import static com.apschulewitz.resdb.research.model.ClassificationTestHelper.ARMLET_NAME;
+import static com.apschulewitz.resdb.research.model.ClassificationTestHelper.JEWELLERY_NAME;
+import static com.apschulewitz.resdb.research.model.ClassificationTestHelper.TATTOO_NAME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 

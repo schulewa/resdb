@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.AddressType;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface AddressTypeDao extends CrudRepository<AddressType, Long> {
+public interface AddressTypeDao extends DataDao<AddressType, Long>, CrudRepository<AddressType, Long> {
 
   List<AddressType> findByStatusIn(List<VersionStatus> livestatuses);
 

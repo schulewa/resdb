@@ -12,7 +12,7 @@ public class TitleTypeTest {
     String code = "P";
 
     // When
-    TitleType type = TitleType.getTypeFor(code);
+    TitleType type = TitleType.getTypeForCode(code);
 
     // Then
     assertEquals("P code", TitleType.Prefix, type);
@@ -24,7 +24,7 @@ public class TitleTypeTest {
     String code = "S";
 
     // When
-    TitleType type = TitleType.getTypeFor(code);
+    TitleType type = TitleType.getTypeForCode(code);
 
     // Then
     assertEquals("S code", TitleType.Suffix, type);
@@ -38,7 +38,7 @@ public class TitleTypeTest {
 
     // When
     try {
-      TitleType.getTypeFor(code);
+      TitleType.getTypeForCode(code);
     } catch (IllegalArgumentException e) {
       isExceptionThrown = true;
     }

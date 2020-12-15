@@ -35,16 +35,19 @@ public class ArtefactType implements Serializable {
   @Column(nullable = false, length = 20)
   private String name;
 
-  @Column
+  @Column(nullable = false)
   private VersionStatus status;
 
-  @Column
+  @Column(nullable = false)
   private String createdBy;
+
+  @Version
+  @Column(name = "version_no")
+  private Long versionNumber;
 
   @Column
   private String updatedBy;
 
-  @Version
   @Column(name = "last_updated")
   private LocalDateTime lastUpdated;
 

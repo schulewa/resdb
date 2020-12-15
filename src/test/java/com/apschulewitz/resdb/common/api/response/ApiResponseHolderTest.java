@@ -2,17 +2,19 @@ package com.apschulewitz.resdb.common.api.response;
 
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.common.utils.StringUtils;
 import com.apschulewitz.resdb.refdata.model.entity.AddressType;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @Slf4j
 public class ApiResponseHolderTest {
@@ -27,7 +29,7 @@ public class ApiResponseHolderTest {
       .name("Test address")
       .status(VersionStatus.New)
       .updatedBy("tester")
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .id(1L)
       .operation(DataOperation.CREATE)
       .build();
@@ -59,7 +61,7 @@ public class ApiResponseHolderTest {
       .name("Test address1")
       .status(VersionStatus.New)
       .updatedBy("tester")
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .id(1L)
       .operation(DataOperation.CREATE)
       .build();
@@ -69,7 +71,7 @@ public class ApiResponseHolderTest {
       .name("Test address2")
       .status(VersionStatus.New)
       .updatedBy("tester")
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .id(1L)
       .operation(DataOperation.CREATE)
       .build();

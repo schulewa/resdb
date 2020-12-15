@@ -2,6 +2,7 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.Tolerate;
 
 import javax.persistence.Embeddable;
 
@@ -16,4 +17,8 @@ public class Longitude {
 		return true; // TODO implement real validation method for longitude
 	}
 
+	@Tolerate
+	public Longitude() {
+
+  }
 }

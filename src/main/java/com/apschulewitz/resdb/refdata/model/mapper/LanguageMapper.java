@@ -2,23 +2,22 @@ package com.apschulewitz.resdb.refdata.model.mapper;
 
 import com.apschulewitz.resdb.common.model.entity.YesNoChoice;
 import com.apschulewitz.resdb.common.utils.StringUtils;
+import com.apschulewitz.resdb.refdata.model.dto.LanguageGroupDto;
 import com.apschulewitz.resdb.refdata.model.entity.Language;
-import com.apschulewitz.resdb.security.model.dto.LanguageDto;
-import com.apschulewitz.resdb.security.model.dto.LanguageGroupDto;
-import com.apschulewitz.resdb.security.model.mapper.EntityMapper;
-import com.apschulewitz.resdb.security.model.mapper.VersionableEntityMapper;
+import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
+import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LanguageMapper implements VersionableEntityMapper<Language, LanguageDto> {
+public class LanguageMapper implements VersionableEntityDtoMapper<Language, LanguageDto> {
 
     @Override
     public LanguageDto toDto(Language language) {
         return toDto(language, false);
     }
 
-    @Override
+  @Override
     public LanguageDto toDto(Language language, boolean onlyActive) {
         if (language == null) {
             throw new IllegalArgumentException("Null user account cannot be mapped to dto");
@@ -60,7 +59,18 @@ public class LanguageMapper implements VersionableEntityMapper<Language, Languag
                 .build();
     }
 
-    private boolean convertYesNoChoiceToBool(YesNoChoice yesNoChoice) {
+  @Override
+  public Language toEntity(LanguageDto dto, boolean onlyActive) {
+    Language entity = Language.builder().build();
+    return entity; // TODO write implementation to map LanguageDto to Language
+  }
+
+//  @Override
+//  public Language toEntity(LanguageDto dto) {
+//    return null;
+//  }
+
+  private boolean convertYesNoChoiceToBool(YesNoChoice yesNoChoice) {
         if (yesNoChoice == null || StringUtils.isEmpty(yesNoChoice.getCode())) {
             return false;
         }

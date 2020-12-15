@@ -1,94 +1,82 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.EntityTypeEnum;
+import com.apschulewitz.resdb.common.utils.LoggingUtils;
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.refdata.model.dao.ArtefactGroupDao;
-import com.apschulewitz.resdb.refdata.model.dao.ArtefactTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.ArtefactGroup;
-import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
-import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
+import com.apschulewitz.resdb.refdata.model.dto.ArtefactTypeDto;
+import com.apschulewitz.resdb.refdata.service.ArtefactTypeService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by adrianschulewitz on 22/04/2017.
  */
 @RestController()
 @Slf4j
-public class ArtefactTypeController extends AbstractController<ArtefactType, Long> {
+public class ArtefactTypeController extends AbstractController<ArtefactTypeDto, Long> {
 
-  private ArtefactTypeDao artefactTypeDao;
+  private ArtefactTypeService artefactTypeService;
 
-  public ArtefactTypeController(ArtefactTypeDao artefactTypeDao) {
-    this.artefactTypeDao = artefactTypeDao;
+  public ArtefactTypeController(ArtefactTypeService artefactTypeService) {
+    this.artefactTypeService = artefactTypeService;
   }
 
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<ArtefactType>> findAll() {
-
-    List<ArtefactType> artefactTypes = new ArrayList<>();
-    Iterable<ArtefactType> iter = artefactTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
-    StreamSupport.stream(iter.spliterator(), false)
-      .forEach(artefactTypes::add);
-    log.info("findAll: {} artefact types founs", artefactTypes.size());
+  public ResponseEntity<List<ArtefactTypeDto>> findAll(@RequestBody Boolean onlyActive) {
+    LoggingUtils.logStartOfFindAllRequest(EntityTypeEnum.ARTEFACT_TYPE);
+    List<ArtefactTypeDto> artefactTypes = artefactTypeService.findAll(onlyActive);
+    LoggingUtils.logEndOfFindAllRequest(EntityTypeEnum.ARTEFACT_TYPE);
     return new ResponseEntity<>(artefactTypes, HttpStatus.OK);
   }
 
+//  @Override
+//  public ResponseEntity<List<ArtefactType>> findAllActive() {
+//    logStartOfFindAllRequest(EntityTypeEnum.ARTEFACT_TYPE);
+//    List<ArtefactType> artefactTypes = new ArrayList<>();
+//    Iterable<ArtefactType> iter = artefactTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
+//    StreamSupport.stream(iter.spliterator(), false)
+//      .forEach(artefactTypes::add);
+//    logEndOfFindAllRequest(EntityTypeEnum.ARTEFACT_TYPE);
+//    return new ResponseEntity<>(artefactTypes, HttpStatus.OK);
+//  }
+
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.POST)
-  public ResponseEntity<ArtefactType> add(HttpServletRequest request, @RequestBody ArtefactType toBeSaved) {
-    log.info("Save new artefact type: {}", toBeSaved);
-    ArtefactType saved = artefactTypeDao.save(toBeSaved);
+  public ResponseEntity<ArtefactTypeDto> add(@RequestBody ArtefactTypeDto toBeSaved) {
+    LoggingUtils.logStartOfAddRequest(EntityTypeEnum.ARTEFACT_TYPE, toBeSaved);
+    ArtefactTypeDto saved = artefactTypeService.add(toBeSaved);
+    LoggingUtils.logEndOfAddRequest(EntityTypeEnum.ARTEFACT_TYPE, saved);
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<ArtefactType> delete(@PathVariable long id) {
-    log.info("Marking artefact type [{}] for deletion", id);
-    Optional<ArtefactType> existing = artefactTypeDao.findById(id);
-
-    if (existing.isEmpty()) {
-      log.error("No existing artefact type found for id {} - unable to mark for deletion", id);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+  public ResponseEntity<ArtefactTypeDto> delete(@PathVariable Long id) {
+    LoggingUtils.logStartOfDeleteRequest(EntityTypeEnum.ARTEFACT_TYPE, id);
+    ArtefactTypeDto deleted = artefactTypeService.deleteById(id);
+    HttpStatus status;
+    if (deleted == null) {
+      status = HttpStatus.NOT_FOUND;
+    } else {
+      status = HttpStatus.OK;
     }
-
-    existing.get().setStatus(VersionStatus.Cancel);
-    ArtefactType saved = artefactTypeDao.save(existing.get());
-    return new ResponseEntity<>(saved, HttpStatus.OK);
+    LoggingUtils.logEndOfDeleteRequest(EntityTypeEnum.ARTEFACT_TYPE, deleted);
+    return new ResponseEntity<>(deleted, status);
   }
 
   @RequestMapping(value = RestUrlPaths.ARTEFACT_TYPE_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<ArtefactType> update(@RequestBody ArtefactType toBeSaved) {
-    log.info("Update existing artefact type: {}", toBeSaved);
-    Optional<ArtefactType> existing = artefactTypeDao.findById(toBeSaved.getId());
-
-    if (existing.isEmpty()) {
-      log.error("No existing artefact type found for id {} - update aborted for: {}", toBeSaved.getId(), toBeSaved);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    ArtefactType saved;
-    String errMsg;
-
-    try {
-      saved = artefactTypeDao.save(toBeSaved);
-    } catch (Exception e) {
-      String msg = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
-      errMsg = "Error saving artefact type [" + toBeSaved.getName() + "]: " + msg;
-      log.error(errMsg, e);
-      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-    }
-
+  public ResponseEntity<ArtefactTypeDto> update(@RequestBody ArtefactTypeDto toBeSaved) {
+    LoggingUtils.logStartOfUpdateRequest(EntityTypeEnum.ARTEFACT_TYPE, toBeSaved);
+    ArtefactTypeDto saved = artefactTypeService.update(toBeSaved);
+    LoggingUtils.logEndOfUpdateRequest(EntityTypeEnum.ARTEFACT_TYPE, saved);
     return new ResponseEntity<>(saved, HttpStatus.OK);
   }
 

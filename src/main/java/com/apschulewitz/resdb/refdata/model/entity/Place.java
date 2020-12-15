@@ -59,7 +59,7 @@ public class Place {
 //	@OneToMany(mappedBy="toPlace", fetch = FetchType.LAZY)
 //	private Set<PlaceAlias>  toAliases;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne// (fetch = FetchType.LAZY)
     private River river;
 
     @Column(nullable = false)

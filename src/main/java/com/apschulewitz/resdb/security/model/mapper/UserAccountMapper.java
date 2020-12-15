@@ -1,19 +1,19 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
 import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.mapper.LanguageMapper;
-import com.apschulewitz.resdb.security.model.dto.LanguageDto;
+import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
 import com.apschulewitz.resdb.security.model.dto.UserAccountDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupMembershipDto;
 import com.apschulewitz.resdb.security.model.entity.UserAccount;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class UserAccountMapper implements VersionableEntityMapper<UserAccount, UserAccountDto> {
+public class UserAccountMapper implements VersionableEntityDtoMapper<UserAccount, UserAccountDto> {
 
     private final UserGroupMembershipMapper userGroupMembershipMapper;
 
@@ -65,5 +65,15 @@ public class UserAccountMapper implements VersionableEntityMapper<UserAccount, U
       }
       return null;
     }
+
+  @Override
+  public UserAccount toEntity(UserAccountDto dto, boolean onlyActive) {
+      if (dto == null) {
+        throw new IllegalArgumentException("Null dto supplied");
+      }
+    UserAccount userAccount = UserAccount.builder()
+      .build(); // TODO write implement to map UserAccountDto to UserAccount
+    return userAccount;
+  }
 
 }

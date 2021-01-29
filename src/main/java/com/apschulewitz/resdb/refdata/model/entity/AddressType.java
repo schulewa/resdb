@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
@@ -24,10 +22,9 @@ import java.time.ZonedDateTime;
 @Data
 @Builder
 @Entity
-@Table(name = "resdb_address_type", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name = "resdb_address_type")
 @EqualsAndHashCode
 public class AddressType implements EqualsAll, VersionableDataEntity<Long> {
-  private static final long serialVersionUID = -4217533971787415501L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +45,6 @@ public class AddressType implements EqualsAll, VersionableDataEntity<Long> {
   @Column
   private String updatedBy;
 
-  @Version
   @Column(name = "version_no")
   private Long versionNumber;
 

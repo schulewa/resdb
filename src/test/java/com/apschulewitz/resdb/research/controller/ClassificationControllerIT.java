@@ -59,7 +59,7 @@ public class ClassificationControllerIT {
     ClassificationCollectionDto dto = new ClassificationCollectionDto();
     dto.setId(1L);
     dto.setName("Test Collection");
-    dto.setStatus(VersionStatus.New);
+    dto.setStatus(VersionStatus.New.name());
     String json = gson.toJson(dto);
 
     mockMvc.perform(

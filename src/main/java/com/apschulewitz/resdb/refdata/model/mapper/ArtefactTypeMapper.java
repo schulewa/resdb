@@ -6,6 +6,7 @@ import com.apschulewitz.resdb.refdata.model.dto.ArtefactTypeDto;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactType;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @NoArgsConstructor
@@ -14,13 +15,19 @@ public class ArtefactTypeMapper implements VersionableEntityDtoMapper<ArtefactTy
 
   @Override
   public ArtefactType toEntity(ArtefactTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null artefact type cannot be mapped to entity");
+    }
 
+    VersionStatus status = StringUtils.isEmpty(dto.getStatus()) ? null : VersionStatus.getInstance(dto.getStatus());
     return ArtefactType.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
-      .status(VersionStatus.getInstance(dto.getStatus()))
+      .status(status)
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -30,17 +37,24 @@ public class ArtefactTypeMapper implements VersionableEntityDtoMapper<ArtefactTy
       throw new IllegalArgumentException("Null artefact type cannot be mapped to dto");
     }
 
+    String status = entity.getStatus() == null ? null : entity.getStatus().name();
     return ArtefactTypeDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public ArtefactTypeDto toDto(ArtefactType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null artefact type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -49,6 +63,14 @@ public class ArtefactTypeMapper implements VersionableEntityDtoMapper<ArtefactTy
 
   @Override
   public ArtefactType toEntity(ArtefactTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null artefact type cannot be mapped to entity");
+    }
+
+    VersionStatus status = StringUtils.isEmpty(dto.getStatus()) ? null : VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
     return null;
   }
 

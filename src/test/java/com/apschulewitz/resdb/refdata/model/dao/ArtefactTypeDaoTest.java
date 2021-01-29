@@ -45,7 +45,7 @@ public class ArtefactTypeDaoTest {
     assertEquals(artefactType1.getCreatedBy(), saved.getCreatedBy());
     assertEquals(artefactType1.getStatus(), saved.getStatus());
     assertEquals(artefactType1.getOperation(), saved.getOperation());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
@@ -64,14 +64,13 @@ public class ArtefactTypeDaoTest {
 
     assertNotNull(saved);
     assertNotNull(saved.getId());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
     Iterable<ArtefactType> liveEntries = artefactTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     List<ArtefactType> artefactTypes = StreamSupport.stream(liveEntries.spliterator(), false).collect(Collectors.toList());
     assertEquals(1, artefactTypes.size());
-    assertTrue(artefactTypes.get(0).getVersionNumber() > 0L);
   }
 
   @Test

@@ -15,13 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
 @DataJpaTest
 public class ImageTypeControllerTest {
 
-  private LocalDateTime now = LocalDateTime.now();
+  private ZonedDateTime now = ZonedDateTime.now();
 
   private ImageTypeController controller;
 

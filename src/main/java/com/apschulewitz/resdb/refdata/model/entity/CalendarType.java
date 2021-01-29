@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
@@ -43,7 +42,6 @@ public class CalendarType implements Serializable, VersionableDataEntity<Long> {
   @Column
   private String updatedBy;
 
-  @Version
   @Column(name = "version_no")
   private Long versionNumber;
 

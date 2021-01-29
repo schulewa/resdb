@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dto;
 
+import com.apschulewitz.resdb.common.model.VersionableDataDto;
 import com.apschulewitz.resdb.common.model.dto.HistoricalDateDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,13 +9,14 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Builder
 @Data
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PersonDto {
+public class PersonDto implements VersionableDataDto<Long> {
 
   @JsonProperty
   private Long id;
@@ -52,6 +54,8 @@ public class PersonDto {
   @JsonProperty
   private String updatedBy;
   @JsonProperty
-  private LocalDateTime lastUpdated;
+  private ZonedDateTime lastUpdated;
+  @JsonProperty
+  private Long versionNumber;
 
 }

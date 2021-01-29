@@ -19,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import java.time.ZonedDateTime;
 
 /**
@@ -53,7 +52,6 @@ public class LanguageGroup implements VersionableDataEntity<Long> {
     @Column
     private String updatedBy;
 
-    @Version
     @Column(name = "version_no")
     private Long versionNumber;
 

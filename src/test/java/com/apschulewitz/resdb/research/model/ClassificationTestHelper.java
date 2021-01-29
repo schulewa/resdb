@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassificationTestHelper extends AbstractTestHelper {
+public class ClassificationTestHelper extends AbstractTestHelper<ClassificationCollection, ClassificationCollectionDto> {
 
     public static final String ADORNMENT_NAME = "Adornment"; // level 1
 
@@ -21,7 +21,27 @@ public class ClassificationTestHelper extends AbstractTestHelper {
     public static final String ANKLET_NAME = "Anklet"; // level 3
     public static final String ARMLET_NAME = "Armlet";
 
-    public static ClassificationCollection constructNewClassificationCollection(@NotBlank String name) {
+  @Override
+  public ClassificationCollection constructUnsavedMinimalEntity() {
+    return null;
+  }
+
+  @Override
+  public ClassificationCollection constructNewEntityWithAllValues() {
+    return null;
+  }
+
+  @Override
+  public ClassificationCollectionDto constructUnsavedMinimalDto() {
+    return null;
+  }
+
+  @Override
+  public ClassificationCollectionDto constructNewDtoWithAllValues() {
+    return null;
+  }
+
+  public static ClassificationCollection constructNewClassificationCollection(@NotBlank String name) {
         ClassificationCollection collection = new ClassificationCollection();
         collection.setName(name);
         collection.setCreatedBy(USER_NAME);
@@ -44,8 +64,8 @@ public class ClassificationTestHelper extends AbstractTestHelper {
     ClassificationCollectionDto dto = new ClassificationCollectionDto();
     dto.setId(id);
     dto.setName(name);
-    dto.setEntries(entries);
-    dto.setStatus(VersionStatus.New);
+    dto.getEntries().addAll(entries);
+    dto.setStatus(VersionStatus.New.name());
     dto.setCreatedBy(USER_NAME);
     return dto;
   }
@@ -95,5 +115,10 @@ public class ClassificationTestHelper extends AbstractTestHelper {
 
     newClassificationCollection.getEntries().add(adornmentEntry); // add level 1 to collection
     return newClassificationCollection;
+  }
+
+  @Override
+  public List<ClassificationCollectionDto> constructListOfUnsavedMinimalDto() {
+    return null;
   }
 }

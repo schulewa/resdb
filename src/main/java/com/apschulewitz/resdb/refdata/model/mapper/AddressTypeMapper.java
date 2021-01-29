@@ -16,6 +16,9 @@ public class AddressTypeMapper implements VersionableEntityDtoMapper<AddressType
 
   @Override
   public AddressType toEntity(AddressTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null address type cannot be mapped to entity");
+    }
 
     return AddressType.builder()
       .createdBy(dto.getCreatedBy())
@@ -24,27 +27,33 @@ public class AddressTypeMapper implements VersionableEntityDtoMapper<AddressType
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
       .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
   @Override
   public AddressTypeDto toDto(AddressType entity) {
     if (entity == null) {
-      throw new IllegalArgumentException("Null address type group cannot be mapped to dto");
+      throw new IllegalArgumentException("Null address type cannot be mapped to dto");
     }
 
+    String status = entity.getStatus() == null ? null : entity.getStatus().name();
     return AddressTypeDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public AddressTypeDto toDto(AddressType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null address type cannot be mapped to dto");
+    }
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -53,11 +62,16 @@ public class AddressTypeMapper implements VersionableEntityDtoMapper<AddressType
 
   @Override
   public AddressType toEntity(AddressTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null address type cannot be mapped to entity");
+    }
+
+    VersionStatus status = VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 
-//  @Override
-//  public Person toDto(PersonDto entity) {
-//    return null;
-//  }
 }

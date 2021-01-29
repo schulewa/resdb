@@ -1,16 +1,17 @@
 package com.apschulewitz.resdb.refdata.model.dto;
 
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.VersionableDataDto;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Builder
-@Getter
+@Data
 @ToString
-public class LanguageDto {
+public class LanguageDto implements VersionableDataDto<Long> {
 
     private Long id;
     private String name;
@@ -26,8 +27,9 @@ public class LanguageDto {
 //    private String territory;
     private LanguageGroupDto languageGroup;
     private String notes;
-    private VersionStatus status;
+    private String status;
     private String createdBy;
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
     private String updatedBy;
+  private Long versionNumber;
 }

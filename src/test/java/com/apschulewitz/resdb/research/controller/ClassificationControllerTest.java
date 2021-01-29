@@ -41,7 +41,7 @@ public class ClassificationControllerTest {
 
     ClassificationCollectionDto saved = unsavedCollection.clone();
     saved.setId(1L);
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    when(mockedClassificationService.add(any())).thenReturn(saved);
 
     ResponseEntity<ClassificationCollectionDto> responseEntity = classificationController.add(unsavedCollection);
 
@@ -61,7 +61,7 @@ public class ClassificationControllerTest {
 
     saved.setName("Updated Name");
 
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    when(mockedClassificationService.update(any())).thenReturn(saved);
 
     ResponseEntity<ClassificationCollectionDto> responseEntity = classificationController.update(unsavedCollection);
 
@@ -81,9 +81,9 @@ public class ClassificationControllerTest {
     saved.setId(1L);
 
     ClassificationCollectionDto deleted = saved.clone();
-    deleted.setStatus(VersionStatus.Cancel);
+    deleted.setStatus(VersionStatus.Cancel.name());
 
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    when(mockedClassificationService.add(any())).thenReturn(saved);
 
     // save initial collection
     ResponseEntity<ClassificationCollectionDto> addResponse = classificationController.add(unsavedCollection);
@@ -95,7 +95,7 @@ public class ClassificationControllerTest {
     assertEquals(Long.valueOf(1L), responseDto.getId());
 
     // now delete it
-    when(mockedClassificationService.delete(saved.getId())).thenReturn(deleted);
+    when(mockedClassificationService.deleteById(saved.getId())).thenReturn(deleted);
     ResponseEntity<ClassificationCollectionDto> deleteResponse = classificationController.delete(saved.getId());
     assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
     assertNotNull(deleteResponse.getBody());

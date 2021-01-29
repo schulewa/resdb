@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dto;
 
+import com.apschulewitz.resdb.common.model.VersionableDataDto;
 import com.apschulewitz.resdb.common.model.dto.AltitudeDto;
 import com.apschulewitz.resdb.common.model.dto.LatitudeDto;
 import com.apschulewitz.resdb.common.model.dto.LongitudeDto;
@@ -11,12 +12,13 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Builder
 @Data
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PlaceDto {
+public class PlaceDto implements VersionableDataDto<Long> {
 
     private Long id;
     private String name;
@@ -26,6 +28,8 @@ public class PlaceDto {
     private RiverDto river;
     private String status;
     private String createdBy;
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
+    private Long versionNumber;
+    private String updatedBy;
     private String operation;
 }

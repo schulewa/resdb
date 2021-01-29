@@ -31,6 +31,9 @@ public enum VersionStatus {
     }
 
     public static VersionStatus getInstance(@NotBlank String codeOrName) {
+      if (StringUtils.isEmpty(codeOrName))
+        return New;
+
       Optional<VersionStatus> versionStatus = Arrays.stream(values())
         .filter(e -> e.name().length() > 1)
         .filter(e -> e.name().equals(codeOrName))
@@ -38,6 +41,7 @@ public enum VersionStatus {
 
       if (versionStatus.isPresent())
         return versionStatus.get();
+
 
         switch (codeOrName) {
             case "N":

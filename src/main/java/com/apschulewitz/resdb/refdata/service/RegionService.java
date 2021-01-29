@@ -1,9 +1,8 @@
 package com.apschulewitz.resdb.refdata.service;
 
 import com.apschulewitz.resdb.common.model.EntityTypeEnum;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.service.AbstractService;
 import com.apschulewitz.resdb.common.service.DataService;
-import com.apschulewitz.resdb.common.utils.LoggingUtils;
 import com.apschulewitz.resdb.refdata.model.dao.RegionDao;
 import com.apschulewitz.resdb.refdata.model.dto.RegionDto;
 import com.apschulewitz.resdb.refdata.model.entity.Region;
@@ -11,12 +10,7 @@ import com.apschulewitz.resdb.refdata.model.mapper.RegionMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 @Service
 @Slf4j

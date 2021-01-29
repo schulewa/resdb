@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.refdata.service;
+package com.apschulewitz.resdb.common.service;
 
 import com.apschulewitz.resdb.common.model.EntityTypeEnum;
 import com.apschulewitz.resdb.common.model.VersionableDataDto;
@@ -6,12 +6,17 @@ import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
-import com.apschulewitz.resdb.common.service.DataService;
 import com.apschulewitz.resdb.common.utils.LoggingUtils;
-import com.apschulewitz.resdb.refdata.model.entity.Region;
+import com.apschulewitz.resdb.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,13 @@ implements DataService<D, E, K> {
 
     E entity = mapper.toEntity(dto);
     entity.setStatus(VersionStatus.New);
+    entity.setCreatedBy(getCurrentAuthenticatedUser());
+    //
+    // manual setting of versionNumber due to issue with Spring Data JPA
+    // creating entirely new entry with new ID
+    //
+    entity.setVersionNumber(1L);
+
     E saved = dao.save(entity);
 
     LoggingUtils.logEndOfAddRequest(entityType, saved);
@@ -59,8 +71,14 @@ implements DataService<D, E, K> {
 
     E toBeDeleted = found.get();
     toBeDeleted.setStatus(VersionStatus.Cancel);
-    toBeDeleted.setLastUpdated(ZonedDateTime.now());
-    // TODO set lastUpdatedBY to current logged in user
+    toBeDeleted.setLastUpdated(ZonedDateTime.now(ZoneOffset.UTC));
+    toBeDeleted.setUpdatedBy(getCurrentAuthenticatedUser());
+    //
+    // manual setting of versionNumber due to issue with Spring Data JPA
+    // creating entirely new entry with new ID
+    //
+    toBeDeleted.setVersionNumber(toBeDeleted.getVersionNumber() + 1);
+
     E deleted = dao.save(toBeDeleted);
 
     LoggingUtils.logEndOfDeleteRequest(entityType, deleted);
@@ -70,7 +88,7 @@ implements DataService<D, E, K> {
 
   protected List<D> findAll(EntityTypeEnum entityType, M mapper, R dao, boolean onlyActive) {
     LoggingUtils.logFindingAllEntities(entityType);
-    List<D> regions = new ArrayList<>();
+    List<D> dtoList = new ArrayList<>();
     Iterable<E> iter;
     if (onlyActive) {
       iter = dao.findByStatusIn(VersionStatus.getLiveStatuses());
@@ -78,13 +96,13 @@ implements DataService<D, E, K> {
       iter = dao.findAll();
     }
     StreamSupport.stream(iter.spliterator(), false)
-      .forEach(e -> regions.add(mapper.toDto(e)));
+      .forEach(e -> dtoList.add(mapper.toDto(e)));
     if (onlyActive) {
-      LoggingUtils.logFoundCountActiveEntities(entityType, regions.size());
+      LoggingUtils.logFoundCountActiveEntities(entityType, dtoList.size());
     } else {
-      LoggingUtils.logFoundCountAllEntities(entityType, regions.size());
+      LoggingUtils.logFoundCountAllEntities(entityType, dtoList.size());
     }
-    return regions;
+    return dtoList;
   }
 
   protected D findById(EntityTypeEnum entityType, M mapper, R dao, K id) {
@@ -109,12 +127,17 @@ implements DataService<D, E, K> {
       return null;
     }
 
-    dto.setLastUpdated(ZonedDateTime.now());
-    // TODO set lastUpdatedBy to currrent logged in user
+    dto.setLastUpdated(ZonedDateTime.now(ZoneOffset.UTC));
+    dto.setUpdatedBy(getCurrentAuthenticatedUser());
     VersionStatus status = VersionStatus.getInstance(dto.getStatus());
     if (VersionStatus.New.equals(status)) {
       dto.setStatus(VersionStatus.Amend.name());
     }
+    //
+    // manual setting of versionNumber due to issue with Spring Data JPA
+    // creating entirely new entry with new ID
+    //
+    dto.setVersionNumber(dto.getVersionNumber() + 1);
 
     E entity = mapper.toEntity(dto);
     E saved = dao.save(entity);
@@ -122,5 +145,28 @@ implements DataService<D, E, K> {
     LoggingUtils.logEndOfUpdateRequest(entityType, dto);
 
     return mapper.toDto(saved);
+  }
+
+  private String getCurrentAuthenticatedUser() {
+    String username = null;
+    Object principal = null;
+    if (SecurityContextHolder.getContext() != null && SecurityContextHolder.getContext().getAuthentication() != null)  {
+      principal = SecurityContextHolder.getContext().getAuthentication();
+    }
+    if (principal instanceof UserDetails) {
+      username = ((UserDetails) principal).getUsername();
+    } else if (principal instanceof UsernamePasswordAuthenticationToken) {
+      Object obj = ((UsernamePasswordAuthenticationToken)principal).getPrincipal();
+      if (obj instanceof User) {
+        username = ((User)obj).getUsername();
+      } else if (obj instanceof UserDetails) {
+        username = ((UserDetails) principal).getUsername();
+      } else {
+        log.warn("Principal is an unrecognized type of object [{}], unable to extract current username", obj);
+      }
+    } else if (principal != null) {
+      username = principal.toString();
+    }
+    return username;
   }
 }

@@ -11,15 +11,20 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 public class PublicationTypeMapper implements VersionableEntityDtoMapper<PublicationType, PublicationTypeDto> {
 
-
   @Override
   public PublicationType toEntity(PublicationTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null publication type cannot be mapped to entity");
+    }
+
     return PublicationType.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -35,11 +40,17 @@ public class PublicationTypeMapper implements VersionableEntityDtoMapper<Publica
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
       .status(entity.getStatus().name())
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public PublicationTypeDto toDto(PublicationType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null publication type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -48,6 +59,14 @@ public class PublicationTypeMapper implements VersionableEntityDtoMapper<Publica
 
   @Override
   public PublicationType toEntity(PublicationTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null publication type cannot be mapped to entity");
+    }
+
+    if (VersionStatus.getLiveStatuses().contains(dto.getStatus()) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 

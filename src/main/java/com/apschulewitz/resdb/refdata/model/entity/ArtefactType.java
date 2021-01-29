@@ -4,16 +4,21 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.time.ZonedDateTime;
 
 /**
  * @author adrian
@@ -24,7 +29,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "resdb_artefact_type", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 //@Audited
-public class ArtefactType implements Serializable {
+public class ArtefactType implements /*Serializable*/ VersionableDataEntity<Long> {
 
   private static final long serialVersionUID = -3849879507291454015L;
 
@@ -41,7 +46,6 @@ public class ArtefactType implements Serializable {
   @Column(nullable = false)
   private String createdBy;
 
-  @Version
   @Column(name = "version_no")
   private Long versionNumber;
 
@@ -49,7 +53,7 @@ public class ArtefactType implements Serializable {
   private String updatedBy;
 
   @Column(name = "last_updated")
-  private LocalDateTime lastUpdated;
+  private ZonedDateTime lastUpdated;
 
   private transient DataOperation operation;
 

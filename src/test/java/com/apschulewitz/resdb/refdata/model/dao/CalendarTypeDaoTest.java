@@ -45,7 +45,7 @@ public class CalendarTypeDaoTest {
     assertEquals(calendarType1.getCreatedBy(), saved.getCreatedBy());
     assertEquals(calendarType1.getStatus(), saved.getStatus());
     assertEquals(calendarType1.getOperation(), saved.getOperation());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
@@ -64,14 +64,13 @@ public class CalendarTypeDaoTest {
 
     assertNotNull(saved);
     assertNotNull(saved.getId());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
     Iterable<CalendarType> liveEntries = calendarTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     List<CalendarType> calendarTypes = StreamSupport.stream(liveEntries.spliterator(), false).collect(Collectors.toList());
     assertEquals(1, calendarTypes.size());
-    assertTrue(calendarTypes.get(0).getVersionNumber() > 0L);
   }
 
   @Test

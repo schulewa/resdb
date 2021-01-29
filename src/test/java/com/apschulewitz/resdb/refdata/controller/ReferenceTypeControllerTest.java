@@ -2,7 +2,6 @@ package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dto.ReferenceTypeDto;
-import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
 import com.apschulewitz.resdb.refdata.service.ReferenceTypeService;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,24 +12,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 //@DataJpaTest
 public class ReferenceTypeControllerTest {
 
-  private LocalDateTime now = LocalDateTime.now();
+  private ZonedDateTime now = ZonedDateTime.now();
 
   private ReferenceTypeController controller;
 

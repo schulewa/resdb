@@ -20,6 +20,8 @@ public class PersonTypeMapper implements VersionableEntityDtoMapper<PersonType, 
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -35,11 +37,17 @@ public class PersonTypeMapper implements VersionableEntityDtoMapper<PersonType, 
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
       .status(entity.getStatus().name())
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public PersonTypeDto toDto(PersonType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null person type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -48,6 +56,14 @@ public class PersonTypeMapper implements VersionableEntityDtoMapper<PersonType, 
 
   @Override
   public PersonType toEntity(PersonTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null image cannot be mapped to entity");
+    }
+
+    if (VersionStatus.getLiveStatuses().contains(dto.getStatus()) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 

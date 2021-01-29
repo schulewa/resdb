@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.TechnologyTypeGroup;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface TechnologyTypeGroupDao extends CrudRepository<TechnologyTypeGroup, Long> {
+public interface TechnologyTypeGroupDao extends DataDao<TechnologyTypeGroup, Long>, CrudRepository<TechnologyTypeGroup, Long> {
 
   List<TechnologyTypeGroup> findByStatusIn(List<VersionStatus> livestatuses);
 

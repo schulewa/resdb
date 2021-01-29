@@ -1,7 +1,5 @@
 package com.apschulewitz.resdb.common.service;
 
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-
 import java.util.List;
 
 /**
@@ -18,7 +16,7 @@ public interface DataService<D, E, K> {
 
   List<D> findAll(boolean onlyActive);
 
-//  List<D> findByStatusIn(List<VersionStatus> statuses);
+  D findById(K key);
 
   D update(D dto);
 

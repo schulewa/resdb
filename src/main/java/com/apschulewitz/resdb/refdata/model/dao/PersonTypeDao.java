@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.PersonType;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface PersonTypeDao extends CrudRepository<PersonType, Long> {
+public interface PersonTypeDao extends DataDao<PersonType, Long>, CrudRepository<PersonType, Long> {
 
   List<PersonType> findByStatusIn(List<VersionStatus> livestatuses);
 

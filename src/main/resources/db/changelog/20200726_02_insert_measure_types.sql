@@ -4,9 +4,9 @@
 
 --comment insert measure types
 
-insert into resdb_measure_type (name, status, created_by) values ('Area', 'N', 'admin');
-insert into resdb_measure_type (name, status, created_by) values ('Distance', 'N', 'admin');
-insert into resdb_measure_type (name, status, created_by) values ('Time', 'N', 'admin');
-insert into resdb_measure_type (name, status, created_by) values ('Volume', 'N', 'admin');
-insert into resdb_measure_type (name, status, created_by) values ('Weight', 'N', 'admin');
+insert into resdb_measure_type (name, version_no, status, created_by) values ('Area', 1, 'N', 'admin');
+insert into resdb_measure_type (name, version_no, status, created_by) values ('Distance', 1, 'N', 'admin');
+insert into resdb_measure_type (name, version_no, status, created_by) values ('Time', 1, 'N', 'admin');
+insert into resdb_measure_type (name, version_no, status, created_by) values ('Volume', 1, 'N', 'admin');
+insert into resdb_measure_type (name, version_no, status, created_by) values ('Weight', 1, 'N', 'admin');
 

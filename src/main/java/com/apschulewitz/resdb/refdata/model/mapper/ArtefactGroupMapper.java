@@ -23,6 +23,8 @@ public class ArtefactGroupMapper implements VersionableEntityDtoMapper<ArtefactG
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -32,12 +34,15 @@ public class ArtefactGroupMapper implements VersionableEntityDtoMapper<ArtefactG
       throw new IllegalArgumentException("Null artefact group cannot be mapped to dto");
     }
 
+    String status = entity.getStatus() == null ? null : entity.getStatus().name();
     return ArtefactGroupDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 

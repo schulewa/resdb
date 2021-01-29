@@ -21,13 +21,15 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
   @Override
   public CalendarTypeDto toDto(CalendarType entity) {
     if (entity == null) {
-      throw new IllegalArgumentException("Null calenar type cannot be mapped to dto");
+      throw new IllegalArgumentException("Null calendar type cannot be mapped to dto");
     }
 
     return CalendarTypeDto.builder()
@@ -36,6 +38,8 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
       .status(entity.getStatus().name())
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 

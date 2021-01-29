@@ -47,7 +47,7 @@ public class AddressTypeDaoTest {
     assertEquals(homePostal.getCreatedBy(), saved.getCreatedBy());
     assertEquals(homePostal.getStatus(), saved.getStatus());
     assertEquals(homePostal.getOperation(), saved.getOperation());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
@@ -66,14 +66,13 @@ public class AddressTypeDaoTest {
 
     assertNotNull(saved);
     assertNotNull(saved.getId());
-    assertNotNull(saved.getVersionNumber());
+    assertNull(saved.getVersionNumber());
     assertNull(saved.getUpdatedBy());
     assertNull(saved.getLastUpdated());
 
     Iterable<AddressType> liveEntries = addressTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     List<AddressType> addressTypes = StreamSupport.stream(liveEntries.spliterator(), false).collect(Collectors.toList());
     assertEquals(1, addressTypes.size());
-    assertTrue(addressTypes.get(0).getVersionNumber() > 0L);
   }
 
   @Test

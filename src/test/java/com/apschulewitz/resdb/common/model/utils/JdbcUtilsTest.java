@@ -2,6 +2,7 @@ package com.apschulewitz.resdb.common.model.utils;
 
 import com.apschulewitz.resdb.common.ResearchDatabaseModelException;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
+@Ignore
 public class JdbcUtilsTest {
 
   private static final String SQL_SCRIPT_DIR = "classpath:scripts/sql";

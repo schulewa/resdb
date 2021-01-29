@@ -13,12 +13,20 @@ public class RegionMapper implements VersionableEntityDtoMapper<Region, RegionDt
 
   @Override
   public RegionDto toDto(Region entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null region cannot be mapped to dto");
+    }
+
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
     return RegionDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
       .versionNumber(entity.getVersionNumber())
       .build();
@@ -26,6 +34,10 @@ public class RegionMapper implements VersionableEntityDtoMapper<Region, RegionDt
 
   @Override
   public Region toEntity(RegionDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null region cannot be mapped to entity");
+    }
+
     return Region.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())

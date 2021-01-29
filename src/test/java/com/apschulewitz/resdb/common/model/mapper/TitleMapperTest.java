@@ -8,6 +8,7 @@ import com.apschulewitz.resdb.refdata.model.dto.TitleDto;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
@@ -25,7 +26,7 @@ public class TitleMapperTest {
       .createdBy("testuser")
       .description("Title description")
       .id(1L)
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .status("New")
       .title("Sir")
       .titleType("Prefix")
@@ -55,7 +56,7 @@ public class TitleMapperTest {
       .createdBy("testuser")
       .description("Title description")
       .id(1L)
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .status("New")
       .title("Sir")
       .titleType("Prefix")
@@ -78,7 +79,7 @@ public class TitleMapperTest {
       .createdBy("testuser")
       .description("Title description")
       .id(1L)
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .status("unknown status")
       .title("Sir")
       .titleType("Prefix")
@@ -102,7 +103,7 @@ public class TitleMapperTest {
       .createdBy("testuser")
       .description("Title description")
       .id(1L)
-      .lastUpdated(LocalDateTime.now())
+      .lastUpdated(ZonedDateTime.now())
       .status("Amend")
       .title("Sir")
       .titleType("unknown title type")

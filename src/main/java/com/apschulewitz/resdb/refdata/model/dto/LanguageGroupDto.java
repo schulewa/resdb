@@ -16,7 +16,7 @@ public class LanguageGroupDto implements VersionableDataDto<Long> {
 
   private Long id;
   private String name;
-  private String region;
+  private RegionDto region;
   private String status;
   private String createdBy;
   private Long versionNumber;

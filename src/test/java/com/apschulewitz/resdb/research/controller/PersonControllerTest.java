@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,12 @@ public class PersonControllerTest {
   @MockBean
   private PersonService mockedPersonService;
 
+  @Autowired
+  private PersonTestHelper personTestHelper;
+
+  @Autowired
+  private PlaceTestHelper placeTestHelper;
+
   @Before
   public void beforeEachTest() {
     reset(mockedPersonService);
@@ -46,22 +53,10 @@ public class PersonControllerTest {
   @Test
   public void when_findAll_is_executed_and_onlyactive_is_false_then_return_list() {
     // given
-    PlaceDto malborough = PlaceTestHelper.constructNewPlaceDto(null, null, null, "Malborough", null);
-    PlaceDto kensington = PlaceTestHelper.constructNewPlaceDto(null, null, null, "Kensington", null);
-    List<PersonDto> personDtos = Arrays.asList(
-      PersonTestHelper.constructNewPersonDto(
-        "Winston",
-        null,
-        "Churchill",
-        HistoricalDateDto.builder().day(1).month(2).year(3).build(),
-        malborough,
-        HistoricalDateDto.builder().day(2).month(3).year(4).build(),
-        kensington,
-        Gender.Male,
-        null,
-        null,
-        null)
-    );
+    PlaceDto malborough = placeTestHelper.constructUnsavedMinimalDto(); //(null, null, null, "Malborough", null);
+    PlaceDto kensington = placeTestHelper.constructUnsavedMinimalDto(); //constructNewPlaceDto(null, null, null, "Kensington", null);
+    PersonDto churchillDto = personTestHelper.constructUnsavedMinimalDto();
+    List<PersonDto> personDtos = Arrays.asList(churchillDto);
     when(mockedPersonService.findAll(false)).thenReturn(personDtos);
 
     // when
@@ -77,8 +72,8 @@ public class PersonControllerTest {
   @Test
   public void when_findAll_is_executed_and_onlyactive_is_true_then_return_empty_list() {
     // given
-    PlaceDto malborough = PlaceTestHelper.constructNewPlaceDto(null, null, null, "Malborough", null);
-    PlaceDto kensington = PlaceTestHelper.constructNewPlaceDto(null, null, null, "Kensington", null);
+    PlaceDto malborough = placeTestHelper.constructUnsavedMinimalDto(); //(null, null, null, "Malborough", null);
+    PlaceDto kensington = placeTestHelper.constructUnsavedMinimalDto(); //(null, null, null, "Kensington", null);
     List<PersonDto> personDtos = Arrays.asList(
       PersonTestHelper.constructCancelledPersonDto(
         "Winston",
@@ -108,7 +103,7 @@ public class PersonControllerTest {
   @Test
   public void given_valid_minimal_person_when_add_is_called_then_return_saved_person() {
     // given
-    PersonDto personDto = PersonTestHelper.constructNewPersonDto();
+    PersonDto personDto = personTestHelper.constructUnsavedMinimalDto();
     String json = GSON.toJson(personDto);
     PersonDto savedDto = GSON.fromJson(GSON.toJson(personDto), PersonDto.class);
     savedDto.setId(1L);

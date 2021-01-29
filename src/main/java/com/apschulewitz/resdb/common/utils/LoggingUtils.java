@@ -142,4 +142,16 @@ public final class LoggingUtils {
   public static void logFoundCountActiveEntities(EntityTypeEnum entityType, int count) {
     log.info(String.format("Found %d active %s entity instances", count, entityType.getType()));
   }
+
+  public static void logUnableToMapNullDto(EntityTypeEnum entityType, Object id) {
+    log.info(String.format("Unable to map null %s dto %d", entityType.getType(), id));
+  }
+
+  public static void logUnableToMapNullEntity(EntityTypeEnum entityType, Object id) {
+    log.info(String.format("Unable to map null %s entity %d", entityType.getType(), id));
+  }
+
+  public static void logUnableToMapNullDtoToEntity(EntityTypeEnum entityType) {
+    log.info(String.format("Unable to map null %s dto to entity", entityType.getType()));
+  }
 }

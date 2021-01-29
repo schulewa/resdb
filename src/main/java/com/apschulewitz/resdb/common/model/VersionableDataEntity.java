@@ -23,6 +23,10 @@ public interface VersionableDataEntity<K> extends DataEntityId<K> {
 
   void setCreatedBy(String createdBy);
 
+  Long getVersionNumber();
+
+  void setVersionNumber(Long versionNumber);
+
   String getUpdatedBy();
 
   void setUpdatedBy(String updatedBy);

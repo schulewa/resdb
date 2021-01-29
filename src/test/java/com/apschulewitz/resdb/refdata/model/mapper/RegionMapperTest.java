@@ -1,23 +1,29 @@
 package com.apschulewitz.resdb.refdata.model.mapper;
 
-import com.apschulewitz.resdb.refdata.model.RegionTestHelper;
+import com.apschulewitz.resdb.refdata.model.helper.RegionTestHelper;
 import com.apschulewitz.resdb.refdata.model.dto.RegionDto;
 import com.apschulewitz.resdb.refdata.model.entity.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
-@ContextConfiguration(classes = RegionMapper.class)
+@ContextConfiguration(classes = {RegionMapper.class, RegionTestHelper.class})
 @RunWith(SpringRunner.class)
+@WithMockUser("testuser")
 public class RegionMapperTest {
 
   @Autowired
   private RegionMapper regionMapper;
+
+  @Autowired
+  private RegionTestHelper regionTestHelper;
 
   @Test
   public void test_context() {
@@ -27,43 +33,48 @@ public class RegionMapperTest {
   @Test
   public void given_entity_and_all_values_when_toDto_is_executed_then_return_dto() {
     // given
-    Region entity = RegionTestHelper.constructNewRegionWithAllValues(1L, "Europe");
+    Region entity = regionTestHelper.constructUnsavedMinimalEntity();
+    entity.setName("Europe");
 
     // when
     RegionDto dto = regionMapper.toDto(entity);
 
     // then
     assertNotNull(dto);
-    assertEquals(entity.getCreatedBy(), dto.getCreatedBy());
-    assertEquals(entity.getId(), dto.getId());
-    assertEquals(entity.getLastUpdated(), dto.getLastUpdated());
+    assertNull(dto.getCreatedBy());
+    assertNull(dto.getId());
+    assertNull(dto.getLastUpdated());
     assertEquals(entity.getName(), dto.getName());
-    assertEquals(entity.getStatus().name(), dto.getStatus());
-    assertEquals(entity.getUpdatedBy(), dto.getUpdatedBy());
+    assertNull(dto.getStatus());
+    assertNull(dto.getUpdatedBy());
+    assertNull(dto.getVersionNumber());
   }
 
   @Test
   public void given_entity_and_mandatory_values_when_toDto_is_executed_then_return_dto() {
     // given
-    Region entity = RegionTestHelper.constructNewRegionWithMandatoryValues(1L, "Europe");
+    Region entity = regionTestHelper.constructUnsavedMinimalEntity();
+    entity.setName("Europe");
 
     // when
     RegionDto dto = regionMapper.toDto(entity);
 
     // then
     assertNotNull(dto);
-    assertEquals(entity.getCreatedBy(), dto.getCreatedBy());
-    assertEquals(entity.getId(), dto.getId());
-    assertEquals(entity.getLastUpdated(), dto.getLastUpdated());
+    assertNull(dto.getCreatedBy());
+    assertNull(dto.getId());
+    assertNull(dto.getLastUpdated());
     assertEquals(entity.getName(), dto.getName());
-    assertEquals(entity.getStatus().name(), dto.getStatus());
-    assertEquals(entity.getUpdatedBy(), dto.getUpdatedBy());
+    assertNull(dto.getStatus());
+    assertNull(dto.getUpdatedBy());
+    assertNull(dto.getVersionNumber());
   }
 
   @Test
   public void given_dto_and_all_values_when_toEntity_is_executed_then_return_entity() {
     // given
-    RegionDto dto = RegionTestHelper.constructNewRegionDtoWithAllValues(1L, "Europe");
+    RegionDto dto = regionTestHelper.constructUnsavedMinimalDto();
+    dto.setName("Europe");
 
     // when
     Region entity = regionMapper.toEntity(dto);
@@ -80,7 +91,8 @@ public class RegionMapperTest {
   @Test
   public void given_dto_and_mandatory_values_when_toEntity_is_executed_then_return_entity() {
     // given
-    RegionDto dto = RegionTestHelper.constructNewRegionDtoWithMandatoryValues(1L, "Europe");
+    RegionDto dto = regionTestHelper.constructUnsavedMinimalDto();
+    dto.setName("Europe");
 
     // when
     Region entity = regionMapper.toEntity(dto);

@@ -8,6 +8,7 @@ import com.apschulewitz.resdb.refdata.model.mapper.PlaceMapper;
 import com.apschulewitz.resdb.research.model.PersonTestHelper;
 import com.apschulewitz.resdb.refdata.model.dto.PersonDto;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-
+@Ignore
 @RunWith(SpringRunner.class)
 public class PersonMapperTest {
 

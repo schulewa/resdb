@@ -1,6 +1,7 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
 import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.refdata.model.mapper.LanguageGroupMapper;
 import com.apschulewitz.resdb.refdata.model.mapper.LanguageMapper;
 import com.apschulewitz.resdb.security.SecurityTestHelper;
 import com.apschulewitz.resdb.security.model.dto.UserAccountDto;
@@ -23,7 +24,7 @@ public class UserAccountMapperTest {
 
   @Before
   public void beforeEachTest() {
-    languageMapper = new LanguageMapper();
+    languageMapper = new LanguageMapper(new LanguageGroupMapper());
     userGroupMembershipMapper = new UserGroupMembershipMapper();
     userAccountMapper = new UserAccountMapper(userGroupMembershipMapper, languageMapper);
   }

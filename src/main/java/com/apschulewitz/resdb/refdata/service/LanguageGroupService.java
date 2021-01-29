@@ -1,6 +1,7 @@
 package com.apschulewitz.resdb.refdata.service;
 
 import com.apschulewitz.resdb.common.model.EntityTypeEnum;
+import com.apschulewitz.resdb.common.service.AbstractService;
 import com.apschulewitz.resdb.common.service.DataService;
 import com.apschulewitz.resdb.refdata.model.dao.LanguageGroupDao;
 import com.apschulewitz.resdb.refdata.model.dto.LanguageGroupDto;

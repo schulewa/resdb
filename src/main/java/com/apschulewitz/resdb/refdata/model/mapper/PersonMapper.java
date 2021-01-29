@@ -27,6 +27,10 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
 
   @Override
   public Person toEntity(PersonDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null person cannot be mapped to entity");
+    }
+
     Gender gender = Gender.Unknown;
     if (dto.getGender() != null) {
       gender = Gender.getGenderFor(dto.getGender());
@@ -84,11 +88,15 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
       .deathPlace(placeOfDeath)
       .firstName(dto.getFirstName())
       .gender(gender)
+      .id(dto.getId())
+      .lastUpdated(dto.getLastUpdated())
       .middleName(dto.getMiddleName())
       .familyName(dto.getFamilyName())
       .prefixTitle(prefixTitle)
       .status(status)
       .suffixTitle(suffixTitle)
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
     .build();
 
     return person;
@@ -163,16 +171,22 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
       .firstName(person.getFirstName())
       .gender(gender)
       .id(person.getId())
+      .lastUpdated(person.getLastUpdated())
       .middleName(person.getMiddleName())
       .prefixTitle(prefixTitle)
       .status(person.getStatus().name())
       .suffixTitle(suffixTitle)
       .updatedBy(person.getUpdatedBy())
+      .versionNumber(person.getVersionNumber())
       .build();
   }
 
   @Override
   public PersonDto toDto(Person person, boolean onlyActive) {
+    if (person == null) {
+      throw new IllegalArgumentException("Null person cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(person.getStatus()) || !onlyActive) {
       return toDto(person);
     }

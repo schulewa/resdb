@@ -16,6 +16,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import static org.mockito.Mockito.when;
 @DataJpaTest
 public class RaceTypeControllerTest {
 
-  private LocalDateTime now = LocalDateTime.now();
+  private ZonedDateTime now = ZonedDateTime.now();
 
   private RaceTypeController controller;
 

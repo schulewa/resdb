@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -50,9 +51,8 @@ public class LanguageGroupController extends AbstractController<LanguageGroupDto
                                                                   allowableValues = "true, false",
                                                                   required = true,
                                                                   type = "Boolean",
-                                                                  value = "A boolean. True specifies to only include active language groups, false to exclude inactive language groups."
-                                                          )
-                                                          @RequestBody Boolean onlyActive) {
+                                                                  value = "A boolean. True specifies to only include active language groups, false to exclude inactive language groups.")
+                                                          @RequestParam Boolean onlyActive) {
     logStartOfFindAllRequest(EntityTypeEnum.LANGUAGE_GROUP);
     List<LanguageGroupDto> languageGroups = languageGroupService.findAll(onlyActive);
     logEndOfFindAllRequest(EntityTypeEnum.LANGUAGE_GROUP);
@@ -66,14 +66,13 @@ public class LanguageGroupController extends AbstractController<LanguageGroupDto
     response = LanguageGroupDto.class
   )
   @ApiResponses(value = {
-    @ApiResponse(code = 200, message = "Request to delete the specified language group completed successfully.")
+    @ApiResponse(code = 200, message = "Request to add the specified language group completed successfully.")
   })
   @RequestMapping(value = RestUrlPaths.LANGUAGE_GROUP_CONTROLLER_BASE_URL, method = RequestMethod.POST)
   public ResponseEntity<LanguageGroupDto> add(@ApiParam(name = "toBeSaved",
                                                         required = true,
                                                         type = "LanguageGroupDto",
-                                                        value = "A non-null instance of a LanguageGroupDto"
-                                                        )
+                                                        value = "A non-null instance of a LanguageGroupDto")
                                                 @RequestBody LanguageGroupDto toBeSaved) {
     logStartOfAddRequest(EntityTypeEnum.LANGUAGE_GROUP, toBeSaved);
     LanguageGroupDto saved = languageGroupService.add(toBeSaved);
@@ -90,8 +89,7 @@ public class LanguageGroupController extends AbstractController<LanguageGroupDto
   public ResponseEntity<LanguageGroupDto> delete(@ApiParam(name = "id",
                                                           required = true,
                                                           type = "Long",
-                                                          value = "A positive Long number identifying the language group to be deleted"
-                                                  )
+                                                          value = "A positive Long number identifying the language group to be deleted")
                                                    @PathVariable Long id) {
     logStartOfDeleteRequest(EntityTypeEnum.LANGUAGE_GROUP, id);
     LanguageGroupDto deleted = languageGroupService.deleteById(id);
@@ -114,8 +112,7 @@ public class LanguageGroupController extends AbstractController<LanguageGroupDto
   public ResponseEntity<LanguageGroupDto> update(@ApiParam(name = "toBeSaved",
                                                           required = true,
                                                           type = "LanguageGroupDto",
-                                                          value = "A non-null LanguageGroupDto"
-                                                  )
+                                                          value = "A non-null LanguageGroupDto")
                                                    @RequestBody LanguageGroupDto toBeSaved) {
     logStartOfUpdateRequest(EntityTypeEnum.LANGUAGE_GROUP, toBeSaved);
     LanguageGroupDto updated = languageGroupService.update(toBeSaved);

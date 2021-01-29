@@ -15,6 +15,4 @@ public interface DataDao<E extends VersionableDataEntity<K>, K> {
 
   List<E> findByStatusIn(List<VersionStatus> statuses);
 
-//  E save(E entity);
-
 }

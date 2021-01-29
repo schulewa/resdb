@@ -12,8 +12,6 @@ import java.util.List;
 /**
  * Created by adrianschulewitz on 01/10/2016.
  */
-@Transactional
-@Repository
 public interface AddressTypeDao extends DataDao<AddressType, Long>, CrudRepository<AddressType, Long> {
 
   List<AddressType> findByStatusIn(List<VersionStatus> livestatuses);

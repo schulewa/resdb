@@ -1,11 +1,13 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
 import com.apschulewitz.resdb.common.model.entity.Title;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
+@Builder
 @Entity
 @Table(name = "resdb_person_title")
 public class PersonTitle {

@@ -1,9 +1,12 @@
 package com.apschulewitz.resdb.research.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,21 +19,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
+@Builder
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
 @Table(name = "resdb_classification_collection")
-public class ClassificationCollection implements Serializable {
+public class ClassificationCollection implements VersionableDataEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,9 +56,11 @@ public class ClassificationCollection implements Serializable {
     @Column
     private String updatedBy;
 
-    @Version
+    @Column(name = "version_no")
+    private Long versionNumber;
+
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
 
     private transient DataOperation operation;
 

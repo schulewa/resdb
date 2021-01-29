@@ -1,26 +1,23 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.service.TechnologyTypeGroupService;
 import com.apschulewitz.resdb.refdata.model.dto.TechnologyTypeGroupDto;
+import com.apschulewitz.resdb.refdata.service.TechnologyTypeGroupService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -30,7 +27,7 @@ import static org.mockito.Mockito.when;
 //@DataJpaTest
 public class TechnologyTypeGroupControllerTest {
 
-  private LocalDateTime now = LocalDateTime.now();
+  private ZonedDateTime now = ZonedDateTime.now();
 
   private TechnologyTypeGroupController controller;
 

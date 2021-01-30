@@ -14,6 +14,10 @@ public class MeasureTypeMapper implements VersionableEntityDtoMapper<MeasureType
 
   @Override
   public MeasureType toEntity(MeasureTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null measure type cannot be mapped to entity");
+    }
+
     VersionStatus status = dto.getStatus() == null ? null : VersionStatus.getInstance(dto.getStatus());
     return MeasureType.builder()
       .createdBy(dto.getCreatedBy())
@@ -46,6 +50,10 @@ public class MeasureTypeMapper implements VersionableEntityDtoMapper<MeasureType
 
   @Override
   public MeasureTypeDto toDto(MeasureType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null measure type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -54,6 +62,14 @@ public class MeasureTypeMapper implements VersionableEntityDtoMapper<MeasureType
 
   @Override
   public MeasureType toEntity(MeasureTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null measure type cannot be mapped to entity");
+    }
+
+    if (VersionStatus.getLiveStatuses().contains(dto.getStatus()) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 

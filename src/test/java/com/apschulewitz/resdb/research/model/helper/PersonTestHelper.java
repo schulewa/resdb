@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.research.model;
+package com.apschulewitz.resdb.research.model.helper;
 
 import com.apschulewitz.resdb.common.model.TitleTestHelper;
 import com.apschulewitz.resdb.common.model.dto.HistoricalDateDto;
@@ -19,6 +19,7 @@ import com.apschulewitz.resdb.refdata.model.entity.Person;
 import com.apschulewitz.resdb.refdata.model.entity.PersonTitle;
 import com.apschulewitz.resdb.refdata.model.entity.Place;
 import com.apschulewitz.resdb.refdata.model.entity.River;
+import com.apschulewitz.resdb.research.model.AbstractTestHelper;
 import org.springframework.stereotype.Component;
 
 import java.time.Month;
@@ -26,7 +27,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

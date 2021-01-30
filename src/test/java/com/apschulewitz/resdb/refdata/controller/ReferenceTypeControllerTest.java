@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.model.dto.ReferenceTypeDto;
+import com.apschulewitz.resdb.research.model.dto.ReferenceTypeDto;
 import com.apschulewitz.resdb.refdata.service.ReferenceTypeService;
 import org.junit.Before;
 import org.junit.Test;

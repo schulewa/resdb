@@ -9,6 +9,7 @@ import com.apschulewitz.resdb.refdata.model.dto.LanguageGroupDto;
 import com.apschulewitz.resdb.refdata.model.entity.Language;
 import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
+import com.apschulewitz.resdb.refdata.model.entity.LanguageGroup;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Component;
 
@@ -81,6 +82,10 @@ public class LanguageMapper implements VersionableEntityDtoMapper<Language, Lang
     String deciphered = dto.getDeciphered() ? "Y" : "N";
     String living = dto.getLiving() ? "Y" : "N";
     String macroLanguage = dto.getMacroLanguage() ? "Y" : "N";
+    LanguageGroup languageGroup = null;
+    if (dto.getLanguageGroup() != null) {
+      languageGroup = languageGroupMapper.toEntity(dto.getLanguageGroup());
+    }
     return Language.builder()
       .constructed(YesNoChoice.getChoiceFor(constructed))
       .createdBy(dto.getCreatedBy())
@@ -90,7 +95,7 @@ public class LanguageMapper implements VersionableEntityDtoMapper<Language, Lang
       .iso6392CodeAlpha2b(dto.getIso6392CodeAlpha2b())
       .iso6392CodeAlpha2t(dto.getIso6392CodeAlpha2t())
       .iso6392CodeAlpha3(dto.getIso6392CodeAlpha3())
-      .languageGroup(languageGroupMapper.toEntity(dto.getLanguageGroup()))
+      .languageGroup(languageGroup)
       .lastUpdated(dto.getLastUpdated())
       .living(YesNoChoice.getChoiceFor(living))
       .macroLanguage(YesNoChoice.getChoiceFor(macroLanguage))

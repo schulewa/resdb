@@ -16,6 +16,7 @@ import com.apschulewitz.resdb.refdata.model.entity.Place;
 import com.apschulewitz.resdb.refdata.model.entity.TechnologyTypeGroup;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @NoArgsConstructor
@@ -24,13 +25,23 @@ public class TechnologyTypeGroupMapper implements VersionableEntityDtoMapper<Tec
 
   @Override
   public TechnologyTypeGroup toEntity(TechnologyTypeGroupDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null technology type group cannot be mapped to entity");
+    }
+
+    VersionStatus status = null;
+    if (!StringUtils.isEmpty(dto.getStatus())) {
+      status = VersionStatus.getInstance(dto.getStatus());
+    }
 
     return TechnologyTypeGroup.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
-      .status(VersionStatus.getInstance(dto.getStatus()))
+      .status(status)
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -40,17 +51,27 @@ public class TechnologyTypeGroupMapper implements VersionableEntityDtoMapper<Tec
       throw new IllegalArgumentException("Null technology type group cannot be mapped to dto");
     }
 
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
     return TechnologyTypeGroupDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public TechnologyTypeGroupDto toDto(TechnologyTypeGroup entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null technology type group cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -59,11 +80,15 @@ public class TechnologyTypeGroupMapper implements VersionableEntityDtoMapper<Tec
 
   @Override
   public TechnologyTypeGroup toEntity(TechnologyTypeGroupDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null technology type group cannot be mapped to entity");
+    }
+
+    VersionStatus status = VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
     return null;
   }
 
-//  @Override
-//  public Person toDto(PersonDto entity) {
-//    return null;
-//  }
 }

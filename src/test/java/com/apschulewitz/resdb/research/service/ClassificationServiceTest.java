@@ -1,21 +1,9 @@
 package com.apschulewitz.resdb.research.service;
 
 import com.apschulewitz.resdb.common.model.mapper.ClassificationCollectionMapper;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.common.service.DataServiceTestRunner;
 import com.apschulewitz.resdb.refdata.model.comparator.ClassificationCollectionDataComparator;
-import com.apschulewitz.resdb.refdata.model.comparator.RaceTypeDataComparator;
-import com.apschulewitz.resdb.refdata.model.dao.RaceTypeDao;
-import com.apschulewitz.resdb.refdata.model.dto.AddressTypeDto;
-import com.apschulewitz.resdb.refdata.model.dto.RaceTypeDto;
-import com.apschulewitz.resdb.refdata.model.entity.AddressType;
-import com.apschulewitz.resdb.refdata.model.entity.RaceType;
 import com.apschulewitz.resdb.refdata.model.helper.ClassificationCollectionTestHelper;
-import com.apschulewitz.resdb.refdata.model.helper.RaceTypeTestHelper;
-import com.apschulewitz.resdb.refdata.model.mapper.RaceTypeMapper;
-import com.apschulewitz.resdb.refdata.service.RaceTypeService;
-import com.apschulewitz.resdb.research.model.AbstractTestHelper;
-import com.apschulewitz.resdb.research.model.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.dao.ClassificationDao;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
 import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
@@ -25,17 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -43,12 +23,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * @author Adrian.Schulewitz

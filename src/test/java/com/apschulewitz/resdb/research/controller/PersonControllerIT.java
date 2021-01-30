@@ -14,15 +14,14 @@ import com.apschulewitz.resdb.refdata.model.dao.PersonDao;
 import com.apschulewitz.resdb.refdata.model.dao.PlaceDao;
 import com.apschulewitz.resdb.refdata.model.dao.RiverDao;
 import com.apschulewitz.resdb.refdata.model.dto.PersonDto;
-import com.apschulewitz.resdb.refdata.model.dto.PersonTitleDto;
 import com.apschulewitz.resdb.refdata.model.dto.PlaceDto;
 import com.apschulewitz.resdb.refdata.model.dto.TitleDto;
 import com.apschulewitz.resdb.refdata.model.entity.Person;
 import com.apschulewitz.resdb.refdata.model.entity.River;
 import com.apschulewitz.resdb.refdata.model.mapper.PersonMapper;
 import com.apschulewitz.resdb.refdata.model.mapper.RiverMapper;
-import com.apschulewitz.resdb.research.model.PersonTestHelper;
-import com.apschulewitz.resdb.research.model.PlaceTestHelper;
+import com.apschulewitz.resdb.research.model.helper.PersonTestHelper;
+import com.apschulewitz.resdb.research.model.helper.PlaceTestHelper;
 import com.apschulewitz.resdb.research.model.dao.TitleDao;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -38,8 +37,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -95,8 +92,7 @@ public class PersonControllerIT {
 
   @Before
   public void beforeEachTest() {
-    altitudeDto = new AltitudeDto();
-    altitudeDto.setValue("altitude");
+    altitudeDto = AltitudeDto.builder().value("altitude").build();
 
     latitudeDto = LatitudeDto.builder().value("latitude").build();
 

@@ -849,11 +849,15 @@ CREATE UNIQUE INDEX resdb_person_role_name_idx ON resdb_person_role (role_name);
 
 CREATE TABLE resdb_person_title
 (
-    id         BIGINT     NOT NULL AUTO_INCREMENT,
-    person_id  BIGINT     NOT NULL,
-    title_id   BIGINT     NOT NULL,
---     title_type VARCHAR(1) NOT NULL, -- P=prefix, S=suffix
-    position   INTEGER    NOT NULL,
+    id           BIGINT         NOT NULL AUTO_INCREMENT,
+    person_id    BIGINT         NOT NULL,
+    title_id     BIGINT         NOT NULL,
+    position     INTEGER        NOT NULL,
+    status       VARCHAR(1)     NOT NULL,
+    created_by   VARCHAR(20)    NOT NULL,
+    version_no   BIGINT         NOT NULL,
+    last_updated TIMESTAMP      NULL,
+    updated_by   VARCHAR(20)    NULL,
     CONSTRAINT resdb_person_title_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_person_title_idx ON resdb_person_title (person_id, title_id);

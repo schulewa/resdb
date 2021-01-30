@@ -2,7 +2,6 @@ package com.apschulewitz.resdb.common.model.utils;
 
 import com.apschulewitz.resdb.common.ResearchDatabaseModelException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Slf4j
-@Ignore
 public class JdbcUtilsTest {
 
   private static final String SQL_SCRIPT_DIR = "classpath:scripts/sql";
@@ -59,12 +57,20 @@ public class JdbcUtilsTest {
     String deleteSqlFile = String.format("%s%s%s",SQL_SCRIPT_DIR, File.separator, "JDbcUtilsTest-Delete.sql");
 
     // When
-    JdbcUtils.JdbcResponse response = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Insert, insertSqlFile);
-    response = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Delete, deleteSqlFile);
+    JdbcUtils.JdbcResponse response1 = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Delete, deleteSqlFile);
+    JdbcUtils.JdbcResponse response2 = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Insert, insertSqlFile);
+    JdbcUtils.JdbcResponse response3 = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Delete, deleteSqlFile);
 
     // then
-    assertNotNull(response);
-    assertEquals(1, response.getRecordcount());
+    assertNotNull(response1);
+    assertFalse(response1.hasError());
+    assertNotNull(response2);
+    assertFalse(response2.hasError());
+    assertNotNull(response3);
+    assertFalse(response3.hasError());
+    assertEquals(1, response1.getRecordcount());
+    assertEquals(1, response2.getRecordcount());
+    assertEquals(1, response3.getRecordcount());
   }
 
   @Test
@@ -115,7 +121,7 @@ public class JdbcUtilsTest {
     String deleteSqlFile = String.format("%s%s%s",SQL_SCRIPT_DIR, File.separator, "JDbcUtilsTest-Delete.sql");
     String insertSqlFile = String.format("%s%s%s",SQL_SCRIPT_DIR, File.separator, "JDbcUtilsTest-Insert.sql");
     JdbcUtils.JdbcResponse response = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Delete, deleteSqlFile);
-    response = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Insert, insertSqlFile); // populate our table
+    JdbcUtils.JdbcResponse response2 = jdbcUtils.executeScript(conn, JdbcUtils.JdbcActionType.Insert, insertSqlFile); // populate our table
 
     // When
     String selectSqlFile = String.format("%s%s%s",SQL_SCRIPT_DIR, File.separator, "JDbcUtilsTest-Select.sql");
@@ -125,7 +131,9 @@ public class JdbcUtilsTest {
     assertNotNull(response);
     assertFalse(response.hasError());
     assertTrue(response.hasResults());
-    assertEquals(1, response.getRecordcount());
+    assertNotNull(response2);
+    assertFalse(response2.hasError());
+    assertEquals(1, response2.getRecordcount());
   }
 
   @Test(expected = ResearchDatabaseModelException.class)

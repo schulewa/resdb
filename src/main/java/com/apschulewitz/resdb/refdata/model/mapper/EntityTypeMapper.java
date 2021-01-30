@@ -36,12 +36,17 @@ public class EntityTypeMapper implements VersionableEntityDtoMapper<EntityType, 
       throw new IllegalArgumentException("Null entity type cannot be mapped to dto");
     }
 
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
     return EntityTypeDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
       .versionNumber(entity.getVersionNumber())
       .build();

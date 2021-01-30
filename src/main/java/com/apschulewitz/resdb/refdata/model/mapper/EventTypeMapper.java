@@ -52,6 +52,10 @@ public class EventTypeMapper implements VersionableEntityDtoMapper<EventType, Ev
 
   @Override
   public EventTypeDto toDto(EventType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null event type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -61,7 +65,7 @@ public class EventTypeMapper implements VersionableEntityDtoMapper<EventType, Ev
   @Override
   public EventType toEntity(EventTypeDto dto, boolean onlyActive) {
     if (dto == null) {
-      throw new IllegalArgumentException("Null event type cannot be mapped to dto");
+      throw new IllegalArgumentException("Null event type cannot be mapped to entity");
     }
 
     if (VersionStatus.getLiveStatuses().contains(dto.getStatus()) || !onlyActive) {

@@ -6,6 +6,7 @@ import com.apschulewitz.resdb.refdata.model.dto.EventTypeGroupDto;
 import com.apschulewitz.resdb.refdata.model.entity.EventTypeGroup;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @NoArgsConstructor
@@ -19,12 +20,17 @@ public class EventTypeGroupMapper implements VersionableEntityDtoMapper<EventTyp
       throw new IllegalArgumentException("Null event type group cannot be mapped to entity");
     }
 
+    VersionStatus status = null;
+    if (!StringUtils.isEmpty(dto.getStatus())) {
+      status = VersionStatus.getInstance(dto.getStatus());
+    }
+
     return EventTypeGroup.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
-      .status(VersionStatus.getInstance(dto.getStatus()))
+      .status(status)
       .updatedBy(dto.getUpdatedBy())
       .versionNumber(dto.getVersionNumber())
       .build();
@@ -36,12 +42,17 @@ public class EventTypeGroupMapper implements VersionableEntityDtoMapper<EventTyp
       throw new IllegalArgumentException("Null event type group cannot be mapped to dto");
     }
 
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
     return EventTypeGroupDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
       .versionNumber(entity.getVersionNumber())
       .build();

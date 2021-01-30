@@ -6,6 +6,7 @@ import com.apschulewitz.resdb.refdata.model.dto.CalendarTypeDto;
 import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @NoArgsConstructor
@@ -14,13 +15,21 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
 
   @Override
   public CalendarType toEntity(CalendarTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null calendar type cannot be mapped to entity");
+    }
+
+    VersionStatus status = null;
+    if (!StringUtils.isEmpty(dto.getStatus())) {
+      status = VersionStatus.getInstance(dto.getStatus());
+    }
 
     return CalendarType.builder()
       .createdBy(dto.getCreatedBy())
       .id(dto.getId())
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
-      .status(VersionStatus.getInstance(dto.getStatus()))
+      .status(status)
       .updatedBy(dto.getUpdatedBy())
       .versionNumber(dto.getVersionNumber())
       .build();
@@ -32,12 +41,17 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
       throw new IllegalArgumentException("Null calendar type cannot be mapped to dto");
     }
 
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
     return CalendarTypeDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
       .versionNumber(entity.getVersionNumber())
       .build();
@@ -45,6 +59,10 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
 
   @Override
   public CalendarTypeDto toDto(CalendarType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null calendar type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -53,6 +71,15 @@ public class CalendarTypeMapper implements VersionableEntityDtoMapper<CalendarTy
 
   @Override
   public CalendarType toEntity(CalendarTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null calendar type cannot be mapped to entity");
+    }
+
+    VersionStatus status = StringUtils.isEmpty(dto.getStatus()) ? null : VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 

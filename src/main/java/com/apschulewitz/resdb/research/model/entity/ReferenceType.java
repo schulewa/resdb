@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.refdata.model.entity;
+package com.apschulewitz.resdb.research.model.entity;
 
 import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;

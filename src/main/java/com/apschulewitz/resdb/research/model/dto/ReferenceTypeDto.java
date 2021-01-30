@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.refdata.model.dto;
+package com.apschulewitz.resdb.research.model.dto;
 
 import com.apschulewitz.resdb.common.model.VersionableDataDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

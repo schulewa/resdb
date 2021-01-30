@@ -18,7 +18,7 @@ public class LanguageGroupMapper implements VersionableEntityDtoMapper<LanguageG
   @Override
   public LanguageGroup toEntity(LanguageGroupDto dto) {
     if (dto == null)
-      return null;
+      throw new IllegalArgumentException("Null language group cannot be mapped to entity");;
 
     Region region = null;
     if (dto.getRegion() != null) {

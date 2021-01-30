@@ -4,9 +4,9 @@ import com.apschulewitz.resdb.common.model.EntityTypeEnum;
 import com.apschulewitz.resdb.common.service.AbstractService;
 import com.apschulewitz.resdb.common.service.DataService;
 import com.apschulewitz.resdb.refdata.model.dao.ReferenceTypeDao;
-import com.apschulewitz.resdb.refdata.model.dto.ReferenceTypeDto;
-import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
-import com.apschulewitz.resdb.refdata.model.mapper.ReferenceTypeMapper;
+import com.apschulewitz.resdb.research.model.dto.ReferenceTypeDto;
+import com.apschulewitz.resdb.research.model.entity.ReferenceType;
+import com.apschulewitz.resdb.research.model.mapper.ReferenceTypeMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

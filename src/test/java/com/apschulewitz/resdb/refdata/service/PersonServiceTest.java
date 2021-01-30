@@ -6,7 +6,7 @@ import com.apschulewitz.resdb.refdata.model.dao.PersonDao;
 import com.apschulewitz.resdb.refdata.model.dto.PersonDto;
 import com.apschulewitz.resdb.refdata.model.entity.Person;
 import com.apschulewitz.resdb.refdata.model.mapper.PersonMapper;
-import com.apschulewitz.resdb.research.model.PersonTestHelper;
+import com.apschulewitz.resdb.research.model.helper.PersonTestHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;

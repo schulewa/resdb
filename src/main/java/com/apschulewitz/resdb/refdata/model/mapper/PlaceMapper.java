@@ -1,5 +1,8 @@
 package com.apschulewitz.resdb.refdata.model.mapper;
 
+import com.apschulewitz.resdb.common.model.dto.AltitudeDto;
+import com.apschulewitz.resdb.common.model.dto.LatitudeDto;
+import com.apschulewitz.resdb.common.model.dto.LongitudeDto;
 import com.apschulewitz.resdb.common.model.entity.Altitude;
 import com.apschulewitz.resdb.common.model.entity.Latitude;
 import com.apschulewitz.resdb.common.model.entity.Longitude;
@@ -14,13 +17,62 @@ import org.springframework.stereotype.Component;
 public class PlaceMapper implements VersionableEntityDtoMapper<Place, PlaceDto> {
 
   @Override
-  public PlaceDto toDto(Place entity, boolean onlyActive) {
-    return null;
+  public PlaceDto toDto(Place entity) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null place cannot be mapped to dto");
+    }
+
+    PlaceDto placeDto;
+
+    AltitudeDto altitude = null;
+    if (entity.getAltitude() != null) {
+      altitude = AltitudeDto.builder()
+        .value(entity.getAltitude().getValue())
+        .build();
+    }
+
+    LatitudeDto latitude = null;
+    if (entity.getLatitude() != null) {
+      latitude = LatitudeDto.builder()
+        .value(entity.getLatitude().getValue())
+        .build();
+    }
+
+    LongitudeDto longitude = null;
+    if (entity.getLongitude() != null) {
+      longitude = LongitudeDto.builder()
+        .value(entity.getLongitude().getValue())
+        .build();
+    }
+
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
+    placeDto = PlaceDto.builder()
+      .altitude(altitude)
+      .createdBy(entity.getCreatedBy())
+      .id(entity.getId())
+      .lastUpdated(entity.getLastUpdated())
+      .latitude(latitude)
+      .longitude(longitude)
+      .name(entity.getName())
+      .status(status)
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
+      .build();
+
+    return placeDto;
   }
 
   @Override
-  public Place toEntity(PlaceDto dto, boolean onlyActive) {
-    Place entity = null;
+  public Place toEntity(PlaceDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null place cannot be mapped to entity");
+    }
+
+    Place entity;
 
     Altitude altitude = null;
     if (dto.getAltitude() != null) {
@@ -61,8 +113,33 @@ public class PlaceMapper implements VersionableEntityDtoMapper<Place, PlaceDto> 
       .name(dto.getName())
       .river(river)
       .status(status)
-      // TODO set updatedBy to logged in user
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
     return entity;
+  }
+
+  @Override
+  public PlaceDto toDto(Place entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null place cannot be mapped to dto");
+    }
+
+    if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
+      return toDto(entity);
+    }
+    return null;
+  }
+
+  @Override
+  public Place toEntity(PlaceDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null place cannot be mapped to entity");
+    }
+
+    if (VersionStatus.getLiveStatuses().contains(dto.getStatus()) || !onlyActive) {
+      return toEntity(dto);
+    }
+    return null;
   }
 }

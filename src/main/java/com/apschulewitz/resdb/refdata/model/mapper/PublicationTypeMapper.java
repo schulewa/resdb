@@ -34,12 +34,17 @@ public class PublicationTypeMapper implements VersionableEntityDtoMapper<Publica
       throw new IllegalArgumentException("Null publication type cannot be mapped to dto");
     }
 
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
     return PublicationTypeDto.builder()
       .createdBy(entity.getCreatedBy())
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
       .updatedBy(entity.getUpdatedBy())
       .versionNumber(entity.getVersionNumber())
       .build();

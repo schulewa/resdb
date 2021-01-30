@@ -1,6 +1,7 @@
-package com.apschulewitz.resdb.research.model;
+package com.apschulewitz.resdb.research.model.helper;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.research.model.AbstractTestHelper;
 import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
 import com.apschulewitz.resdb.research.model.entity.ClassificationEntry;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;

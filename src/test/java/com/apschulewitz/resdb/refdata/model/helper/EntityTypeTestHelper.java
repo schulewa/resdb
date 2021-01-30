@@ -25,11 +25,12 @@ public class EntityTypeTestHelper extends AbstractTestHelper<EntityType, EntityT
   public EntityType constructNewEntityWithAllValues() {
     return EntityType.builder()
       .createdBy(USER_NAME)
-      .id(1L)
+      .id(ID.getAndIncrement())
       .lastUpdated(ZonedDateTime.now(ZoneOffset.UTC))
       .name(getClass().getSimpleName())
       .status(VersionStatus.New)
       .updatedBy(USER_NAME1)
+      .versionNumber(VERSION_NUMBER.getAndIncrement())
       .build();
   }
 
@@ -44,12 +45,12 @@ public class EntityTypeTestHelper extends AbstractTestHelper<EntityType, EntityT
   public EntityTypeDto constructNewDtoWithAllValues() {
     return EntityTypeDto.builder()
       .createdBy(USER_NAME)
-      .id(1L)
+      .id(ID.getAndIncrement())
       .lastUpdated(ZonedDateTime.now(ZoneOffset.UTC))
       .name(getClass().getSimpleName())
       .status(VersionStatus.New.name())
       .updatedBy(USER_NAME1)
-      .versionNumber(2L)
+      .versionNumber(VERSION_NUMBER.getAndIncrement())
       .build();
   }
 

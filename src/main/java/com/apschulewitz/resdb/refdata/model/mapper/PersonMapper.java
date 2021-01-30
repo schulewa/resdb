@@ -161,6 +161,10 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
       suffixTitle = titleMapper.toDto(person.getSuffixTitle());
     }
 
+    String status = null;
+    if (person.getStatus() != null) {
+      status = person.getStatus().name();
+    }
     return PersonDto.builder()
       .birthPlace(birthPlace)
       .createdBy(person.getCreatedBy())
@@ -174,7 +178,7 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
       .lastUpdated(person.getLastUpdated())
       .middleName(person.getMiddleName())
       .prefixTitle(prefixTitle)
-      .status(person.getStatus().name())
+      .status(status)
       .suffixTitle(suffixTitle)
       .updatedBy(person.getUpdatedBy())
       .versionNumber(person.getVersionNumber())
@@ -195,11 +199,15 @@ public class PersonMapper implements VersionableEntityDtoMapper<Person, PersonDt
 
   @Override
   public Person toEntity(PersonDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null person cannot be mapped to entity");
+    }
+
+    VersionStatus status = VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
     return null;
   }
 
-//  @Override
-//  public Person toDto(PersonDto entity) {
-//    return null;
-//  }
 }

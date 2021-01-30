@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.research.model;
+package com.apschulewitz.resdb.research.model.helper;
 
 import com.apschulewitz.resdb.common.model.dto.AltitudeDto;
 import com.apschulewitz.resdb.common.model.dto.LatitudeDto;
@@ -11,6 +11,7 @@ import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dto.PlaceDto;
 import com.apschulewitz.resdb.refdata.model.entity.Place;
 import com.apschulewitz.resdb.refdata.model.entity.River;
+import com.apschulewitz.resdb.research.model.AbstractTestHelper;
 import org.springframework.stereotype.Component;
 
 import java.time.ZoneOffset;
@@ -39,6 +40,7 @@ public class PlaceTestHelper extends AbstractTestHelper<Place, PlaceDto> {
       .id(ID.getAndIncrement())
       .altitude(altitude)
       .id(ID.getAndIncrement())
+      .lastUpdated(ZonedDateTime.now(ZoneOffset.UTC))
       .latitude(latitude)
       .longitude(longitude)
       .name(Place.class.getSimpleName())
@@ -52,20 +54,19 @@ public class PlaceTestHelper extends AbstractTestHelper<Place, PlaceDto> {
   @Override
   public PlaceDto constructUnsavedMinimalDto() {
     return PlaceDto.builder()
-      .createdBy(USER_NAME)
-      .id(ID.getAndIncrement())
-      .lastUpdated(ZonedDateTime.now(ZoneOffset.UTC))
+//      .createdBy(USER_NAME)
+//      .id(ID.getAndIncrement())
+//      .lastUpdated(ZonedDateTime.now(ZoneOffset.UTC))
       .name(PlaceDto.class.getSimpleName())
-      .status(VersionStatus.Amend.name())
-      .updatedBy(USER_NAME1)
-      .versionNumber(VERSION_NUMBER.getAndIncrement())
+//      .status(VersionStatus.Amend.name())
+//      .updatedBy(USER_NAME1)
+//      .versionNumber(VERSION_NUMBER.getAndIncrement())
       .build();
   }
 
   @Override
   public PlaceDto constructNewDtoWithAllValues() {
-    AltitudeDto altitudeDto = new AltitudeDto();
-    altitudeDto.setValue("altitude");
+    AltitudeDto altitudeDto = AltitudeDto.builder().value("altitude").build();
     LatitudeDto latitudeDto = LatitudeDto.builder().value("latitude").build();
     LongitudeDto longitudeDto = LongitudeDto.builder().value("longitude").build();
     RiverDto riverDto = RiverDto.builder().name(River.class.getSimpleName()).build();

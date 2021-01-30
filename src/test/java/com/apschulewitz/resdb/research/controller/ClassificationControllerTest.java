@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.research.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.research.model.ClassificationTestHelper;
+import com.apschulewitz.resdb.research.model.helper.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
 import com.apschulewitz.resdb.research.service.ClassificationService;
 import org.junit.Before;

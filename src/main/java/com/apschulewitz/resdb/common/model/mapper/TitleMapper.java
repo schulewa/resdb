@@ -17,10 +17,20 @@ public class TitleMapper implements EntityMapper<Title, TitleDto> {
       throw new IllegalArgumentException("Null Title entity supplied");
     }
 
+    String appliesTo = null;
+    if (entity.getAppliesTo() != null) {
+      appliesTo = entity.getAppliesTo().name();
+    }
+
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
+    }
+
     TitleDto dto = TitleDto.builder()
-      .appliesTo(entity.getAppliesTo().name())
+      .appliesTo(appliesTo)
       .createdBy(entity.getCreatedBy())
-      .status(entity.getStatus().name())
+      .status(status)
       .title(entity.getTitle())
       .titleType(entity.getTitleType().name())
       // optional fields

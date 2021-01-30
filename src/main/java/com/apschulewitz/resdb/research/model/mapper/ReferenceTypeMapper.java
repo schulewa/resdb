@@ -1,12 +1,9 @@
-package com.apschulewitz.resdb.refdata.model.mapper;
+package com.apschulewitz.resdb.research.model.mapper;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
-import com.apschulewitz.resdb.refdata.model.dao.ReferenceTypeDao;
-import com.apschulewitz.resdb.refdata.model.dto.ReferenceTypeDto;
-import com.apschulewitz.resdb.refdata.model.dto.TechnologyTypeGroupDto;
-import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
-import com.apschulewitz.resdb.refdata.model.entity.TechnologyTypeGroup;
+import com.apschulewitz.resdb.research.model.dto.ReferenceTypeDto;
+import com.apschulewitz.resdb.research.model.entity.ReferenceType;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +14,9 @@ public class ReferenceTypeMapper implements VersionableEntityDtoMapper<Reference
 
   @Override
   public ReferenceType toEntity(ReferenceTypeDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null reference type cannot be mapped to entity");
+    }
 
     return ReferenceType.builder()
       .createdBy(dto.getCreatedBy())
@@ -24,13 +24,20 @@ public class ReferenceTypeMapper implements VersionableEntityDtoMapper<Reference
       .lastUpdated(dto.getLastUpdated())
       .name(dto.getName())
       .status(VersionStatus.getInstance(dto.getStatus()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
   @Override
   public ReferenceTypeDto toDto(ReferenceType entity) {
     if (entity == null) {
-      throw new IllegalArgumentException("Null reference type group cannot be mapped to dto");
+      throw new IllegalArgumentException("Null reference type cannot be mapped to dto");
+    }
+
+    String status = null;
+    if (entity.getStatus() != null) {
+      status = entity.getStatus().name();
     }
 
     return ReferenceTypeDto.builder()
@@ -38,12 +45,18 @@ public class ReferenceTypeMapper implements VersionableEntityDtoMapper<Reference
       .id(entity.getId())
       .lastUpdated(entity.getLastUpdated())
       .name(entity.getName())
-      .status(entity.getStatus().name())
+      .status(status)
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public ReferenceTypeDto toDto(ReferenceType entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null reference type cannot be mapped to dto");
+    }
+
     if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
       return toDto(entity);
     }
@@ -52,11 +65,16 @@ public class ReferenceTypeMapper implements VersionableEntityDtoMapper<Reference
 
   @Override
   public ReferenceType toEntity(ReferenceTypeDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null reference type cannot be mapped to entity");
+    }
+
+    VersionStatus status = VersionStatus.getInstance(dto.getStatus());
+    if (VersionStatus.getLiveStatuses().contains(status) || !onlyActive) {
+      return toEntity(dto);
+    }
+
     return null;
   }
 
-//  @Override
-//  public Person toDto(PersonDto entity) {
-//    return null;
-//  }
 }

@@ -1,9 +1,9 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.research.model.entity.ReferenceType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 

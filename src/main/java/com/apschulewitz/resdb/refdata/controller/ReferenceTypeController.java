@@ -2,13 +2,8 @@ package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
 import com.apschulewitz.resdb.common.model.EntityTypeEnum;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.refdata.model.dao.ReferenceTypeDao;
-import com.apschulewitz.resdb.refdata.model.dto.RaceTypeDto;
-import com.apschulewitz.resdb.refdata.model.dto.ReferenceTypeDto;
-import com.apschulewitz.resdb.refdata.model.dto.TechnologyTypeGroupDto;
-import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
+import com.apschulewitz.resdb.research.model.dto.ReferenceTypeDto;
 import com.apschulewitz.resdb.refdata.service.ReferenceTypeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,10 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by adrianschulewitz on 22/04/2017.

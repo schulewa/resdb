@@ -25,12 +25,19 @@ public class PersonTitleMapper implements VersionableEntityDtoMapper<PersonTitle
 
   @Override
   public PersonTitle toEntity(PersonTitleDto dto) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null person title cannot be mapped to entity");
+    }
 
     return PersonTitle.builder()
+      .createdBy(dto.getCreatedBy())
       .id(dto.getId())
+      .lastUpdated(dto.getLastUpdated())
       .person(personMapper.toEntity(dto.getPerson()))
       .position(dto.getPosition())
       .title(titleMapper.toEntity(dto.getTitle()))
+      .updatedBy(dto.getUpdatedBy())
+      .versionNumber(dto.getVersionNumber())
       .build();
   }
 
@@ -41,15 +48,22 @@ public class PersonTitleMapper implements VersionableEntityDtoMapper<PersonTitle
     }
 
     return PersonTitleDto.builder()
+      .createdBy(entity.getCreatedBy())
       .id(entity.getId())
+      .lastUpdated(entity.getLastUpdated())
       .person(personMapper.toDto(entity.getPerson()))
       .position(entity.getPosition())
       .title(titleMapper.toDto(entity.getTitle()))
+      .updatedBy(entity.getUpdatedBy())
+      .versionNumber(entity.getVersionNumber())
       .build();
   }
 
   @Override
   public PersonTitleDto toDto(PersonTitle entity, boolean onlyActive) {
+    if (entity == null) {
+      throw new IllegalArgumentException("Null person title cannot be mapped to dto");
+    }
 //    if (VersionStatus.getLiveStatuses().contains(entity.getStatus()) || !onlyActive) {
 //      return toDto(entity);
 //    }
@@ -58,11 +72,11 @@ public class PersonTitleMapper implements VersionableEntityDtoMapper<PersonTitle
 
   @Override
   public PersonTitle toEntity(PersonTitleDto dto, boolean onlyActive) {
+    if (dto == null) {
+      throw new IllegalArgumentException("Null person title cannot be mapped to entity");
+    }
     return toEntity(dto);
   }
 
-//  @Override
-//  public Person toDto(PersonDto entity) {
-//    return null;
-//  }
+
 }

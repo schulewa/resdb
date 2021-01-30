@@ -16,7 +16,9 @@ public class HierarchyTypeTestHelper extends AbstractTestHelper<HierarchyType, H
 
   @Override
   public HierarchyType constructUnsavedMinimalEntity() {
-    return null;
+    return HierarchyType.builder()
+      .name(HierarchyType.class.getSimpleName())
+      .build();
   }
 
   @Override

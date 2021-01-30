@@ -16,7 +16,9 @@ public class EventTypeGroupTestHelper extends AbstractTestHelper<EventTypeGroup,
 
   @Override
   public EventTypeGroup constructUnsavedMinimalEntity() {
-    return null;
+    return EventTypeGroup.builder()
+      .name(EventTypeGroup.class.getSimpleName())
+      .build();
   }
 
   @Override

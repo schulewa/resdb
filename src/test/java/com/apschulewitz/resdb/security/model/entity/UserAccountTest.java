@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -122,7 +123,7 @@ public class UserAccountTest {
         LanguageGroup languageGroup = LanguageGroup.builder()
                 .id(1L)
                 .createdBy("test user")
-                .lastUpdated(LocalDateTime.now())
+                .lastUpdated(ZonedDateTime.now())
                 .name("English")
                 .build();
 

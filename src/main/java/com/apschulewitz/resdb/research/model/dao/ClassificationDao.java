@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.research.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface ClassificationDao extends CrudRepository<ClassificationCollection, Long> {
+public interface ClassificationDao extends DataDao<ClassificationCollection, Long>, CrudRepository<ClassificationCollection, Long> {
 
   List<ClassificationCollection> findByStatusIn(List<VersionStatus> livestatuses);
 

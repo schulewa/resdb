@@ -1,5 +1,9 @@
 package com.apschulewitz.resdb.common.model.entity;
 
-public interface DataEntityId {
-    Long getId();
+/**
+ *
+ * @param <K> is the Key type for the Entity
+ */
+public interface DataEntityId<K> {
+    K getId();
 }

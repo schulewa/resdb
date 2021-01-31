@@ -4,13 +4,27 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.HistoricalDate;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.time.ZonedDateTime;
 
 /**
  *
@@ -19,9 +33,9 @@ import javax.persistence.*;
 @Data
 @Builder
 @Entity
-@Table(name = "resdb_artefact", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
+@Table(name = "resdb_artefact") // , uniqueConstraints = @UniqueConstraint(columnNames = {"name"})
 //@Audited
-public class Artefact {
+public class Artefact implements VersionableDataEntity<Long> {
 
 	private static final long serialVersionUID = 3621647821369051687L;
 
@@ -32,7 +46,7 @@ public class Artefact {
 	@Column(nullable = false, length = 30)
     private String name;
 
-	@Column(nullable = false, length = 500)
+	@Column(length = 500)
     private String description;
 
     @AttributeOverrides({
@@ -48,10 +62,10 @@ public class Artefact {
     private ArtefactType artefactType;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "found_by_person_id", nullable = true)
+	@JoinColumn(name = "found_by_person_id")
     private Person foundByPerson;
 
-	@Column(name = "owner_identifier", nullable = true, length = 30)
+	@Column(name = "owner_identifier", length = 30)
     private String ownerIdentifier;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,6 +76,21 @@ public class Artefact {
 //    @ManyToOne
 //    @JoinColumn(name = "composition_material_id", nullable = true)
 //    private Material compositionMaterial;
+
+  @Column(nullable = false)
+  private VersionStatus status;
+
+  @Column(nullable = false)
+  private String createdBy;
+
+  @Column
+  private String updatedBy;
+
+  @Column(name = "version_no")
+  private Long versionNumber;
+
+  @Column(name = "last_updated")
+  private ZonedDateTime lastUpdated;
 
     @Tolerate
     public Artefact() {

@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.HierarchyType;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface HierarchyTypeDao extends CrudRepository<HierarchyType, Long> {
+public interface HierarchyTypeDao extends DataDao<HierarchyType, Long>, CrudRepository<HierarchyType, Long> {
 
   List<HierarchyType> findByStatusIn(List<VersionStatus> livestatuses);
 

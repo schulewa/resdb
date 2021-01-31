@@ -1,6 +1,7 @@
 package com.apschulewitz.resdb.research.controller;
 
-import com.apschulewitz.resdb.refdata.ClassificationTestHelper;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.research.model.helper.ClassificationTestHelper;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
 import com.apschulewitz.resdb.research.service.ClassificationService;
 import org.junit.Before;
@@ -40,7 +41,7 @@ public class ClassificationControllerTest {
 
     ClassificationCollectionDto saved = unsavedCollection.clone();
     saved.setId(1L);
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    when(mockedClassificationService.add(any())).thenReturn(saved);
 
     ResponseEntity<ClassificationCollectionDto> responseEntity = classificationController.add(unsavedCollection);
 
@@ -60,7 +61,7 @@ public class ClassificationControllerTest {
 
     saved.setName("Updated Name");
 
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    when(mockedClassificationService.update(any())).thenReturn(saved);
 
     ResponseEntity<ClassificationCollectionDto> responseEntity = classificationController.update(unsavedCollection);
 
@@ -79,7 +80,10 @@ public class ClassificationControllerTest {
     ClassificationCollectionDto saved = unsavedCollection.clone();
     saved.setId(1L);
 
-    when(mockedClassificationService.save(any())).thenReturn(saved);
+    ClassificationCollectionDto deleted = saved.clone();
+    deleted.setStatus(VersionStatus.Cancel.name());
+
+    when(mockedClassificationService.add(any())).thenReturn(saved);
 
     // save initial collection
     ResponseEntity<ClassificationCollectionDto> addResponse = classificationController.add(unsavedCollection);
@@ -91,15 +95,15 @@ public class ClassificationControllerTest {
     assertEquals(Long.valueOf(1L), responseDto.getId());
 
     // now delete it
-    when(mockedClassificationService.delete(saved.getId())).thenReturn(true);
-    ResponseEntity<Boolean> deleteResponse = classificationController.delete(saved.getId());
+    when(mockedClassificationService.deleteById(saved.getId())).thenReturn(deleted);
+    ResponseEntity<ClassificationCollectionDto> deleteResponse = classificationController.delete(saved.getId());
     assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
-    assertTrue(deleteResponse.getBody());
+    assertNotNull(deleteResponse.getBody());
   }
 
   @Test
-  public void when_findall_is_executed_and_no_data_is_found_then_return_no_data_and_no_error() {
-    ResponseEntity<List<ClassificationCollectionDto>> responseEntity = classificationController.findAll();
+  public void when_findall_is_executed_and_onlyactive_is_false_and_no_data_is_found_then_return_no_data_and_no_error() {
+    ResponseEntity<List<ClassificationCollectionDto>> responseEntity = classificationController.findAll(false);
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     List<ClassificationCollectionDto> data = responseEntity.getBody();
     assertNotNull(data);

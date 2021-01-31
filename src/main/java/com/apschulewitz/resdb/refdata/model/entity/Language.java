@@ -4,15 +4,23 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
-import com.apschulewitz.resdb.common.model.entity.DataEntityId;
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.common.model.entity.YesNoChoice;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.time.ZonedDateTime;
 
 /**
  *
@@ -23,7 +31,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "resdb_language", uniqueConstraints = @UniqueConstraint(columnNames = {"iso_6392_code_alpha_2b", "name"}))
-public class Language implements DataEntityId {
+public class Language implements VersionableDataEntity<Long> {
 	private static final long serialVersionUID = 5803383078653905879L;
 
 	@Id
@@ -76,9 +84,11 @@ public class Language implements DataEntityId {
     @Column
     private String updatedBy;
 
-    @Version
+    @Column(name = "version_no")
+    private Long versionNumber;
+
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
 
     @Tolerate
     public Language() {

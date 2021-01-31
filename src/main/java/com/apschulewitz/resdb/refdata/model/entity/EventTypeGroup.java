@@ -1,23 +1,29 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
 @Entity
 @Table(name = "resdb_event_type_group", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
 //@Audited
-public class EventTypeGroup {
+public class EventTypeGroup implements VersionableDataEntity<Long> {
 
-  private static final long serialVersionUID = -2867489478969596402L;
+//  private static final long serialVersionUID = -2867489478969596402L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,9 +41,11 @@ public class EventTypeGroup {
   @Column
   private String updatedBy;
 
-  @Version
+  @Column(name = "version_no")
+  private Long versionNumber;
+
   @Column(name = "last_updated")
-  private LocalDateTime lastUpdated;
+  private ZonedDateTime lastUpdated;
 
   private transient DataOperation operation;
 

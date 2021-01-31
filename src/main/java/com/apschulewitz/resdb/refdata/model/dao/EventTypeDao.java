@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.refdata.model.entity.EventType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -10,5 +11,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public interface EventTypeDao extends CrudRepository<EventType, Long> {
+public interface EventTypeDao extends DataDao<EventType, Long>, CrudRepository<EventType, Long> {
 }

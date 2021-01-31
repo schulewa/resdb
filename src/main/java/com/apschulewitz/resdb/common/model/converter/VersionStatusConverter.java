@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Created by adrianschulewitz on 22/04/2017.
  */
-@Component
+//@Component
 public class VersionStatusConverter implements Converter<String, VersionStatus> {
 
     @Override

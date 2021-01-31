@@ -1,21 +1,14 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
-import com.apschulewitz.resdb.common.model.entity.DataOperation;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
-import com.apschulewitz.resdb.refdata.model.entity.Language;
-import com.apschulewitz.resdb.refdata.model.entity.LanguageGroup;
-import com.apschulewitz.resdb.refdata.model.entity.Region;
+import com.apschulewitz.resdb.refdata.model.mapper.LanguageGroupMapper;
 import com.apschulewitz.resdb.refdata.model.mapper.LanguageMapper;
 import com.apschulewitz.resdb.security.SecurityTestHelper;
 import com.apschulewitz.resdb.security.model.dto.UserAccountDto;
 import com.apschulewitz.resdb.security.model.entity.UserAccount;
-import com.apschulewitz.resdb.security.model.entity.UserGroup;
-import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -31,7 +24,7 @@ public class UserAccountMapperTest {
 
   @Before
   public void beforeEachTest() {
-    languageMapper = new LanguageMapper();
+    languageMapper = new LanguageMapper(new LanguageGroupMapper());
     userGroupMembershipMapper = new UserGroupMembershipMapper();
     userAccountMapper = new UserAccountMapper(userGroupMembershipMapper, languageMapper);
   }

@@ -12,6 +12,7 @@ public enum DataOperation {
     DELETE("D"), CREATE("C"),READ("R"),UPDATE("U"),ALL("CRUD");
 
     private String code;
+    private String name;
 
     DataOperation(@NotBlank String code) {
         this.code = code;

@@ -1,9 +1,9 @@
 package com.apschulewitz.resdb.research.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
+import com.apschulewitz.resdb.common.model.EntityTypeEnum;
 import com.apschulewitz.resdb.config.RestUrlPaths;
 import com.apschulewitz.resdb.research.model.dto.ClassificationCollectionDto;
-import com.apschulewitz.resdb.research.model.entity.ClassificationCollection;
 import com.apschulewitz.resdb.research.service.ClassificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -23,7 +22,7 @@ import java.util.List;
  */
 @RestController()
 @Slf4j
-public class ClassificationController extends AbstractController<ClassificationCollection, Long> {
+public class ClassificationController extends AbstractController<ClassificationCollectionDto, Long> {
 
   private ClassificationService classificationService;
 
@@ -31,35 +30,44 @@ public class ClassificationController extends AbstractController<ClassificationC
     this.classificationService = classificationService;
   }
 
-  @RequestMapping(value = RestUrlPaths.CLASSIFICATION_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<ClassificationCollectionDto>> findAll() {
-    log.info("Processing request to find all classification collections");
-    List<ClassificationCollectionDto> liveEntries = classificationService.findAllLiveCollections();
-    log.info("Found {} classification collections", liveEntries.size());
-    return new ResponseEntity<>(liveEntries, HttpStatus.OK);
-  }
+//  @Override
+//  public ResponseEntity<List<ClassificationCollectionDto>> findAllActive() {
+//    logStartOfFindAllRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION);
+//    List<ClassificationCollectionDto> liveEntries = classificationService.findAllActive();
+//    logEndOfFindAllRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION);
+//    return new ResponseEntity<>(liveEntries, HttpStatus.OK);
+//  }
 
   @RequestMapping(value = RestUrlPaths.CLASSIFICATION_CONTROLLER_BASE_URL, method = RequestMethod.POST)
   public ResponseEntity<ClassificationCollectionDto> add(@RequestBody ClassificationCollectionDto toBeSaved) {
-    log.info("Processing request to save new classification collection: {}", toBeSaved);
-    ClassificationCollectionDto saved = classificationService.save(toBeSaved);
-    log.info("New classification collection saved: {}", saved);
+    logStartOfAddRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, toBeSaved);
+    ClassificationCollectionDto saved = classificationService.add(toBeSaved);
+    logEndOfAddRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, saved);
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
   @RequestMapping(value = RestUrlPaths.CLASSIFICATION_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<Boolean> delete(@PathVariable long id) {
-    log.info("Processing request to mark classification collection for identifier {} as deleted", id);
-    boolean markedAsDeleted = classificationService.delete(id);
-    log.info("Classification collection for identifier {} marked as deleted: {}", id, markedAsDeleted);
-    return new ResponseEntity<>(markedAsDeleted, HttpStatus.OK);
+  public ResponseEntity<ClassificationCollectionDto> delete(@PathVariable Long id) {
+    logStartOfDeleteRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, id);
+    ClassificationCollectionDto saved = classificationService.deleteById(id);
+    logEndOfDeleteRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, saved);
+    return new ResponseEntity<>(saved, HttpStatus.OK);
+  }
+
+
+  @RequestMapping(value = RestUrlPaths.CLASSIFICATION_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<List<ClassificationCollectionDto>> findAll(@RequestBody Boolean onlyActive) {
+    logStartOfFindAllRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION);
+    List<ClassificationCollectionDto> classificationCollections = classificationService.findAll(onlyActive);
+    logEndOfFindAllRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION);
+    return new ResponseEntity<>(classificationCollections, HttpStatus.OK);
   }
 
   @RequestMapping(value = RestUrlPaths.CLASSIFICATION_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ClassificationCollectionDto> update(@RequestBody ClassificationCollectionDto toBeSaved) {
-    log.info("Processing request to update existing classification: {}", toBeSaved);
-    ClassificationCollectionDto saved = classificationService.save(toBeSaved);
-    log.info("Request to update classification collection [{}] processed", toBeSaved);
+    logStartOfUpdateRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, toBeSaved);
+    ClassificationCollectionDto saved = classificationService.update(toBeSaved);
+    logEndOfUpdateRequest(EntityTypeEnum.CLASSIFICATION_COLLECTION, saved);
     return new ResponseEntity<>(saved, HttpStatus.OK);
   }
 

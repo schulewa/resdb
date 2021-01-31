@@ -2,11 +2,12 @@ package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.dao.CalendarTypeDao;
-import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
-import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
+import com.apschulewitz.resdb.refdata.model.dto.CalendarTypeDto;
+import com.apschulewitz.resdb.refdata.service.CalendarTypeService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
@@ -14,61 +15,63 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class CalendarTypeControllerTest {
 
-  private LocalDateTime now = LocalDateTime.now();
+  private ZonedDateTime now = ZonedDateTime.now();
 
   private CalendarTypeController controller;
 
-  @MockBean
-  private CalendarTypeDao mockedDao;
+  @Autowired
+  private CalendarTypeDao calendarTypeDao;
 
-  private HttpServletRequest mockedRequest = mock(HttpServletRequest.class);
+  @MockBean
+  private CalendarTypeService mockedService;
 
   @Before
   public void beforeEachTest() {
-    mockedDao.deleteAll();
-    controller = new CalendarTypeController(mockedDao);
+    calendarTypeDao.deleteAll();
+    controller = new CalendarTypeController(mockedService);
   }
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_none_when_findAll_is_executed_then_return_list() {
+  public void when_findAll_is_executed_then_return_list() {
     // Given
 
-    CalendarType unsaved1 = CalendarType.builder()
+    CalendarTypeDto unsaved1 = CalendarTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.New)
+      .status(VersionStatus.New.name())
       .updatedBy("system")
       .build();
 
-    CalendarType unsaved2 = CalendarType.builder()
+    CalendarTypeDto unsaved2 = CalendarTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Julian")
-      .status(VersionStatus.New)
+      .status(VersionStatus.Cancel.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.findByStatusIn(VersionStatus.getLiveStatuses())).thenReturn(Arrays.asList(unsaved1, unsaved2));
+    when(mockedService.findAll(false)).thenReturn(Arrays.asList(unsaved1, unsaved2));
 
     // When
-    ResponseEntity<List<CalendarType>> responseEntityList = controller.findAll();
+    ResponseEntity<List<CalendarTypeDto>> responseEntityList = controller.findAll(false);
 
     // Then
     assertEquals(HttpStatus.OK, responseEntityList.getStatusCode());
@@ -78,29 +81,27 @@ public class CalendarTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_entity_when_save_is_executed_then_return_saved_entity() {
+  public void when_add_is_executed_then_return_saved_entity() {
     // Given
-    CalendarType unsaved = CalendarType.builder()
+    CalendarTypeDto unsaved = CalendarTypeDto.builder()
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
       .build();
 
-    CalendarType saved = CalendarType.builder()
+    CalendarTypeDto saved = CalendarTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.New)
+      .status(VersionStatus.New.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
+    when(mockedService.add(unsaved)).thenReturn(saved);
 
     // When
-    ResponseEntity<CalendarType> responseEntity = controller.add(mockedRequest, unsaved);
+    ResponseEntity<CalendarTypeDto> responseEntity = controller.add(unsaved);
 
     // Then
     assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
@@ -110,194 +111,67 @@ public class CalendarTypeControllerTest {
 
   @WithMockUser(value = "adrian")
   @Test
-  public void given_existing_entity_when_delete_is_executed_then_return_mark_entity_as_cancelled() {
+  public void when_delete_is_executed_then_return_mark_entity_as_cancelled() {
     // Given
-    CalendarType unsaved = CalendarType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType saved = CalendarType.builder()
+    CalendarTypeDto saved = CalendarTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
+      .status(VersionStatus.New.name())
       .build();
 
-    CalendarType deleted = CalendarType.builder()
+    CalendarTypeDto deleted = CalendarTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.Cancel)
+      .status(VersionStatus.Cancel.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(deleted);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+    when(mockedService.deleteById(saved.getId())).thenReturn(deleted);
 
     // When
-    ResponseEntity<CalendarType> responseEntity = controller.delete(saved.getId());
+    ResponseEntity<CalendarTypeDto> responseEntity = controller.delete(saved.getId());
 
     // Then
     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 
-    verify(mockedDao, times(1)).save(any(CalendarType.class));
+    verify(mockedService, times(1)).deleteById(anyLong());
 
     assertEquals(deleted, responseEntity.getBody());
   }
 
-  @WithMockUser(value = "adrian")
-  @Test
-  public void given_nonexisting_entity_when_delete_is_executed_then_return_not_found() {
-    // Given
-    CalendarType unsaved = CalendarType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType saved = CalendarType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType deleted = CalendarType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Gregorian")
-      .status(VersionStatus.Cancel)
-      .updatedBy("system")
-      .build();
-
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-    // When
-    ResponseEntity<CalendarType> responseEntity = controller.delete(saved.getId());
-
-    // Then
-    assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-    assertNull(responseEntity.getBody());
-  }
-
   @Test
   @WithMockUser(value = "adrian")
-  public void given_new_entity_when_update_is_executed_then_return_updated_entity() {
+  public void when_update_is_executed_then_return_updated_entity() {
     // Given
-    CalendarType unsaved = CalendarType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType saved = CalendarType.builder()
+    CalendarTypeDto saved = CalendarTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.New)
-      .updatedBy("system")
+      .status(VersionStatus.New.name())
       .build();
 
-    CalendarType updated = CalendarType.builder()
+    CalendarTypeDto updated = CalendarTypeDto.builder()
       .id(1L)
       .createdBy("system")
       .lastUpdated(now)
       .name("Gregorian")
-      .status(VersionStatus.Amend)
+      .status(VersionStatus.Amend.name())
       .updatedBy("system")
       .build();
 
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(updated);
-
-    when(mockedDao.save(updated)).thenReturn(updated);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.of(saved));
+    when(mockedService.deleteById(saved.getId())).thenReturn(updated);
 
     // When
-    ResponseEntity<CalendarType> responseEntity = controller.add(mockedRequest, unsaved);
-
-    ResponseEntity<CalendarType> responseUpdatedEntity = controller.update(updated);
+    ResponseEntity<CalendarTypeDto> responseUpdatedEntity = controller.update(updated);
 
     // Then
-    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    assertNotNull(responseEntity.getBody());
-    assertNotNull(responseEntity.getBody().getId());
-
     assertNotNull(responseUpdatedEntity);
     assertEquals(HttpStatus.OK, responseUpdatedEntity.getStatusCode());
   }
 
-  @Test
-  @WithMockUser(value = "adrian")
-  public void given_unknown_entity_when_update_is_executed_then_return_notfound() {
-    // Given
-    CalendarType unsaved = CalendarType.builder()
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType saved = CalendarType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
-
-    CalendarType updated = CalendarType.builder()
-      .id(1L)
-      .createdBy("system")
-      .lastUpdated(now)
-      .name("Ceramics")
-      .status(VersionStatus.Amend)
-      .updatedBy("system")
-      .build();
-
-    when(mockedDao.save(unsaved)).thenReturn(saved);
-
-    when(mockedDao.save(saved)).thenReturn(updated);
-
-    when(mockedDao.save(updated)).thenReturn(updated);
-
-    when(mockedDao.findById(saved.getId())).thenReturn(Optional.empty());
-
-    // When
-    ResponseEntity<CalendarType> responseEntity = controller.add(mockedRequest, unsaved);
-
-    ResponseEntity<CalendarType> responseUpdatedEntity = controller.update(updated);
-
-    // Then
-    assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-    assertNotNull(responseEntity.getBody());
-    assertNotNull(responseEntity.getBody().getId());
-
-    assertNotNull(responseUpdatedEntity);
-    assertEquals(HttpStatus.NOT_FOUND, responseUpdatedEntity.getStatusCode());
-  }
 }

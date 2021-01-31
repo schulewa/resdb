@@ -2,17 +2,16 @@
 
 --changeset author:schulewa
 
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Africa', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Africa, Asia', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Africa, Asia, Oceania', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Anatolia', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Asia', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Asia, Europe', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Australia', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Caucasian', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Cyclades', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('New Guinea', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('North America', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('Pontic', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('South America', 'N', 'admin');
-INSERT INTO resdb_region (name, status, created_by) VALUES ('World ?', 'N', 'admin');
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Africa', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Africa, Asia', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Africa, Asia, Oceania', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Anatolia', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Asia', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Asia, Europe', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Australia', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Caucasian', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Cyclades', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('New Guinea', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('North America', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('Pontic', 'N', 'admin', 0);
+INSERT INTO resdb_region (name, status, created_by, version_no) VALUES ('South America', 'N', 'admin', 0);

@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.EventTypeGroup;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface EventTypeGroupDao extends CrudRepository<EventTypeGroup, Long> {
+public interface EventTypeGroupDao extends DataDao<EventTypeGroup, Long>, CrudRepository<EventTypeGroup, Long> {
 
   List<EventTypeGroup> findByStatusIn(List<VersionStatus> livestatuses);
 

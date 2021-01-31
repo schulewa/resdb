@@ -6,6 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,8 +30,20 @@ public enum VersionStatus {
         return code;
     }
 
-    public static VersionStatus getInstance(@NotBlank String code) {
-        switch (code) {
+    public static VersionStatus getInstance(@NotBlank String codeOrName) {
+      if (StringUtils.isEmpty(codeOrName))
+        return New;
+
+      Optional<VersionStatus> versionStatus = Arrays.stream(values())
+        .filter(e -> e.name().length() > 1)
+        .filter(e -> e.name().equals(codeOrName))
+        .findFirst();
+
+      if (versionStatus.isPresent())
+        return versionStatus.get();
+
+
+        switch (codeOrName) {
             case "N":
                 return New;
             case "A":
@@ -38,7 +51,7 @@ public enum VersionStatus {
             case "C":
                 return Cancel;
             default:
-                return null;
+                throw new IllegalArgumentException("Invalid code or name supplied as VersionStatus");
         }
     }
 

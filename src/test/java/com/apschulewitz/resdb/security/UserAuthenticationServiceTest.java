@@ -2,11 +2,13 @@ package com.apschulewitz.resdb.security;
 
 import com.apschulewitz.resdb.common.ApplicationResponse;
 import com.apschulewitz.resdb.common.ResponseStatus;
+import com.apschulewitz.resdb.common.utils.StringUtils;
 import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dao.UserAccountDao;
 import com.apschulewitz.resdb.security.model.dto.UserLogonDto;
 import com.apschulewitz.resdb.security.model.entity.*;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.hql.internal.ast.ParseErrorHandler;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +20,16 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
@@ -46,10 +53,10 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Active);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -68,10 +75,11 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Inactive);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.setStatus(AccountStatus.Inactive);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -90,10 +98,11 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Locked);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.setStatus(AccountStatus.Locked);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -112,10 +121,11 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.PasswordNeedsResetting);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.setStatus(AccountStatus.PasswordNeedsResetting);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -134,10 +144,11 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Suspended);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.setStatus(AccountStatus.Suspended);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -156,10 +167,11 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Unknown);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.setStatus(AccountStatus.Unknown);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
@@ -173,24 +185,20 @@ public class UserAuthenticationServiceTest {
   }
 
   @Test
-  public void given_invalid_user_credentials_when_logon_is_executed_then_return_invalid_credentials() {
+  public void given_unmatched_user_password_when_logon_is_executed_then_return_invalid_credentials() {
     // Given
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
-    UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
-
     UserLogonDto invalidUserLogonDto = new UserLogonDto();
-    invalidUserLogonDto.setUserName("testuser");
+    invalidUserLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
     invalidUserLogonDto.setPassword("no way jose");
 
-    UserAccount userAccount = constructUserAccount(invalidUserLogonDto, AccountStatus.Active);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
 
     // When
-    when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenReturn(userAccount);
+    when(mockedUserAccountDao.findByLogonName(invalidUserLogonDto.getUserName())).thenReturn(userAccount);
 
-    ApplicationResponse applicationResponse = userAuthenticationService.authenticateUser(userLogonDto.getUserName(), userLogonDto.getPassword());
+    ApplicationResponse applicationResponse = userAuthenticationService.authenticateUser(invalidUserLogonDto.getUserName(), invalidUserLogonDto.getPassword());
 
     // Then
     assertNotNull(applicationResponse);
@@ -204,10 +212,10 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Active);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
 
     // When
     when(mockedUserAccountDao.findByLogonName("unknown user")).thenReturn(userAccount);
@@ -226,10 +234,8 @@ public class UserAuthenticationServiceTest {
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
-
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Active);
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
     // When
     when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenThrow(new RuntimeException("Simulate error reading from database"));
@@ -243,20 +249,17 @@ public class UserAuthenticationServiceTest {
   }
 
   @Test
-  @Ignore
-  public void given_valid_user_credentials_when_extractPermissions_is_executed_then_return_permissions() {
+  public void given_valid_user_credentials_with_active_groups_and_permissions_when_extractPermissions_is_executed_then_return_permissions() {
     // Given
     UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
     UserLogonDto userLogonDto = new UserLogonDto();
-    userLogonDto.setUserName("testuser");
-    userLogonDto.setPassword("testpassword");
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserAccount userAccount = constructUserAccount(userLogonDto, AccountStatus.Active);
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
 
     // When
-//    when(mockedUserAccountDao.findByLogonName(userLogonDto.getUserName())).thenThrow(new RuntimeException("Simulate error reading from database"));
-
     Collection<Permission> permissions = userAuthenticationService.extractPermissions(true, userAccount);
 
     // Then
@@ -264,36 +267,117 @@ public class UserAuthenticationServiceTest {
     assertEquals(2, permissions.size());
   }
 
-  public UserAccount constructUserAccount(UserLogonDto userLogonDto, AccountStatus accountStatus) {
+  @Test
+  public void given_valid_user_credentials_with_expired_permissions_when_extractPermissions_is_executed_with_onlyActive_true_then_return_permissions() {
+    // Given
+    UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
 
-    UserPassword userPassword = UserPassword.builder()
-      .password(userLogonDto.getPassword())
-      .validFrom(LocalDate.of(2019, 1, 1))
-      .validUntil(LocalDate.MAX)
-      .build();
-    Collection<UserPassword> passwords = Collections.singletonList(userPassword);
+    UserLogonDto userLogonDto = new UserLogonDto();
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
 
-    UserGroup userGroup = UserGroup.builder()
-      .displayName("Test group 1")
-      .name("group1")
-      .id(1L)
-      .groupPermissions(null)
-      .build();
+    LocalDateTime validTillYesterday = LocalDateTime.now().minusDays(1);
 
-    UserGroupMembership groupMembership = UserGroupMembership.builder()
-      .group(userGroup)
-      .build();
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.getGroupMemberships().stream()
+      .forEach(ugp -> ugp.setValidTo(validTillYesterday));
 
-    Collection<UserGroupMembership> groupMemberships = Collections.singletonList(groupMembership);
+    // When
+    Collection<Permission> permissions = userAuthenticationService.extractPermissions(true, userAccount);
 
-    return UserAccount.builder()
-      .id(1L)
-      .familyName("Schulewitz")
-      .firstName("Adrian")
-      .groupMemberships(groupMemberships)
-      .logonName(userLogonDto.getUserName())
-      .passwords(passwords)
-      .status(accountStatus)
-      .build();
+    // Then
+    assertNotNull(permissions);
+    assertEquals(0, permissions.size());
+  }
+
+  @Test
+  public void given_valid_user_credentials_with_expired_permissions_when_extractPermissions_is_executed_with_onlyActive_false_then_return_permissions() {
+    // Given
+    UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
+
+    UserLogonDto userLogonDto = new UserLogonDto();
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
+
+    LocalDateTime validTillYesterday = LocalDateTime.now().minusDays(1);
+
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.getGroupMemberships().stream()
+      .forEach(ugp -> ugp.setValidTo(validTillYesterday));
+
+    // When
+    Collection<Permission> permissions = userAuthenticationService.extractPermissions(false, userAccount);
+
+    // Then
+    assertNotNull(permissions);
+    assertEquals(2, permissions.size());
+  }
+
+  @Test
+  public void given_valid_user_credentials_with_inactive_permissions_when_extractPermissions_is_executed_with_onlyActive_true_then_return_permissions() {
+    // Given
+    UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
+
+    UserLogonDto userLogonDto = new UserLogonDto();
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
+
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.getGroupMemberships().stream()
+      .forEach(ugm -> ugm.getGroup().getGroupPermissions().stream()
+                  .forEach(ugp -> ugp.getPermission().setStatus(Permission.PermissionStatus.Suspended)));
+
+    // When
+    Collection<Permission> permissions = userAuthenticationService.extractPermissions(true, userAccount);
+
+    // Then
+    assertNotNull(permissions);
+    assertEquals(0, permissions.size());
+  }
+
+  @Test
+  public void given_valid_user_credentials_with_expired_permissions_when_extractPermissionsAsString_is_executed_with_onlyActive_false_then_return_permissions() {
+    // Given
+    UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
+
+    UserLogonDto userLogonDto = new UserLogonDto();
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
+
+    LocalDateTime validTillYesterday = LocalDateTime.now().minusDays(1);
+
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.getGroupMemberships().stream()
+      .forEach(ugp -> ugp.setValidTo(validTillYesterday));
+
+    // When
+    Optional<String> optionalPermissions = userAuthenticationService.extractPermissionsAsString(false, userAccount);
+
+    // Then
+    assertNotNull(optionalPermissions);
+    assertTrue(optionalPermissions.isPresent());
+    assertEquals("Theory maintenance,Artefact maintenance", optionalPermissions.get());
+  }
+
+  @Test
+  public void given_valid_user_credentials_with_inactive_permissions_when_extractPermissionsAsString_is_executed_with_onlyActive_true_then_return_permissions() {
+    // Given
+    UserAuthenticationService userAuthenticationService = new UserAuthenticationService(mockedUserAccountDao, mockedAuthenticationManager, csrfTokenRepository);
+
+    UserLogonDto userLogonDto = new UserLogonDto();
+    userLogonDto.setUserName(SecurityTestHelper.TEST_USER_NAME);
+    userLogonDto.setPassword(SecurityTestHelper.TEST_USER_PASSWORD);
+
+    UserAccount userAccount = SecurityTestHelper.constructActiveUserAccount();
+    userAccount.getGroupMemberships().stream()
+      .forEach(ugm -> ugm.getGroup().getGroupPermissions().stream()
+        .forEach(ugp -> ugp.getPermission().setStatus(Permission.PermissionStatus.Suspended)));
+
+    // When
+    Optional<String> optionalPermissions = userAuthenticationService.extractPermissionsAsString(true, userAccount);
+
+    // Then
+    assertNotNull(optionalPermissions);
+    assertTrue(optionalPermissions.isEmpty());
   }
 }

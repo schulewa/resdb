@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.LanguageGroup;
 import com.apschulewitz.resdb.refdata.model.entity.MeasureType;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface LanguageGroupDao extends CrudRepository<LanguageGroup, Long> {
+public interface LanguageGroupDao extends DataDao<LanguageGroup, Long>, CrudRepository<LanguageGroup, Long> {
 
   List<LanguageGroup> findByStatusIn(List<VersionStatus> livestatuses);
 

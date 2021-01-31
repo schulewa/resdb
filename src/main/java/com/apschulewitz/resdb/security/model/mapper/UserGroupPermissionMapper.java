@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.common.model.mapper.EntityMapper;
 import com.apschulewitz.resdb.security.model.dto.PermissionDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
@@ -28,4 +29,9 @@ public class UserGroupPermissionMapper implements EntityMapper<UserGroupPermissi
                 .permission(permission)
                 .build();
     }
+
+  @Override
+  public UserGroupPermission toEntity(UserGroupPermissionDto dto) {
+    return null; // TODO write implementation to map UserGroupPermissionDto to UserGroupPermission
+  }
 }

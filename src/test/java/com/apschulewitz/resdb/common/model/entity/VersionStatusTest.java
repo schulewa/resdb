@@ -2,6 +2,7 @@ package com.apschulewitz.resdb.common.model.entity;
 
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 
 public class VersionStatusTest {
@@ -47,14 +48,11 @@ public class VersionStatusTest {
 
   @Test
   public void given_unknown_code_when_getInstance_is_executed_then_return_null() {
-    // Given
-    String code = "^";
 
-    // When
-    VersionStatus versionStatus = VersionStatus.getInstance(code);
+    assertThatThrownBy(() -> VersionStatus.getInstance("^"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("Invalid code or name supplied as VersionStatus");
 
-    // Then
-    assertNull("VersionStatus null", versionStatus);
   }
 
   @Test

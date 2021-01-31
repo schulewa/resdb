@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
+import com.apschulewitz.resdb.common.model.mapper.EntityMapper;
 import com.apschulewitz.resdb.security.model.dto.PermissionDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupMembershipDto;
@@ -42,4 +43,9 @@ public class UserGroupMembershipMapper implements EntityMapper<UserGroupMembersh
                 .validTo(userGroupMembership.getValidTo())
                 .build();
     }
+
+  @Override
+  public UserGroupMembership toEntity(UserGroupMembershipDto dto) {
+    return null; // TODO write implementation to map UserGroupMembershipDto to UserGroupMembership
+  }
 }

@@ -4,10 +4,14 @@
  */
 package com.apschulewitz.resdb.research.model.dto;
 
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.VersionableDataDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,16 +20,23 @@ import java.util.List;
  * @version $Id: ClassificationCollectionDto.java, v 0.1 2020-10-18 13:53 adrianschulewitz.hds Exp $$
  */
 @Data
-public class ClassificationCollectionDto implements Cloneable {
+//@Builder
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ClassificationCollectionDto implements VersionableDataDto<Long>, Cloneable {
 
   private Long id;
   private String name;
-  private List<ClassificationEntryDto> entries;
-  private VersionStatus status;
+  private final List<ClassificationEntryDto> entries = new ArrayList<>();
+  private String createdBy;
+  private String status;
+  private ZonedDateTime lastUpdated;
+  private String updatedBy;
+  private Long versionNumber;
 
-  public ClassificationCollectionDto() {
-    entries = new ArrayList<>();
-  }
+//  public ClassificationCollectionDto() {
+//    entries = new ArrayList<>();
+//  }
 
   @Override
   public String toString() {
@@ -38,10 +49,11 @@ public class ClassificationCollectionDto implements Cloneable {
 
     if (!CollectionUtils.isEmpty(entries)) {
       buffer.append("entries: ");
-      entries.forEach(e -> buffer.append("id=" + e.getId()).append("name=" + e.getName()));
+      entries.forEach(e -> buffer.append("id=" + e.getId()).append(" name=" + e.getName()));
     }
 
-    buffer.append("status=" + status);
+    buffer.append("status=" + status + " ");
+    buffer.append("createdBy=" + createdBy + " ");
     return buffer.toString();
   }
 
@@ -51,7 +63,8 @@ public class ClassificationCollectionDto implements Cloneable {
     cloned.setId(id);
     cloned.setName(name);
     cloned.setStatus(status);
-    cloned.setEntries(entries);
+    cloned.setCreatedBy(createdBy);
+    cloned.getEntries().addAll(entries);
     return cloned;
   }
 }

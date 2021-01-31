@@ -150,9 +150,9 @@ public class UserAuthenticationService {
 //    }
 
 
-    private Date currentDate() {
-        return new Date(System.currentTimeMillis());
-    }
+//    private Date currentDate() {
+//        return new Date(System.currentTimeMillis());
+//    }
 
     public Collection<Permission> extractPermissions(boolean onlyActive, UserAccount userAccount) {
         log.info("Extracting permissions for user {}", userAccount);
@@ -176,8 +176,8 @@ public class UserAuthenticationService {
                         .map(UserGroupPermission::getPermission))
                 .collect(Collectors.toList());
 
-        return perms.stream()
-                .filter(p -> onlyActive && Permission.PermissionStatus.Active.equals(p.getStatus()))
+        return perms.stream() // check Permission status (but only if onlyActive is set)
+                .filter(p -> !onlyActive || onlyActive && Permission.PermissionStatus.Active.equals(p.getStatus()))
                 .collect(Collectors.toList());
 
     }

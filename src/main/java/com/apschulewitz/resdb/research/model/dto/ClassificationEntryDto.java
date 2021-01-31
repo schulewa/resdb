@@ -4,6 +4,8 @@
  */
 package com.apschulewitz.resdb.research.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +20,7 @@ import java.util.List;
 //@Builder
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClassificationEntryDto {
 
   private Long id;
@@ -35,6 +38,10 @@ public class ClassificationEntryDto {
 
   public void addEntry(String name) {
     ClassificationEntryDto entry = new ClassificationEntryDto();
+//      .name(name)
+//      .owningCollection(getOwningCollection())
+//      .parentEntry(this)
+//      .build();
     entry.setName(name);
     entry.setParentEntry(this);
     entry.setOwningCollection(getOwningCollection());

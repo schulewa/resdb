@@ -1,6 +1,8 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.refdata.model.dto.RegionDto;
 import com.apschulewitz.resdb.refdata.model.entity.Region;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface RegionDao extends CrudRepository<Region, Long> {
+public interface RegionDao extends DataDao<Region, Long>, CrudRepository<Region, Long> {
 
   List<Region> findByStatusIn(List<VersionStatus> livestatuses);
 

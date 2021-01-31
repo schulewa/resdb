@@ -4,15 +4,30 @@
  */
 package com.apschulewitz.resdb.refdata.model.entity;
 
-import com.apschulewitz.resdb.common.model.entity.*;
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
+import com.apschulewitz.resdb.common.model.entity.DataOperation;
+import com.apschulewitz.resdb.common.model.entity.Gender;
+import com.apschulewitz.resdb.common.model.entity.HistoricalDate;
+import com.apschulewitz.resdb.common.model.entity.Title;
+import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Tolerate;
-import org.hibernate.envers.Audited;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -23,9 +38,9 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "resdb_person")
-public class Person implements Serializable {
+public class Person implements VersionableDataEntity<Long> {
 
-    private static final long serialVersionUID = -2639006949864237790L;
+//    private static final long serialVersionUID = -2639006949864237790L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,18 +76,18 @@ public class Person implements Serializable {
     private HistoricalDate dateOfDeath;
 
     // default prefix title used when listing person
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Title prefixTitle;
 
     // default suffix title used when listing person
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Title suffixTitle;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "birth_place_id")
     private Place birthPlace;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "death_place_id")
     private Place deathPlace;
 
@@ -109,9 +124,11 @@ public class Person implements Serializable {
     @Column
     private String updatedBy;
 
-    @Version
+    @Column(name = "version_no")
+    private Long versionNumber;
+
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
 
     private transient DataOperation operation;
 

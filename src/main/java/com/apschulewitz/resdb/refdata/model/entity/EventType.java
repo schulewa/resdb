@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.common.model.VersionableDataEntity;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 
 @Data
 @Builder
 @Entity
 @Table(name = "resdb_event_type", uniqueConstraints = @UniqueConstraint(columnNames = {"name"}))
-public class EventType {
+public class EventType implements VersionableDataEntity<Long> {
 
 	private static final long serialVersionUID = -7400857047540246516L;
 
@@ -47,9 +47,11 @@ public class EventType {
     @Column
     private String updatedBy;
 
-    @Version
+    @Column(name = "version_no")
+    private Long versionNumber;
+
     @Column(name = "last_updated")
-    private LocalDateTime lastUpdated;
+    private ZonedDateTime lastUpdated;
 
     @Tolerate
     public EventType() {

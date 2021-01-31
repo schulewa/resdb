@@ -1,8 +1,10 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
+import com.apschulewitz.resdb.refdata.model.entity.HierarchyType;
 import com.apschulewitz.resdb.refdata.model.entity.MeasureType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,10 +17,10 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface MeasureTypeDao extends CrudRepository<MeasureType, Long> {
+public interface MeasureTypeDao extends DataDao<MeasureType, Long>, CrudRepository<MeasureType, Long> {
 
     MeasureType findByNameEquals(String name);
 
-    List<MeasureType> findByStatusIn(List<VersionStatus> livestatuses);
+//    List<MeasureType> findByStatusIn(List<VersionStatus> livestatuses);
 
 }

@@ -1,84 +1,91 @@
 package com.apschulewitz.resdb.research.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.EntityTypeEnum;
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.refdata.model.dao.PersonDao;
-import com.apschulewitz.resdb.refdata.model.entity.AddressType;
-import com.apschulewitz.resdb.refdata.model.entity.Person;
-import com.apschulewitz.resdb.security.model.dto.PersonDto;
-import com.apschulewitz.resdb.security.model.mapper.PersonMapper;
+import com.apschulewitz.resdb.refdata.service.PersonService;
+import com.apschulewitz.resdb.refdata.model.dto.PersonDto;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by adrianschulewitz on 22/04/2017.
  */
 @RestController()
 @Slf4j
-public class PersonController extends AbstractController<Person, Long> {
+public class PersonController extends AbstractController<PersonDto, Long> {
 
-  private PersonDao personDao;
-  private PersonMapper personMapper;
+  private PersonService personService;
 
-  public PersonController(PersonDao personDao, PersonMapper personMapper) {
-      this.personDao = personDao;
-      this.personMapper = personMapper;
+  private final Gson gson = new Gson();
+
+  public PersonController(PersonService personService) {
+    this.personService = personService;
   }
 
-  @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<PersonDto>> findAll() {
-    Iterable<Person> iter = personDao.findByStatusIn(VersionStatus.getLiveStatuses());
-      List<PersonDto> persons = StreamSupport.stream(iter.spliterator(), false)
-            .map(p -> personMapper.toDto(p))
-            .collect(Collectors.toList());
+  @GetMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<List<PersonDto>> findAll(Boolean onlyActive) {
+    logStartOfFindAllRequest(EntityTypeEnum.PERSON);
+    List<PersonDto> persons = personService.findAll(onlyActive);
+    logEndOfFindAllRequest(EntityTypeEnum.PERSON);
     return new ResponseEntity<>(persons, HttpStatus.OK);
   }
 
-  @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, method = RequestMethod.POST)
-  public ResponseEntity<Person> add(HttpServletRequest request, @RequestBody Person toBeSaved) {
-    log.info("Save new person: {}", toBeSaved);
-    Person saved = personDao.save(toBeSaved);
-    return new ResponseEntity<>(saved, HttpStatus.CREATED);
+//  @GetMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//  public ResponseEntity<List<PersonDto>> findAllActive() {
+//    logStartOfFindAllActiveRequest(EntityTypeEnum.PERSON);
+//    List<PersonDto> persons = personService.findByStatusIn(VersionStatus.getLiveStatuses());
+//    logEndOfFindAllActiveRequest(EntityTypeEnum.PERSON);
+//    return new ResponseEntity<>(persons, HttpStatus.OK);
+//  }
+
+  // TODO fix PersonController 'add' method with PersonDto causing unreadable message exception
+  @PostMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL)
+  public ResponseEntity<PersonDto> add(@RequestBody PersonDto toBeSaved) {
+    logStartOfAddRequest(EntityTypeEnum.PERSON, toBeSaved);
+    PersonDto savedDto = personService.add(toBeSaved);
+    logEndOfAddRequest(EntityTypeEnum.PERSON, savedDto);
+    return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
   }
 
-  @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<Person> delete(@PathVariable long id) {
-    log.info("Marking person [{}] for deletion", id);
-    Optional<Person> existing = personDao.findById(id);
+//  @PostMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL)
+//    public ResponseEntity<PersonDto> addUsingStringData(@RequestBody String json) {
+//    logStartOfAddRequest(EntityTypeEnum.PERSON, json);
+//    PersonDto toBeSaved;
+//    try {
+//      toBeSaved = gson.fromJson(json, PersonDto.class);
+//    } catch (JsonSyntaxException e) {
+//      log.error("Error parsing json version of PerdsonDto", e);
+//      return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//    }
+//    return this.add(toBeSaved);
+//  }
 
-    if (existing.isEmpty()) {
-      log.error("No existing person found for id {} - unable to mark for deletion", id);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    existing.get().setStatus(VersionStatus.Cancel);
-    Person saved = personDao.save(existing.get());
+  @DeleteMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL + "/{id}")
+  public ResponseEntity<PersonDto> delete(@PathVariable Long id) {
+    logStartOfDeleteRequest(EntityTypeEnum.PERSON, id);
+    PersonDto saved = personService.deleteById(id);
+    logEndOfDeleteRequest(EntityTypeEnum.PERSON, saved);
     return new ResponseEntity<>(saved, HttpStatus.OK);
   }
 
-  @RequestMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Person> update(@RequestBody Person toBeSaved) {
-    log.info("Update existing person: {}", toBeSaved);
-    Optional<Person> existing = personDao.findById(toBeSaved.getId());
-
-    if (existing.isEmpty()) {
-      log.error("No existing person found for id {} - update aborted for: {}", toBeSaved.getId(), toBeSaved);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    Person saved = personDao.save(toBeSaved);
+  @PutMapping(value = RestUrlPaths.PERSON_CONTROLLER_BASE_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PersonDto> update(@RequestBody PersonDto toBeSaved) {
+    logStartOfUpdateRequest(EntityTypeEnum.PERSON, toBeSaved);
+    PersonDto saved = personService.update(toBeSaved);
+    logEndOfUpdateRequest(EntityTypeEnum.PERSON, saved);
     return new ResponseEntity<>(saved, HttpStatus.OK);
   }
 

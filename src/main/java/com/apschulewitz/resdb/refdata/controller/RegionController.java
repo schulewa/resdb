@@ -1,82 +1,123 @@
 package com.apschulewitz.resdb.refdata.controller;
 
 import com.apschulewitz.resdb.common.controller.AbstractController;
-import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.model.EntityTypeEnum;
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.refdata.model.dao.RegionDao;
-import com.apschulewitz.resdb.refdata.model.entity.ReferenceType;
-import com.apschulewitz.resdb.refdata.model.entity.Region;
+import com.apschulewitz.resdb.refdata.model.dto.RegionDto;
+import com.apschulewitz.resdb.refdata.service.RegionService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * Created by adrianschulewitz on 22/04/2017.
  */
 @RestController()
 @Slf4j
-public class RegionController extends AbstractController<Region, Long> {
+@Api(value = "Region controller", tags = {"Region"})
+public class RegionController extends AbstractController<RegionDto, Long> {
 
-  private RegionDao regionDao;
+  private RegionService regionService;
 
-  public RegionController(RegionDao regionDao) {
-    this.regionDao = regionDao;
+  public RegionController(RegionService regionService) {
+    this.regionService = regionService;
   }
 
+  @ApiOperation(
+    value = "Find all regions",
+    httpMethod = "GET",
+    notes = "Finds all regions, active and inactive",
+    response = List.class
+  )
+  @ApiResponses(value = {
+    @ApiResponse(code = 200, message = "Request to find all regions completed successfully.")
+  })
   @RequestMapping(value = RestUrlPaths.REGION_CONTROLLER_BASE_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<Region>> findAll() {
+  public ResponseEntity<List<RegionDto>> findAll(@ApiParam(name = "onlyActive",
+                                                            allowableValues = "true, false",
+                                                            required = true,
+                                                            type = "Boolean",
+                                                            value = "A boolean. True specifies to only include active regions, false to exclude inactive regions.")
+                                                   @RequestParam Boolean onlyActive) {
+    logStartOfFindAllRequest(EntityTypeEnum.REGION);
+    List<RegionDto> regions = new ArrayList<>();
+    if (onlyActive)
+      regions.addAll(regionService.findAll(true));
+    else
+      regions.addAll(regionService.findAll(false));
 
-    List<Region> regions = new ArrayList<>();
-    Iterable<Region> iter = regionDao.findByStatusIn(VersionStatus.getLiveStatuses());
-    StreamSupport.stream(iter.spliterator(), false)
-      .forEach(regions::add);
-
+    logEndOfFindAllRequest(EntityTypeEnum.REGION);
     return new ResponseEntity<>(regions, HttpStatus.OK);
   }
 
+  @ApiOperation(
+    value = "Add new region",
+    notes = "Add new region. Returns the saved region.",
+    httpMethod = "POST",
+    response = RegionDto.class
+  )
+  @ApiResponses(value = {
+    @ApiResponse(code = 200, message = "Request to add the specified region completed successfully.")
+  })
   @RequestMapping(value = RestUrlPaths.REGION_CONTROLLER_BASE_URL, method = RequestMethod.POST)
-  public ResponseEntity<Region> add(HttpServletRequest request, @RequestBody Region toBeSaved) {
-    log.info("Save new region: {}", toBeSaved);
-    Region saved = regionDao.save(toBeSaved);
+  public ResponseEntity<RegionDto> add(@ApiParam(name = "toBeSaved",
+                                                  required = true,
+                                                  type = "RegionDto",
+                                                  value = "A non-null instance of a RegionDto")
+                                         @RequestBody RegionDto toBeSaved) {
+    logStartOfAddRequest(EntityTypeEnum.REGION, toBeSaved);
+    RegionDto saved = regionService.add(toBeSaved);
+    logEndOfAddRequest(EntityTypeEnum.REGION, saved);
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
 
+  @ApiOperation(
+    value = "Delete a region",
+    notes = "Delete the region matching the identifier by marking it as cancelled(inactive).",
+    httpMethod = "DELETE",
+    response = RegionDto.class)
   @RequestMapping(value = RestUrlPaths.REGION_CONTROLLER_BASE_URL + "/{id}", method = RequestMethod.DELETE)
-  public ResponseEntity<Region> delete(@PathVariable long id) {
-    log.info("Marking region [{}] for deletion", id);
-    Optional<Region> existing = regionDao.findById(id);
-
-    if (existing.isEmpty()) {
-      log.error("No existing reference type found for id {} - unable to mark for deletion", id);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    existing.get().setStatus(VersionStatus.Cancel);
-    Region saved = regionDao.save(existing.get());
-    return new ResponseEntity<>(saved, HttpStatus.OK);
+  public ResponseEntity<RegionDto> delete(@ApiParam(name = "id",
+                                                    required = true,
+                                                    type = "Long",
+                                                    value = "A positive Long number identifying the region to be deleted")
+                                            @PathVariable Long id) {
+    logStartOfDeleteRequest(EntityTypeEnum.REGION, id);
+    RegionDto deleted = regionService.deleteById(id);
+    logEndOfDeleteRequest(EntityTypeEnum.REGION, deleted);
+    return new ResponseEntity<>(deleted, HttpStatus.OK);
   }
 
+  @ApiOperation(
+    value = "Update a region",
+    notes = "Update the region using the supplied data. The identifier must identify an active region",
+    httpMethod = "PUT",
+    response = RegionDto.class)
   @RequestMapping(value = RestUrlPaths.REGION_CONTROLLER_BASE_URL, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Region> update(Region toBeSaved) {
-    log.info("Update existing region: {}", toBeSaved);
-    Optional<Region> existing = regionDao.findById(toBeSaved.getId());
-
-    if (existing.isEmpty()) {
-      log.error("No existing region found for id {} - update aborted for: {}", toBeSaved.getId(), toBeSaved);
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    Region saved = regionDao.save(toBeSaved);
-    return new ResponseEntity<>(saved, HttpStatus.OK);
+  public ResponseEntity<RegionDto> update(@ApiParam(name = "toBeSaved",
+                                                    required = true,
+                                                    type = "RegionDto",
+                                                    value = "A non-null RegionDto")
+                                            @RequestBody RegionDto toBeSaved) {
+    logStartOfUpdateRequest(EntityTypeEnum.REGION, toBeSaved);
+    RegionDto updated = regionService.update(toBeSaved);
+    logEndOfUpdateRequest(EntityTypeEnum.REGION, updated);
+    return new ResponseEntity<>(updated, HttpStatus.OK);
   }
 
 }

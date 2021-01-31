@@ -2,7 +2,9 @@ package com.apschulewitz.resdb.refdata.model.dao;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.AddressType;
+import cucumber.api.java.bs.A;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -24,31 +29,50 @@ import static org.junit.Assert.assertNotNull;
 public class AddressTypeDaoTest {
 
   @Autowired
-  private TestEntityManager testEntityManager;
-
-  @Autowired
   private AddressTypeDao addressTypeDao;
 
-  @Test
-  public void given_valid_addresstype_entity_when_save_is_executed_then_save_entity() {
-    // first delete all entries
+  @Before
+  public void beforeEachTest() {
     addressTypeDao.deleteAll();
+  }
 
+  @Test
+  public void given_valid_new_entity_when_save_is_executed_then_save_entity() {
     AddressType homePostal = constructNewAddressType("Home postal address");
     AddressType saved = addressTypeDao.save(homePostal);
 
-    assertNotNull("Address type saved", saved);
-    assertNotNull("Address type id", saved.getId());
-    assertEquals("Address type name", homePostal.getName(), saved.getName());
-    assertEquals("Address type createdBy", homePostal.getCreatedBy(), saved.getCreatedBy());
-    assertEquals("Address type updatedBy", homePostal.getUpdatedBy(), saved.getUpdatedBy());
-    assertEquals("Address type lastUpdated", homePostal.getLastUpdated(), saved.getLastUpdated());
-    assertEquals("Address type status", homePostal.getStatus(), saved.getStatus());
-    assertEquals("Address type ", homePostal.getOperation(), saved.getOperation());
+    assertNotNull(saved);
+    assertNotNull(saved.getId());
+    assertEquals(homePostal.getName(), saved.getName());
+    assertEquals(homePostal.getCreatedBy(), saved.getCreatedBy());
+    assertEquals(homePostal.getStatus(), saved.getStatus());
+    assertEquals(homePostal.getOperation(), saved.getOperation());
+    assertNull(saved.getVersionNumber());
+    assertNull(saved.getUpdatedBy());
+    assertNull(saved.getLastUpdated());
 
     Iterable<AddressType> liveEntries = addressTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
     List<AddressType> addressTypes = StreamSupport.stream(liveEntries.spliterator(), false).collect(Collectors.toList());
     assertEquals("Active address types size", 1, addressTypes.size());
+  }
+
+  @Test
+  public void given_valid_new_entity_when_save_is_executed_multiple_times_then_version_no_is_updated() {
+    AddressType homePostal = constructNewAddressType("Home postal address");
+    AddressType saved = addressTypeDao.save(homePostal);
+    saved.setName("Modified name");
+    saved.setStatus(VersionStatus.Amend);
+    saved = addressTypeDao.save(saved);
+
+    assertNotNull(saved);
+    assertNotNull(saved.getId());
+    assertNull(saved.getVersionNumber());
+    assertNull(saved.getUpdatedBy());
+    assertNull(saved.getLastUpdated());
+
+    Iterable<AddressType> liveEntries = addressTypeDao.findByStatusIn(VersionStatus.getLiveStatuses());
+    List<AddressType> addressTypes = StreamSupport.stream(liveEntries.spliterator(), false).collect(Collectors.toList());
+    assertEquals(1, addressTypes.size());
   }
 
   @Test
@@ -113,12 +137,16 @@ public class AddressTypeDaoTest {
   }
 
   private AddressType constructNewAddressType(@NotBlank String name) {
-    return AddressType.builder()
-      .name(name)
-      .createdBy("system")
-      .status(VersionStatus.New)
-      .updatedBy("system")
-      .build();
+//    return AddressType.builder()
+//      .name(name)
+//      .createdBy("system")
+//      .status(VersionStatus.New)
+//      .build();
+    AddressType addressType = new AddressType();
+    addressType.setName(name);
+    addressType.setCreatedBy("system");
+    addressType.setStatus(VersionStatus.New);
+    return addressType;
   }
 
 }

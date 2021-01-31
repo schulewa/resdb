@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.CalendarType;
 import org.springframework.data.repository.CrudRepository;
@@ -13,8 +14,9 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface CalendarTypeDao extends CrudRepository<CalendarType, Long> {
+public interface CalendarTypeDao extends DataDao<CalendarType, Long>, CrudRepository<CalendarType, Long> {
 
   List<CalendarType> findByStatusIn(List<VersionStatus> livestatuses);
 
+  List<CalendarType> findByStatusInAndNameStartsWith(List<VersionStatus> livestatuses, String name);
 }

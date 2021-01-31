@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.ArtefactGroup;
 import org.springframework.data.repository.CrudRepository;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface ArtefactGroupDao extends CrudRepository<ArtefactGroup, Long> {
+public interface ArtefactGroupDao extends DataDao<ArtefactGroup, Long>, CrudRepository<ArtefactGroup, Long> {
 
   List<ArtefactGroup> findByStatusIn(List<VersionStatus> livestatuses);
 

@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.dao.DataDao;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.model.entity.HierarchyType;
 import com.apschulewitz.resdb.refdata.model.entity.ImageType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public interface ImageTypeDao extends CrudRepository<ImageType, Long> {
+public interface ImageTypeDao extends DataDao<ImageType, Long>, CrudRepository<ImageType, Long> {
 
   List<ImageType> findByStatusIn(List<VersionStatus> livestatuses);
 

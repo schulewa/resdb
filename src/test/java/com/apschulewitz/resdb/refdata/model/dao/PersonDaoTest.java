@@ -1,11 +1,17 @@
 package com.apschulewitz.resdb.refdata.model.dao;
 
+import com.apschulewitz.resdb.common.model.entity.Altitude;
 import com.apschulewitz.resdb.common.model.entity.Gender;
 import com.apschulewitz.resdb.common.model.entity.HistoricalDate;
+import com.apschulewitz.resdb.common.model.entity.Latitude;
+import com.apschulewitz.resdb.common.model.entity.Longitude;
 import com.apschulewitz.resdb.common.model.entity.Title;
+import com.apschulewitz.resdb.common.model.entity.TitleType;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.refdata.model.entity.Person;
 import com.apschulewitz.resdb.refdata.model.entity.Place;
+import com.apschulewitz.resdb.research.model.helper.PersonTestHelper;
+import com.apschulewitz.resdb.research.model.helper.PlaceTestHelper;
 import com.apschulewitz.resdb.research.model.dao.TitleDao;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -14,13 +20,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -33,8 +37,7 @@ import static org.junit.Assert.assertNotNull;
 @Ignore
 public class PersonDaoTest {
 
-    @Autowired
-    private TestEntityManager testEntityManager;
+  private static final String USER_NAME = "testuser";
 
     @Autowired
     private PersonDao personDao;
@@ -45,7 +48,17 @@ public class PersonDaoTest {
     @Autowired
     private TitleDao titleDao;
 
+    @Autowired
+    private PersonTestHelper personTestHelper;
+
+    @Autowired
+    private PlaceTestHelper placeTestHelper;
+
     private Title sir;
+
+  private Altitude altitude;
+  private Latitude latitude;
+  private Longitude longitude;
 
     @Before
     public void beforeEachTest() {
@@ -54,7 +67,16 @@ public class PersonDaoTest {
         placeDao.deleteAll();
         titleDao.deleteAll();
 
-        sir = Title.builder().title("Sir").build();
+      altitude = new Altitude();
+      altitude.setValue("altitude");
+
+      latitude = new Latitude();
+      latitude.setValue("latitude");
+
+      longitude = new Longitude();
+      longitude.setValue("longitude");
+
+        sir = Title.builder().appliesTo(Gender.Male).createdBy(USER_NAME).title("Sir").titleType(TitleType.Prefix).build();
         titleDao.save(sir);
     }
 
@@ -63,24 +85,28 @@ public class PersonDaoTest {
 
         // Given
 
-        Place campbellBirthPlace = constructNewPlace("Chislehurst", true);
-        Place campbellDeathPlace = constructNewPlace("Reigate", true);
+        Place campbellBirthPlace = placeTestHelper.constructUnsavedMinimalEntity(); //(altitude,latitude, longitude, "Chislehurst", null);
+        Place campbellDeathPlace = placeTestHelper.constructUnsavedMinimalEntity(); //(altitude, latitude, longitude, "Reigate", null);
 
-        HistoricalDate campbellBirth = HistoricalDate.builder()
+        HistoricalDate campbellDateOfBirth = HistoricalDate.builder()
                 .day(11).month(Month.MARCH.getValue()).year(1885).build();
 
-        HistoricalDate campbellDeath = HistoricalDate.builder()
+        HistoricalDate campbellDateOfDeath = HistoricalDate.builder()
                 .day(31).month(Month.DECEMBER.getValue()).year(1948).build();
 
-        Person unSavedCampbell = constructNewPerson("Malcolm",
-                null,
-                "Campbell",
-                Gender.Male,
-                campbellBirthPlace,
-                campbellBirth,
-                campbellDeathPlace,
-                campbellDeath);
-
+      Person unSavedCampbell = PersonTestHelper.constructNewEntityWithAllValues(
+        "Malcolm",
+        null,
+        "Campbell",
+        Gender.Male,
+        campbellDateOfBirth,
+        campbellBirthPlace,
+        campbellDateOfDeath,
+        campbellDeathPlace,
+        sir,
+        null,
+        null
+      );
 
         // When
 
@@ -106,42 +132,57 @@ public class PersonDaoTest {
 
         // Given
 
-        Place campbellBirthPlace = constructNewPlace("Chislehurst", true);
-        Place campbellDeathPlace = constructNewPlace("Reigate", true);
+        Place campbellBirthPlace = placeTestHelper.constructNewEntityWithAllValues();
+      campbellBirthPlace.setName("Chislehurst");
 
-        Place sennaBirthPlace = constructNewPlace("Sao Paulo", true);
-        Place sennaDeathPlace = constructNewPlace("Bologna", true);
+        Place campbellDeathPlace = placeTestHelper.constructNewEntityWithAllValues();
+        campbellDeathPlace.setName("Reigate");
 
-        HistoricalDate campbellBirth = HistoricalDate.builder()
+        Place sennaBirthPlace = placeTestHelper.constructUnsavedMinimalEntity();
+        sennaBirthPlace.setName("Sao Paulo");
+
+        Place sennaDeathPlace = placeTestHelper.constructUnsavedMinimalEntity();
+        sennaDeathPlace.setName("Bologna");
+
+        HistoricalDate campbellDateOfBirth = HistoricalDate.builder()
                 .day(11).month(Month.MARCH.getValue()).year(1885).build();
 
-        HistoricalDate campbellDeath = HistoricalDate.builder()
+        HistoricalDate campbellDateOfDeath = HistoricalDate.builder()
                 .day(31).month(Month.DECEMBER.getValue()).year(1948).build();
 
-        HistoricalDate sennaBirth = HistoricalDate.builder()
+        HistoricalDate sennaDateOfBirth = HistoricalDate.builder()
                 .day(21).month(Month.MARCH.getValue()).year(1960).build();
 
-        HistoricalDate sennaDeath = HistoricalDate.builder()
+        HistoricalDate sennaDateOfDeath = HistoricalDate.builder()
                 .day(1).month(Month.MAY.getValue()).year(1994).build();
 
-        Person unSavedCampbell = constructNewPerson("Malcolm",
-                null,
-                "Campbell",
-                Gender.Male,
-                campbellBirthPlace,
-                campbellBirth,
-                campbellDeathPlace,
-                campbellDeath);
+        Person unSavedCampbell = PersonTestHelper.constructNewEntityWithAllValues(
+          "Malcolm",
+          null,
+          "Campbell",
+          Gender.Male,
+          campbellDateOfBirth,
+          campbellBirthPlace,
+          campbellDateOfDeath,
+          campbellDeathPlace,
+          sir,
+          null,
+          null
+          );
 
-
-        Person unsavedSenna = constructNewPerson("Ayrton",
-                null,
-                "Senna da Silva",
-                Gender.Male,
-                sennaBirthPlace,
-                sennaBirth,
-                sennaDeathPlace,
-                sennaDeath);
+      Person unsavedSenna = PersonTestHelper.constructNewEntityWithAllValues(
+        "Ayrton",
+        null,
+        "Senna da Silva",
+        Gender.Male,
+        sennaDateOfBirth,
+        sennaBirthPlace,
+        sennaDateOfDeath,
+        sennaDeathPlace,
+        null,
+        null,
+        null
+      );
 
         // When
         Person savedMalcolmCampbell = personDao.save(unSavedCampbell);
@@ -160,48 +201,9 @@ public class PersonDaoTest {
         // Then
         assertNotNull("Malcolm Campbell id", savedMalcolmCampbell.getId());
         assertEquals("Live persons size", 1, livePersons.size());
-        assertEquals("All persons size", 2, allPersons);
-        assertEquals("Cancelled persons size", 1, cancelledPersons);
+        assertEquals("All persons size", 2, allPersons.size());
+        assertEquals("Cancelled persons size", 1, cancelledPersons.size());
         assertEquals("Cancelled person", "Ayrton", cancelledPersons.get(0).getFirstName());
-    }
-
-    private Place constructNewPlace(String name, boolean save) {
-        Place unsavedPlace = Place.builder()
-                .name(name)
-                .build();
-
-        Place savedPlace = null;
-
-        if (save) {
-            savedPlace = placeDao.save(unsavedPlace);
-            return savedPlace;
-        }
-
-        return unsavedPlace;
-    }
-
-    private Person constructNewPerson(String firstName,
-                                      String middleName,
-                                      String familyName,
-                                      Gender gender,
-                                      Place birthPlace,
-                                      HistoricalDate dateOfBirth,
-                                      Place deathPlace,
-                                      HistoricalDate dateOfDeath) {
-
-        return Person.builder()
-                .birthPlace(birthPlace)
-                .createdBy("admin")
-                .dateOfBirth(dateOfBirth)
-                .dateOfDeath(dateOfDeath)
-                .deathPlace(deathPlace)
-                .familyName(familyName)
-                .firstName(firstName)
-                .gender(gender)
-                .middleName(middleName)
-                .prefixTitle(sir)
-                .status(VersionStatus.New)
-                .build();
     }
 
 }

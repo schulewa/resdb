@@ -35,7 +35,7 @@
     "core-js": "^2.6.10",
     "dateformat": "^3.0.3",
     "help": "^3.0.2",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "ngx-mydatepicker": "^2.4.9",
     "ngx-permissions": "^6.0.5",

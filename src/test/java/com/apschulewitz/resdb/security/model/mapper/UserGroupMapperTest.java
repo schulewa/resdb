@@ -1,6 +1,6 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.entity.Permission;
 import com.apschulewitz.resdb.security.model.entity.UserGroup;

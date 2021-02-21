@@ -5,6 +5,7 @@ public enum EntityTypeEnum {
   ADDRESS_TYPE("AddressType"),
   ARTEFACT_GROUP("ArtefactGroup"),
   ARTEFACT_TYPE("ArtefactType"),
+  AUTHENTICATION_CONFIGURATION("AuthenticationConfiguration"),
   CALENDAR_TYPE("CalendarType"),
   CLASSIFICATION_COLLECTION("ClassificationCollection"),
   COUNTRY("COUNTRY"),

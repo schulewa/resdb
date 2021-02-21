@@ -23,6 +23,7 @@ spring:
     store-type: none
 
 authentication:
+  strength: 12 # used for encoding the passwords during hashing
   expiryInMinutes: 7200
 
 client:

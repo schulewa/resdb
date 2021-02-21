@@ -1,26 +1,24 @@
-package com.apschulewitz.resdb.security;
+package com.apschulewitz.resdb.security.service;
 
 import com.apschulewitz.resdb.common.ApplicationResponse;
 import com.apschulewitz.resdb.common.ResponseStatus;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dao.UserAccountDao;
 import com.apschulewitz.resdb.security.model.dto.UserDto;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.entity.Permission;
 import com.apschulewitz.resdb.security.model.entity.UserAccount;
 import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
 import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
 import com.apschulewitz.resdb.security.model.mapper.PermissionMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -30,22 +28,24 @@ import java.util.stream.Collectors;
 @Service
 public class UserAuthenticationService {
 
-    private UserAccountDao userAccountDao;
-    private AuthenticationManager authenticationManager;
+    private final UserAccountDao userAccountDao;
+    private final AuthenticationManager authenticationManager;
 
-    @Value("${authentication.expiryInMinutes}")
-    private Integer expiryInMinutes;
+    private final CsrfTokenRepository csrfTokenRepository;
 
-    private CsrfTokenRepository csrfTokenRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserAuthenticationService(UserAccountDao userAccountDao, AuthenticationManager authenticationManager, CsrfTokenRepository csrfTokenRepository) {
+    public UserAuthenticationService(UserAccountDao userAccountDao,
+                                     AuthenticationManager authenticationManager,
+                                     PasswordEncoder passwordEncoder,
+                                     CsrfTokenRepository csrfTokenRepository) {
         this.userAccountDao = userAccountDao;
         this.authenticationManager = authenticationManager;
+        this.passwordEncoder = passwordEncoder;
         this.csrfTokenRepository = csrfTokenRepository;
     }
 
-    public ApplicationResponse authenticateUser(String userName, String password) {
+    public ApplicationResponse<UserDto> authenticateUser(String userName, String password) {
         ApplicationResponse<UserDto> response;
         ResponseStatus responseStatus = ResponseStatus.AUTHENTICATED;
         String message = "";
@@ -63,20 +63,21 @@ public class UserAuthenticationService {
                     responseStatus = ResponseStatus.ACCOUNT_LOCKED;
                 } else if (AccountStatus.Active.equals(userAccount.getStatus())) {
                     log.info("User account {} is active", userAccount.getLogonName());
-                    if (userAccount.getCurrentPassword().isPresent() && userAccount.getCurrentPassword().get().getPassword().equals(password)) {
-                        CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
-                        PermissionMapper permissionMapper = new PermissionMapper();
-                        userDto = UserDto.builder().logonName(userName)
-                                .permissions(permissionMapper.toDto(userAccount.getGroupMemberships()))
-                                .familyName(userAccount.getFamilyName())
-                                .firstName(userAccount.getFirstName())
-                                .id(userAccount.getId())
-                                .status(userAccount.getStatus())
-                                .token(csrfToken.getToken())
-                                .build();
-                        userAccount.setLastLogon(LocalDateTime.now());
-                        userAccountDao.save(userAccount);
-                        log.info("update last logon time to {} for user {}", userAccount.getLastLogon(), userAccount.getLogonName());
+                    // check the user plain password against the encoded version in the database
+                    if (userAccount.getCurrentPassword().isPresent() && passwordEncoder.matches(password, userAccount.getCurrentPassword().get().getPassword())) {
+                      CsrfToken csrfToken = csrfTokenRepository.generateToken(null);
+                      PermissionMapper permissionMapper = new PermissionMapper();
+                      userDto = UserDto.builder().logonName(userName)
+                        .permissions(permissionMapper.toDto(userAccount.getGroupMemberships()))
+                        .familyName(userAccount.getFamilyName())
+                        .firstName(userAccount.getFirstName())
+                        .id(userAccount.getId())
+                        .status(userAccount.getStatus())
+                        .token(csrfToken.getToken())
+                        .build();
+                      userAccount.setLastLogon(LocalDateTime.now());
+                      userAccountDao.save(userAccount);
+                      log.info("update last logon time to {} for user {}", userAccount.getLastLogon(), userAccount.getLogonName());
 //                        authenticationManager.authenticate(jwtUser); // TODO should we call this ??
                     } else {
                       log.info("Invalid credentials supplied for user {}", userAccount.getLogonName());

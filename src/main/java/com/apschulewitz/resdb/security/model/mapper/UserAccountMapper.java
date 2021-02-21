@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.mapper.LanguageMapper;
 import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
 import com.apschulewitz.resdb.security.model.dto.UserAccountDto;
@@ -43,6 +43,7 @@ public class UserAccountMapper implements VersionableEntityDtoMapper<UserAccount
             languageMapper.toDto(userAccount.getPreferredLanguage());
         }
 
+        String status = userAccount.getStatus() == null ? null : userAccount.getStatus().name();
         return UserAccountDto.builder()
                 .familyName(userAccount.getFamilyName())
                 .firstName(userAccount.getFirstName())
@@ -53,7 +54,7 @@ public class UserAccountMapper implements VersionableEntityDtoMapper<UserAccount
                 .logonName(userAccount.getLogonName())
                 .passwordUpdated(userAccount.getPasswordUpdated())
                 .preferredLanguage(preferredLanguage)
-                .status(userAccount.getStatus())
+                .status(status)
                 .templateUser(userAccount.isTemplateUser())
                 .build();
     }

@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.security.controller;
 
 import com.apschulewitz.resdb.common.ResponseStatus;
-import com.apschulewitz.resdb.security.UserAuthenticationService;
+import com.apschulewitz.resdb.security.service.UserAuthenticationService;
 import com.apschulewitz.resdb.security.model.dto.JwtUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

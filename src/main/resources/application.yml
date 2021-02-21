@@ -38,6 +38,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: historyresearchdb
+    password: #Y6iM52i$%JXhUaI
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   session:
     store-type: none
 
@@ -70,6 +81,7 @@ client:
 environment: dev
 
 authentication:
+  strength: 12 # used for encoding the passwords during hashing
   expiryInMinutes: 7200
 
 #security:

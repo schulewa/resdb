@@ -1,24 +1,43 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
-import com.apschulewitz.resdb.security.SecurityTestHelper;
+import com.apschulewitz.resdb.config.UserAuthenticationConfiguration;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
+import com.apschulewitz.resdb.security.model.helper.SecurityTestHelper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {
+//  UserAuthenticationConfiguration.class,
+  PermissionMapper.class,
+  SecurityTestHelper.class,
+  UserGroupPermissionMapper.class
+})
 public class UserGroupPermissionMapperTest {
 
-  private PermissionMapper permissionMapper = new PermissionMapper();
-  private UserGroupPermissionMapper userGroupPermissionMapper = new UserGroupPermissionMapper(permissionMapper);
+  @Autowired
+  private UserGroupPermissionMapper userGroupPermissionMapper;
+
+  @Autowired
+  private SecurityTestHelper securityTestHelper;
+
+//  @Before
+//  public void beforeEachTest() {
+//    ReflectionTestUtils.setField(securityTestHelper, "authentication.strength", 12, Integer.class);
+//  }
 
   @Test
   public void given_usergrouppermission_when_toDto_is_executed_then_return_dto() {
     // given
-    UserGroupPermission userGroupPermission = SecurityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
+    UserGroupPermission userGroupPermission = securityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
 
     // when
     UserGroupPermissionDto userGroupPermissionDto = userGroupPermissionMapper.toDto(userGroupPermission);
@@ -41,7 +60,7 @@ public class UserGroupPermissionMapperTest {
   @Test
   public void given_usergrouppermission_and_null_permission_when_toDto_is_executed_then_return_dto() {
     // given
-    UserGroupPermission userGroupPermission = SecurityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
+    UserGroupPermission userGroupPermission = securityTestHelper.constructActiveUserGroupPermission(); //constructUserGroupPermission();
     userGroupPermission.setPermission(null);
 
     // when

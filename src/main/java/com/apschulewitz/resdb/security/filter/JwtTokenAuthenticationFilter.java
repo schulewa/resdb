@@ -2,7 +2,7 @@ package com.apschulewitz.resdb.security.filter;
 
 import com.apschulewitz.resdb.common.ApplicationResponse;
 import com.apschulewitz.resdb.common.ResponseStatus;
-import com.apschulewitz.resdb.security.UserAuthenticationService;
+import com.apschulewitz.resdb.security.service.UserAuthenticationService;
 import com.apschulewitz.resdb.security.exception.JwtBadSignatureException;
 import com.apschulewitz.resdb.security.exception.JwtExpirationException;
 import com.apschulewitz.resdb.security.exception.MalformedJwtException;

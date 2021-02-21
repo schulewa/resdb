@@ -4,7 +4,6 @@
  */
 package com.apschulewitz.resdb.security.model.entity;
 
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.converter.AccountStatusPersistenceConverter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;

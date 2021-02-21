@@ -1,8 +1,9 @@
-package com.apschulewitz.resdb.security;
+package com.apschulewitz.resdb.security.model.helper;
 
 import com.apschulewitz.resdb.common.model.entity.DataOperation;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.config.UserAuthenticationConfiguration;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.entity.Language;
 import com.apschulewitz.resdb.refdata.model.entity.LanguageGroup;
 import com.apschulewitz.resdb.refdata.model.entity.Region;
@@ -13,15 +14,27 @@ import com.apschulewitz.resdb.security.model.entity.UserGroup;
 import com.apschulewitz.resdb.security.model.entity.UserGroupMembership;
 import com.apschulewitz.resdb.security.model.entity.UserGroupPermission;
 import com.apschulewitz.resdb.security.model.entity.UserPassword;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Class <CODE>SecurityTestHelper</CODE> contains methods to construct sample user accounts
+ * to assist in testing.
+ */
+@Component
+@ContextConfiguration(classes = {UserAuthenticationConfiguration.class, PasswordEncoder.class})
+@Data
+@Slf4j
 public class SecurityTestHelper {
 
   public static final String TEST_USER_NAME = "testuser";
@@ -32,7 +45,13 @@ public class SecurityTestHelper {
 
   public static final LocalDateTime VALID_FROM_DATE_TIME = LocalDateTime.of(VALID_FROM_DATE, VALID_FROM_TIME);
 
-  public static UserAccount constructActiveUserAccount() {
+  private PasswordEncoder passwordEncoder;
+
+  public SecurityTestHelper() {
+    log.info("Starting SecurityTestHelper");
+  }
+
+  public UserAccount constructActiveUserAccount() {
     Region region = Region.builder()
       .createdBy(TEST_USER_NAME)
       .name("region")
@@ -59,23 +78,21 @@ public class SecurityTestHelper {
       .languageGroup(languageGroup)
       .build();
 
+    String encodedPassword = passwordEncoder.encode(TEST_USER_PASSWORD);
     UserPassword userPassword = UserPassword.builder()
-      .password(TEST_USER_PASSWORD)
+      .password(encodedPassword)
       .validFrom(VALID_FROM_DATE)
-//      .id(1L)
       .build();
     Collection<UserPassword> passwords = Collections.singletonList(userPassword);
 
     UserGroup userGroup = UserGroup.builder()
       .displayName("User group display name")
-//      .id(1L)
       .name("User group")
 //      .groupPermissions(Arrays.asList(userGroupPermission))
       .build();
 
     UserGroupMembership userGroupMembership = UserGroupMembership.builder()
       .group(userGroup)
-//      .id(1L)
       .validFrom(VALID_FROM_DATE_TIME)
       .build();
     Collection<UserGroupMembership> groupMemberships = Collections.singletonList(userGroupMembership);
@@ -113,19 +130,17 @@ public class SecurityTestHelper {
 
 //    userGroupPermission.setGroup(userGroup);
 
-
-
     UserAccount userAccount = UserAccount.builder()
-      .status(AccountStatus.Active)
-      .id(1L)
+      .authenticationResult(AuthenticationResult.UnauthenticatedUser)
+      .email("wc@crapper.com")
       .firstName("Winston")
       .familyName("Churchill")
+      .groupMemberships(Arrays.asList(userGroupMembership))
+      .invalidAccessCount(0)
       .logonName("winston")
       .passwords(Arrays.asList(userPassword))
-      .groupMemberships(Arrays.asList(userGroupMembership))
       .preferredLanguage(language)
-      .invalidAccessCount(0)
-      .authenticationResult(AuthenticationResult.UnauthenticatedUser)
+      .status(AccountStatus.Active)
       .build();
 
 
@@ -141,7 +156,7 @@ public class SecurityTestHelper {
     return userAccount;
   }
 
-  public static UserGroupPermission constructActiveUserGroupPermission() {
+  public UserGroupPermission constructActiveUserGroupPermission() {
     Permission permission1 = Permission.builder()
       .name("Permission1")
       .status(Permission.PermissionStatus.Active)

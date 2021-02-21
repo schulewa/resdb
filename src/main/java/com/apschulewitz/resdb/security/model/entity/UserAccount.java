@@ -2,7 +2,6 @@ package com.apschulewitz.resdb.security.model.entity;
 
 
 import com.apschulewitz.resdb.common.model.entity.DataEntityId;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.apschulewitz.resdb.refdata.model.entity.Language;
 import com.apschulewitz.resdb.security.model.AuthenticationResult;
 import com.apschulewitz.resdb.security.model.converter.AccountStatusPersistenceConverter;
@@ -18,6 +17,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -41,8 +41,24 @@ public class UserAccount implements DataEntityId {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "logon_name", nullable = false, length = 20)
+    //
+    // logonName can be left blank IF their email address is set
+    //
+
+    @Column(name = "logon_name", length = 20)
     private String logonName;
+
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+
+    @Column(name = "email_verified")
+    private ZonedDateTime emailVerified;
+
+    @Column(name = "recovery_email")
+    private String recoveryEmail;
+
+    @Column(name = "recovery_email_verified")
+    private ZonedDateTime recoveryEmailVerified;
 
     @Column(name = "first_name", nullable = false, length = 30)
     private String firstName;

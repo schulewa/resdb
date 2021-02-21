@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.refdata.model.entity;
+package com.apschulewitz.resdb.security.model.entity;
 
 import javax.validation.constraints.NotBlank;
 

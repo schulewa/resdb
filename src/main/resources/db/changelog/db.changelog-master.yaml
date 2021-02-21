@@ -94,3 +94,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/20200829_01_add_classification_to_model.sql
       context: ALL
+  - include:
+      file: db/changelog/20210131_01_enhance_user_auth.sql
+      context: ALL

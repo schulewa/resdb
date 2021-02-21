@@ -1,7 +1,6 @@
 package com.apschulewitz.resdb.security.model.dto;
 
 import com.apschulewitz.resdb.refdata.model.dto.LanguageDto;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +19,7 @@ public class UserAccountDto {
     private String logonName;
     private String firstName;
     private String familyName;
-    private AccountStatus status;
+    private String status;
     private Integer invalidAccessCount;
     private LocalDateTime passwordUpdated;
     private LocalDateTime lastLogon;

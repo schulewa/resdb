@@ -1,13 +1,12 @@
 package com.apschulewitz.resdb.security.model.dto;
 
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.Collection;
 
-//@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,8 +19,6 @@ import java.util.Collection;
  * UserLogonDto holds the details of a user who needs to be authenticated.
  */
 public class UserDto {
-
-//    public UserDto() {}
 
     @JsonProperty
     private Long id;

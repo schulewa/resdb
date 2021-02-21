@@ -20,7 +20,7 @@ public class UserPassword {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-    @Column
+    @Column(length = 100)
     private String password;
 
     @Column

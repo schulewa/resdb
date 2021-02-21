@@ -1,8 +1,7 @@
 package com.apschulewitz.resdb.security.model.mapper;
 
-import com.apschulewitz.resdb.common.model.mapper.EntityMapper;
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dto.UserGroupDto;
 import com.apschulewitz.resdb.security.model.dto.UserGroupPermissionDto;
 import com.apschulewitz.resdb.security.model.entity.UserGroup;

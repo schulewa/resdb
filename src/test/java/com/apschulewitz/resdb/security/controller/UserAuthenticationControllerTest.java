@@ -2,7 +2,7 @@ package com.apschulewitz.resdb.security.controller;
 
 import com.apschulewitz.resdb.common.ApplicationResponse;
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.security.UserAuthenticationService;
+import com.apschulewitz.resdb.security.service.UserAuthenticationService;
 import com.apschulewitz.resdb.security.model.dto.UserDto;
 import org.junit.Ignore;
 import org.junit.Test;

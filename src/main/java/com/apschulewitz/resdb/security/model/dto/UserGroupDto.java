@@ -1,6 +1,6 @@
 package com.apschulewitz.resdb.security.model.dto;
 
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import lombok.Builder;
 import lombok.Getter;
 

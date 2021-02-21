@@ -1,5 +1,6 @@
 package com.apschulewitz.resdb.refdata.model.entity;
 
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

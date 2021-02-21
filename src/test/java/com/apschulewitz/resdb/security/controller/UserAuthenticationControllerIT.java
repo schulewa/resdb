@@ -1,7 +1,7 @@
 package com.apschulewitz.resdb.security.controller;
 
 import com.apschulewitz.resdb.config.RestUrlPaths;
-import com.apschulewitz.resdb.refdata.model.entity.AccountStatus;
+import com.apschulewitz.resdb.security.model.entity.AccountStatus;
 import com.apschulewitz.resdb.security.model.dao.UserAccountDao;
 import com.apschulewitz.resdb.security.model.dao.UserPasswordDao;
 import com.apschulewitz.resdb.security.model.dto.UserLogonDto;

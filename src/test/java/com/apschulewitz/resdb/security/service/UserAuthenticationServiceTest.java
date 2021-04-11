@@ -56,7 +56,7 @@ public class UserAuthenticationServiceTest {
   public void beforeEachTest() {
     userAuthenticationConfiguration = new UserAuthenticationConfiguration();
     userAuthenticationConfiguration.setAuthenticationStrength(12);
-    passwordEncoder = userAuthenticationConfiguration.encoder();
+    passwordEncoder = userAuthenticationConfiguration.passwordEncoder();
     securityTestHelper.setPasswordEncoder(passwordEncoder);
     log.info("Before each test, passwordEncoder={}, securityTestHelper={}", passwordEncoder, securityTestHelper);
   }

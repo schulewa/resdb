@@ -1,17 +1,27 @@
 package com.apschulewitz.resdb.security.service;
 
 import com.apschulewitz.resdb.common.ApplicationResponse;
+import com.apschulewitz.resdb.common.EmailConfiguration;
 import com.apschulewitz.resdb.common.ResponseStatus;
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
+import com.apschulewitz.resdb.common.service.EmailServiceImpl;
+import com.apschulewitz.resdb.common.utils.AuthenticationUtils;
 import com.apschulewitz.resdb.common.utils.StringUtils;
+import com.apschulewitz.resdb.security.UserRegistrationConfiguration;
+import com.apschulewitz.resdb.security.model.dao.UserAccountDao;
+import com.apschulewitz.resdb.security.model.dao.UserRegistrationDao;
 import com.apschulewitz.resdb.security.model.dto.UserRegistrationDto;
 import com.apschulewitz.resdb.security.model.entity.RegistrationStatus;
 import com.apschulewitz.resdb.security.model.helper.UserRegistrationTestHelper;
+import com.apschulewitz.resdb.security.model.mapper.UserRegistrationMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,14 +38,47 @@ import static org.junit.Assert.assertNull;
 @Slf4j
 public class UserRegistrationServiceTest {
 
-  @Autowired
+//  @Autowired
   private UserRegistrationService userRegistrationService;
 
   @Autowired
   private UserRegistrationTestHelper testHelper;
 
+  @Autowired
+  private UserRegistrationDao userRegistrationDao;
+
+  @Autowired
+  private UserRegistrationMapper userRegistrationMapper;
+
+  @Autowired
+  private UserAccountDao userAccountDao;
+
+  @Autowired
+  private AuthenticationUtils authenticationUtils;
+
+  @Autowired
+  private EmailConfiguration emailConfiguration;
+
+  @Mock
+  private JavaMailSender mockedMailSender;
+
+  @Mock
+  private UserRegistrationConfiguration mockedUserRegistrationConfig;
+
+  @Before
+  public void beforeEachTest() {
+    EmailServiceImpl emailService = new EmailServiceImpl(mockedMailSender, emailConfiguration, false);
+    userRegistrationService = new UserRegistrationService(mockedUserRegistrationConfig,
+                                                          userAccountDao,
+                                                          userRegistrationDao,
+                                                          userRegistrationMapper,
+                                                          authenticationUtils,
+                                                          emailService,
+                        false);
+  }
+
   @Test
-  public void given_valid_registration_when_registerUser_is_executed_then_return_no_error() {
+  public void given_valid_registration_and_send_verify_email_is_false_when_registerUser_is_executed_then_return_no_error() {
     // given
     UserRegistrationDto userRegistrationDto = testHelper.constructUnsavedMinimalDto();
 

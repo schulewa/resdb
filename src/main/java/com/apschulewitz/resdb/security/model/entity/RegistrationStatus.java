@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 public enum RegistrationStatus {
 
     Initiated("I"),
+    VerifyEmailSent("E"),
     Verified("V"),
     Accepted("A"),
     Rejected("R"),
@@ -24,6 +25,7 @@ public enum RegistrationStatus {
     public static boolean requiresFurtherProcessing(@NotBlank RegistrationStatus registrationStatus) {
       switch (registrationStatus) {
         case Initiated:
+        case VerifyEmailSent:
         case Verified:
         case Accepted:
           return true;
@@ -45,8 +47,10 @@ public enum RegistrationStatus {
                 return Rejected;
             case "N":
                 return NewUserCreated;
-          case "V":
-            return Verified;
+            case "V":
+              return Verified;
+            case "E":
+              return VerifyEmailSent;
             default:
                 return Exception;
         }

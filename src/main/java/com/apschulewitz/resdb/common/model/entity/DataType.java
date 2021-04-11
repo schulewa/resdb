@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public enum DataType
 {
-	BLOB, CLOB, DATE, DATETIME, DOUBLE, FLOAT, INTEGER, LONG, SHORT, STRING, TIME, TIMESTAMP;
+	BLOB, BOOLEAN, CLOB, DATE, DATETIME, DOUBLE, FLOAT, INTEGER, LONG, SHORT, STRING, TIME, TIMESTAMP;
 
     public static boolean isValidDataType(@NotNull DataType type)
     {
@@ -14,6 +14,8 @@ public enum DataType
     	{
     	case BLOB:
     			;
+        case BOOLEAN:
+          ;
     	case CLOB:
     			;
     	case DATE:

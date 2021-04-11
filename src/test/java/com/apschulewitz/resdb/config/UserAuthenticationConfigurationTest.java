@@ -41,7 +41,7 @@ public class UserAuthenticationConfigurationTest {
   @Test
   public void given_passwordencoder_when_encode_is_executed_then_return_encoded_password() {
     // given
-    PasswordEncoder passwordEncoder = userAuthenticationConfiguration.encoder();
+    PasswordEncoder passwordEncoder = userAuthenticationConfiguration.passwordEncoder();
     String encodedRawPassword = passwordEncoder.encode(RAW_PASSWORD);
 
     // when

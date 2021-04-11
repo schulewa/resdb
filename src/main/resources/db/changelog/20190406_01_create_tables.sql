@@ -1116,6 +1116,7 @@ CREATE TABLE resdb_system_parameters
     description   VARCHAR(100) NULL,
     string_value  VARCHAR(30)  NULL,
     integer_value INTEGER      NULL,
+    boolean_value BIT          NULL,
     CONSTRAINT resdb_sysparams_pk PRIMARY KEY (id)
 );
 CREATE UNIQUE INDEX resdb_sysparams_idx ON resdb_system_parameters (name);

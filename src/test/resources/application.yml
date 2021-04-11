@@ -17,6 +17,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: "${EMAIL_USER}""
+    password: "${EMAIL_PASSWORD}"
+    defaultFromEmail: "${EMAIL_ADDRESS}"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   session:
     store-type: none
   liquibase:
@@ -65,6 +77,15 @@ authentication:
   # used for encoding the passwords during hashing
   strength: 12
   expiryInMinutes: 7200
+
+user:
+  registration:
+    verify:
+      url:
+        scheme: http
+        host: localhost
+        path: /user/registration/verify/{verification-code}
+
 
 #security:
 #  ignored:

@@ -43,3 +43,6 @@ CREATE TABLE resdb_user_registration
 );
 CREATE UNIQUE INDEX resdb_user_registration_idx ON resdb_user_account (email);
 CREATE UNIQUE INDEX resdb_user_registration_idx2 ON resdb_user_account (verification_code);
+
+INSERT INTO resdb_system_parameters (name, description, boolean_value)
+VALUES ('SEND_USER_VERIFICATION_EMAIL_WHEN_REGISTERING', 'If set to true then a verification email will automatically be sent to the user being registered, else is sent on user being accepted.', 0);

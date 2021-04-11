@@ -1,4 +1,4 @@
-package com.apschulewitz.resdb.common.utils;
+package com.apschulewitz.resdb.common.exception;
 
 /**
  * Created by adrianschulewitz on 20/08/2016.

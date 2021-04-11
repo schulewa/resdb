@@ -1,5 +1,7 @@
 package com.apschulewitz.resdb.common.utils;
 
+import com.apschulewitz.resdb.common.exception.ResearchDatabaseCommonException;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;

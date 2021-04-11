@@ -27,7 +27,7 @@ public class UserAuthenticationConfiguration {
   private Integer authenticationStrength;
 
   @Bean
-  public PasswordEncoder encoder() {
+  public PasswordEncoder passwordEncoder() {
     Map<String,PasswordEncoder> encoders = new HashMap<>();
     encoders.put(ENCODE_METHOD, new BCryptPasswordEncoder(authenticationStrength));
     encoders.put("noop", NoOpPasswordEncoder.getInstance());

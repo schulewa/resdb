@@ -9,6 +9,7 @@ import com.apschulewitz.resdb.security.model.entity.UserAccount;
 import com.apschulewitz.resdb.security.model.entity.UserPassword;
 import com.google.gson.Gson;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Ignore
 public class UserAuthenticationControllerIT {
 
   private static final String USER_LOGON = "testuser";

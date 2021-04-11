@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CsrfTokenRepository jwtCsrfTokenRepository;
 
-    @Value(("${client.cors.base.url}"))
+    @Value("${client.cors.base.url}")
     private String clientCorsBaseUrl;
 
 
@@ -106,10 +106,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/**").permitAll().anyRequest().authenticated();
     }
-    @Bean
-    public NoOpPasswordEncoder passwordEncoder() {
-        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-    }
+
+    //@Bean
+    //public NoOpPasswordEncoder passwordEncoder() {
+    //    return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+    //}
+
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return new SecurityAuthenticationEntryPoint();

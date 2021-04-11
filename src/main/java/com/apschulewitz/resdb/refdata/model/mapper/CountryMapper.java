@@ -2,18 +2,15 @@ package com.apschulewitz.resdb.refdata.model.mapper;
 
 import com.apschulewitz.resdb.common.model.entity.VersionStatus;
 import com.apschulewitz.resdb.common.model.mapper.VersionableEntityDtoMapper;
-import com.apschulewitz.resdb.common.utils.ResearchDatabaseCommonException;
 import com.apschulewitz.resdb.refdata.model.dto.CountryDto;
 import com.apschulewitz.resdb.refdata.model.dto.ImageDto;
 import com.apschulewitz.resdb.refdata.model.entity.Country;
 import com.apschulewitz.resdb.refdata.model.entity.Image;
 import com.apschulewitz.resdb.refdata.model.entity.ImageType;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 @Component
 //@NoArgsConstructor
